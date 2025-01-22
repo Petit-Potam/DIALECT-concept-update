@@ -38,6 +38,8 @@
 
 .article-card__title {
   font-family: var(--font-product-family);
+  font-weight: var(--font-product-weight);
+  text-transform: var(--font-product-text-transform);
 }
 
 .article-card__top {
@@ -48,7 +50,7 @@
   padding-inline-end: var(--sp-4);
 }
 
-.article-card__top li:after {
+.article-card__top li::after {
   content: '';
   position: absolute;
   inset-inline-end: 0;
@@ -62,11 +64,12 @@
   padding-inline-end: 0;
 }
 
-.article-card__top li:last-child:after {
+.article-card__top li:last-child::after {
   content: none;
 }
 
 .article-card__top .icon {
+  width: var(--sp-4);
   height: var(--sp-4);
 }
 
@@ -93,24 +96,32 @@
 
 /*! collage layout */
 
-.blog-collage .article-card:nth-child(1) .article-card__content {
+.blog-collage .article-card:nth-child(1) .article-card__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-color: color-mix(in oklab, rgb(var(--color-foreground)) 50%, #000000);
+}
+
+.blog-collage .article-card:nth-child(1):not(.without-image) .article-card__content {
   position: absolute;
   inset: var(--card-grid-gap);
   inset-block-start: unset;
   color: #ffffff;
 }
 
-.blog-collage .article-card:nth-child(1) .article-card__media:after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background-color: #000000;
-  opacity: 0.5;
-  pointer-events: none;
+.blog-collage .article-card:nth-child(1):not(.without-image) .article-card__title {
+  color: inherit;
 }
 
 .blog-collage .article-card:nth-child(1) .article-card__title {
   font-size: clamp(var(--text-2xl), 2.526vw, var(--text-5xl));
+}
+
+.blog-collage .article-card:nth-child(1) .reversed-link {
+  --reversed-link-gap: min(100%, 1.12em);
 }
 
 @media screen and (max-width: 639px) {
@@ -199,8 +210,8 @@
     padding-block-start: var(--sp-3);
   }
 
-  .blog-collage .article-card:nth-child(3):before,
-  .blog-collage.with-only4 .article-card:nth-child(4):before {
+  .blog-collage .article-card:nth-child(3)::before,
+  .blog-collage.with-only4 .article-card:nth-child(4)::before {
     content: '';
     position: absolute;
     width: 100%;
@@ -232,6 +243,13 @@
   
   .slider .blog-collage.with-only4 .article-card:nth-child(1) {
     grid-column: span 3;
+  }
+}
+
+@media screen and (pointer: fine) {
+  .blog-collage .article-card:nth-child(1):hover .article-card__image {
+    --tw-scale-x: 1.05;
+    --tw-scale-y: 1.05;
   }
 }
 

@@ -7,9 +7,9 @@
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
   <div class="page-width page-width--full relative">
-    <div class="title-wrapper leading-none">
-      <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}">
-        <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ page.title }}</split-words>
+    <div class="title-wrapper leading-none {{ section.settings.heading_alignment }}">
+      <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
+        <split-words class="split-words block" data-animate="fade-up-large">{{ page.title }}</split-words>
       </{{ section.settings.heading_tag }}>
     </div>
 
@@ -50,6 +50,26 @@
       ],
       "default": "title-xl tracking-heading",
       "label": "t:sections.global.settings.heading_size.label"
+    },
+    {
+      "type": "select",
+      "id": "heading_alignment",
+      "label": "t:sections.global.settings.heading_alignment.label",
+      "options": [
+        {
+          "value": "text-left",
+          "label": "t:sections.global.settings.heading_alignment.options__1.label"
+        },
+        {
+          "value": "text-center",
+          "label": "t:sections.global.settings.heading_alignment.options__2.label"
+        },
+        {
+          "value": "text-right",
+          "label": "t:sections.global.settings.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "text-left"
     },
     {
       "type": "select",

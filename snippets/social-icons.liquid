@@ -72,6 +72,15 @@
         </a>
       </li>
     {%- endif -%}
+    {%- if settings.social_linkedin_link != blank -%}
+      <li>
+        {%- assign platform =  'general.social.links.linkedin' | t -%}
+        <a href="{{ settings.social_linkedin_link }}" class="social_platform block relative" is="magnet-link" title="{{ 'general.social.social_platform' | t: name: shop.name, platform: platform | escape }}">
+          {%- render 'icon-brand', icon: 'linkedin', size: size -%}
+          <span class="sr-only">{{ platform }}</span>
+        </a>
+      </li>
+    {%- endif -%}
     {%- if settings.social_vimeo_link != blank -%}
       <li>
         {%- assign platform =  'general.social.links.vimeo' | t -%}

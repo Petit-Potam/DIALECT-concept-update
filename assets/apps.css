@@ -47,7 +47,7 @@
   margin-inline-start: var(--sp-4);
 }
 
-.AirReviews-Widget .AirReviews-StarRateProduct .AirReviews-StarRateProduct__Content.right:after {
+.AirReviews-Widget .AirReviews-StarRateProduct .AirReviews-StarRateProduct__Content.right::after {
   border-color: rgb(var(--color-border));
   inset: unset;
   inset-block-start: 0;
@@ -157,7 +157,6 @@
   color: inherit !important;
   font-size: inherit;
   font-weight: 400;
-  display: block;
 }
 
 #AirReviews-BlockWrapper .AirReviews-Blocks--ReviewCount span span {
@@ -168,14 +167,24 @@
   display: grid;
   gap: var(--sp-6);
   width: 100%;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  justify-content: unset;
 }
 
 #AirReviews-BlockWrapper .AirReviews-Blocks--Title {
   margin: 0;
   padding: 0;
   font-size: var(--title-md);
-  font-weight: var(--font-bold);
-  color: inherit !important;
+  font-family: var(--font-heading-family);
+  font-style: var(--font-heading-style);
+  font-weight: var(--font-heading-weight);
+  letter-spacing: var(--font-heading-letter-spacing);
+  line-height: var(--font-heading-line-height);
+  text-transform: var(--font-heading-text-transform);
+  color: rgb(var(--color-foreground)) !important;
+  word-break: break-word;
 }
 
 #AirReviews-BlockWrapper .AirReviews-Blocks--List {
@@ -191,6 +200,11 @@
 #AirReviews-BlockWrapper .AirReviews-Blocks__SummaryLeft {
   padding: 0;
   border: none !important;
+  width: 100% !important;
+}
+
+#AirReviews-BlockWrapper .AirReviews-Blocks__SummaryRight--Container {
+  width: 100% !important;
 }
 
 #AirReviews-BlockWrapper .AirReviews-Blocks__SummaryRight {
@@ -327,8 +341,8 @@
 #AirReviews-BlockWrapper .AirReviews-Blocks__ReviewDetails {
   margin: 0;
   border: 1px solid rgb(var(--color-border-light));
-  padding: var(--sp-5);
-  border-radius: var(--rounded-block);
+  padding: var(--sp-5) !important;
+  border-radius: var(--rounded-block) !important;
   color: rgb(var(--color-base-text)) !important;
   background-color: rgb(var(--color-base-background)) !important;
   box-shadow: none !important;
@@ -439,7 +453,8 @@
 }
 
 #AirReviews-BlockWrapper .AirReviews-Blocks__LayoutGrid .AirReviews-Blocks__Information {
-  display: grid;
+  padding: 0 !important;
+  display: grid !important;
   grid-template: "author rating" "content content" /minmax(0,1fr) auto;
   position: relative;
 }
@@ -556,7 +571,7 @@
   line-height: 1.25;
   padding-inline: var(--input-padding-inline);
   color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
   border: var(--inputs-border-width) solid rgb(var(--color-foreground)/ var(--border-opacity));
   border-radius: var(--inputs-radius);
 }
@@ -600,7 +615,7 @@
 }
 
 .AirReviews-Blocks__ListSort .AirReviews-Select .AirReviews-Select__Option:hover {
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
 }
 
 #AirReviews-BlockWrapper .AirReviews-Pagination__button {
@@ -637,8 +652,8 @@
 }
 
 :is(#AirReviews-Modal, #AirReviews-Widget__Modal, #AirReviews-Modal__Details) .AirReviews-Modal__Overlay {
-  background-color: rgb(var(--color-drawer-overlay)/ .7);
-  border-color: rgb(var(--color-drawer-overlay)/ .7);
+  background-color: rgb(var(--color-drawer-overlay)/ 0.7);
+  border-color: rgb(var(--color-drawer-overlay)/ 0.7);
   backdrop-filter: blur(12px);
   opacity: 1;
 }
@@ -948,9 +963,9 @@
   justify-content: center;
   overflow: hidden;
   line-height: 1;
-  font-weight: var(--font-medium);
-  font-family: var(--font-navigation-family);
+  font-family: var(--font-button-family);
   font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
   text-transform: var(--font-button-text-transform);
   padding: clamp(var(--sp-4d5),1.2vw,var(--sp-5d5)) clamp(var(--sp-6d5),1.473vw,var(--sp-7d5));
   color: rgb(var(--color-button-text));
@@ -965,7 +980,7 @@
 #AirReviews-Widget__Modal .AirReviews-Blocks__ReviewDetails {
   padding-block: var(--sp-6);
   padding-inline: var(--sp-7d5);
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
   border: 1px solid rgb(var(--color-border-light));
   border-radius: var(--rounded-block);
   box-shadow: none;
@@ -1071,20 +1086,20 @@
   font-size: var(--sp-5);
 }
 
-:is(#AirReviews-Widget__Modal, #AirReviews-BlockWrapper, #AirReviews-PopWrapper) .AirReviews-StarRate .Avada_Star-Icon:before {
+:is(#AirReviews-Widget__Modal, #AirReviews-BlockWrapper, #AirReviews-PopWrapper) .AirReviews-StarRate .Avada_Star-Icon::before {
   color: rgb(var(--color-rating));
 }
 
-:is(#AirReviews-Widget__Modal, #AirReviews-BlockWrapper, #AirReviews-PopWrapper) .AirReviews-StarRate .AirReviews-StarRate--Icon-negative .Avada_Star-Icon:before {
-  color: rgb(var(--color-foreground)/ .15);
+:is(#AirReviews-Widget__Modal, #AirReviews-BlockWrapper, #AirReviews-PopWrapper) .AirReviews-StarRate .AirReviews-StarRate--Icon-negative .Avada_Star-Icon::before {
+  color: rgb(var(--color-foreground)/ 0.15);
 }
 
-.AirReviews-Widget .AirReviews-StarRate .AirReviews-StarRate--Icon.AirReviews-StarRate-single-star .Avada_Star-Icon:before {
+.AirReviews-Widget .AirReviews-StarRate .AirReviews-StarRate--Icon.AirReviews-StarRate-single-star .Avada_Star-Icon::before {
   color: rgb(var(--color-rating));
 }
 
-.AirReviews-Widget .AirReviews-StarRate .AirReviews-StarRate--Icon.AirReviews-StarRate--Icon-negative .Avada_Star-Icon:before {
-  color: rgb(var(--color-foreground)/ .15);
+.AirReviews-Widget .AirReviews-StarRate .AirReviews-StarRate--Icon.AirReviews-StarRate--Icon-negative .Avada_Star-Icon::before {
+  color: rgb(var(--color-foreground)/ 0.15);
 }
 
 #AirReviews-FloatButtonWrapper .AirReviews-Widget__FloatButtonWrapper {
@@ -1098,7 +1113,7 @@
   margin-inline: var(--page-padding);
   padding-block: var(--sp-2);
   backdrop-filter: blur(6px);
-  background-color: rgb(var(--color-background)/ .8);
+  background-color: rgb(var(--color-background)/ 0.8);
   box-shadow: 0 0 0 1px rgb(var(--color-border));
   border-radius: var(--rounded-full);
   display: flex;
@@ -1116,7 +1131,7 @@
 }
 
 #AirReviews-FloatButtonWrapper .AirReviews-Widget__FloatButton>span:not(.AirReviews-Widget__Icon) {
-  writing-mode: tb-rl;
+  writing-mode: vertical-rl;
   font-size: var(--text-3xs);
   padding-inline: var(--sp-4);
   padding-block: var(--sp-2);
@@ -1250,7 +1265,7 @@
 }
 
 #AirReviews-Modal .AirReviews-Select .AirReviews-Select__Option:hover {
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
 }
 
 #AirReviews-Modal .AirReviews-TextField,
@@ -1263,11 +1278,11 @@
   line-height: 1.25;
   padding-inline: var(--input-padding-inline);
   color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
   border: var(--inputs-border-width) solid rgb(var(--color-foreground)/ var(--border-opacity));
   border-radius: var(--inputs-radius);
   transition: var(--animation-primary);
-  transition-property: border-color,background-color;
+  transition-property: border-color, background-color;
   font-family: inherit !important;
 }
 
@@ -1294,7 +1309,7 @@
 #AirReviews-Modal .AirReviews-Textarea:focus {
   box-shadow: none;
   border-color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-foreground)/ var(--opacity-045));
+  background-color: rgb(var(--color-foreground)/ 0.045);
   outline: none;
 }
 
@@ -1354,9 +1369,9 @@
   justify-content: center;
   overflow: hidden;
   line-height: 1;
-  font-weight: var(--font-medium);
-  font-family: var(--font-navigation-family);
+  font-family: var(--font-button-family);
   font-size: var(--font-button-size);
+  font-weight: var(--font-button-weight);
   text-transform: var(--font-button-text-transform);
   padding: clamp(var(--sp-4d5),1.2vw,var(--sp-5d5)) clamp(var(--sp-6d5),1.473vw,var(--sp-7d5)) !important;
   color: rgb(var(--color-button-text));
@@ -1368,7 +1383,7 @@
   transform: none !important;
 }
 
-#AirReviews-Modal .AirReviews-Button:after {
+#AirReviews-Modal .AirReviews-Button::after {
   content: "";
   pointer-events: none;
   position: absolute;
@@ -1444,7 +1459,7 @@
   box-shadow: none;
   backdrop-filter: blur(6px);
   color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-background)/ .9);
+  background-color: rgb(var(--color-background)/ 0.9);
   border: 1px solid rgb(var(--color-border));
 }
 
@@ -1637,7 +1652,7 @@ div[id*=AirReviews-CarouselWrapper] .AirReviews-Carousel .AirReviews-Carousel__C
 div[id*=AirReviews-CarouselWrapper] .AirReviews-Carousel .AirReviews-Carousel__Card .AirReviews-Pop__ProductWrapper .AirReviews-Pop__ProductName {
   gap: var(--sp-2d5);
   padding: var(--sp-2d5);
-  background-color: rgb(var(--color-foreground)/ var(--opacity-045));
+  background-color: rgb(var(--color-foreground)/ 0.045);
   border-radius: 0;
 }
 
@@ -1665,7 +1680,7 @@ div[id*=AirReviews-CarouselWrapper] .AirReviews-Carousel .AirReviews-Carousel__C
 
 div[id*=AirReviews-CarouselWrapper] .AirReviews-Carousel .AirReviews-Carousel__Card .AirReviews-Carousel__Media .AirReviews-Carousel__RateWrapper {
   background-color: rgb(var(--color-background));
-  box-shadow: 0 10px 10px -5px rgb(var(--color-foreground)/ .04),0 20px 25px -5px rgb(var(--color-foreground)/ .1);
+  box-shadow: 0 10px 10px -5px rgb(var(--color-foreground)/ 0.04),0 20px 25px -5px rgb(var(--color-foreground)/ 0.1);
   position: static;
   transform: none;
   display: inline-block;

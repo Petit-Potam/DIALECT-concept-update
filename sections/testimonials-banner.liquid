@@ -8,10 +8,11 @@
     {% endif -%}
   }
 
-  {%- if section.settings.image_mobile != blank and section.settings.image_height_mobile == 'adapt' %}
+  {%- assign image_mobile = section.settings.image_mobile | default: section.settings.image -%}
+  {%- if image_mobile != blank and section.settings.image_height_mobile == 'adapt' %}
     @media screen and (max-width: 767px) {
       #shopify-section-{{ section.id }} {
-        --ratio-percent: {{ 1 | divided_by: section.settings.image_mobile.aspect_ratio | times: 100 }}%;
+        --ratio-percent: {{ 1 | divided_by: image_mobile.aspect_ratio | times: 100 }}%;
       }
     }
   {% endif -%}
@@ -21,25 +22,23 @@
   <div class="relative">
     <div class="banner media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative">
       <media-element class="banner__media block w-full h-full overflow-hidden"{% if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif %}>
-        <div class="media media--height block w-full h-full relative overflow-hidden">
+        <picture class="media media--height block w-full h-full relative overflow-hidden">
           {%- if section.settings.image != blank -%}
             {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
-            <picture class="media media--height block w-full h-full relative overflow-hidden">
-              {%- if section.settings.image_mobile -%}
-                <source
-                  media="(max-width: 767px)"
-                  srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1000x' }} 1000w"
-                  width="{{ section.settings.image_mobile.width }}"
-                  height="{{ section.settings.image_mobile.height }}"
-                >
-              {%- endif -%}
+            {%- if section.settings.image_mobile -%}
+              <source
+                media="(max-width: 767px)"
+                srcset="{{ section.settings.image_mobile | image_url: width: '400x' }} 400w, {{ section.settings.image_mobile | image_url: width: '600x' }} 600w, {{ section.settings.image_mobile | image_url: width: '800x' }} 800w, {{ section.settings.image_mobile | image_url: width: '1000x' }} 1000w"
+                width="{{ section.settings.image_mobile.width }}"
+                height="{{ section.settings.image_mobile.height }}"
+              >
+            {%- endif -%}
 
-              {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image', class: 'banner__image' -}}
-            </picture>
+            {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image', class: 'banner__image' -}}
           {%- else -%}
-            {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay' -}}
+            {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay placeholder' -}}
           {%- endif -%}
-        </div>
+        </picture>
       </media-element>
       
       {%- if section.blocks.size > 0 -%}
@@ -49,15 +48,15 @@
             <div class="banner__box w-full">
               <testimonials-element class="testimonials block rte relative z-1" initial-index="{{ section.blocks.size | minus: 1 }}" watch-css>
                 {%- liquid
-                  assign withGradient = false
+                  assign with_gradient = false
                   if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-                    assign withGradient = true
+                    assign with_gradient = true
                   endif
                 -%}
                 {%- for block in section.blocks -%}
                   <div class="testimonial with-{{ block.settings.icon }} flex flex-col w-full" {{ block.shopify_attributes }}>
                     <blockquote>
-                      {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                      {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                       
                       {%- if block.settings.image != blank -%}
                         <figure class="inline-block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden">
@@ -65,8 +64,19 @@
                         </figure>
                       {%- endif -%}
         
-                      {%- if block.settings.author != blank -%}
-                        <cite>— {{ block.settings.author }}</cite>
+                      {%- if block.settings.author != blank or block.settings.author_info != blank -%}
+                        <cite>—&nbsp;
+                          {%- if block.settings.author_url != blank -%}
+                            <a href="{{ block.settings.author_url }}" class="reversed-link">
+                          {%- endif -%}
+                            {{- block.settings.author -}}
+                          {%- if block.settings.author_url != blank -%}
+                            </a>
+                          {%- endif -%}
+                          {%- if block.settings.author_info != blank -%}
+                            <span class="block text-base font-normal">{{ block.settings.author_info }}</span>
+                          {%- endif -%}
+                        </cite>
                       {%- endif -%}
                     </blockquote>
                   </div>
@@ -139,6 +149,14 @@
         },
         {
           "label": "t:sections.global.settings.image_height.options__10.label",
+          "value": "850px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__11.label",
+          "value": "900px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__12.label",
           "value": "100vh"
         }
       ],
@@ -439,6 +457,16 @@
           "id": "author",
           "label": "t:sections.testimonials.blocks.testimonial.settings.author.label",
           "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "author_info",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author_info.label"
+        },
+        {
+          "type": "url",
+          "id": "author_url",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author_url.label"
         },
         {
           "type": "image_picker",

@@ -30,17 +30,42 @@
       {%- endfor -%}
     }
   {% endif -%}
+
+  {%- if section.settings.heading_position != 'none' %}
+    {%- assign color_overlay_brightness = section.settings.color_overlay | color_brightness -%}
+    #shopify-section-{{ section.id }} .banner__box {
+      {%- if color_overlay_brightness < 150 %}
+        --color-foreground: 255 255 255;
+        --color-button-gradient: #ffffff;
+        --color-button-background: 255 255 255;
+        --color-button-border: 255 255 255;
+        --color-button-text: 0 0 0;
+      {% else %}
+        --color-foreground: 0 0 0;
+        --color-button-gradient: #000000;
+        --color-button-background: 0 0 0;
+        --color-button-border: 0 0 0;
+        --color-button-text: 255 255 255;
+      {% endif -%}
+    }
+  {% endif -%}
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}" data-section-id="{{ section.id }}">
   <div class="{% unless section.settings.full_width %}page-width {% endunless %}relative">
-    {%- render 'section-heading', section: section -%}
+    {%- if section.settings.heading_position != 'none' -%}
+      <div class="md:hidden">
+    {%- endif -%}
+      {%- render 'section-heading', section: section, section_full_width: section.settings.full_width -%}
+    {%- if section.settings.heading_position != 'none' -%}
+      </div>
+    {%- endif -%}
 
-    <lookbook-element class="banner block media--adapt mobile:media--adapt relative overflow-hidden">
+    <lookbook-element class="banner block media--adapt mobile:media--adapt relative">
       <div class="banner__media w-full h-full overflow-hidden">
-        {%- if section.settings.image != blank -%}
-          {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
-          <picture class="media media--height w-full h-full block relative">
+        <picture class="media media--height w-full h-full block relative">
+          {%- if section.settings.image != blank -%}
+            {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
             {%- if section.settings.image_mobile -%}
               <source
                 media="(max-width: 767px)"
@@ -51,42 +76,55 @@
             {%- endif -%}
 
             {{- section.settings.image | image_url: width: section.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image', class: 'banner__image' -}}
-          </picture>
-        {%- else -%}
-          <div class="media media--height w-full h-full">
-            {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay' -}}
-          </div>
-        {%- endif -%}
+          {%- else -%}
+            {{- 'lifestyle-1' | placeholder_svg_tag: 'banner__image banner__overlay placeholder' -}}
+          {%- endif -%}
+        </picture>
       </div>
 
-      {%- if section.blocks.size > 0 -%}
+      {%- if section.blocks.size > 0 or section.settings.heading_position != 'none' -%}
         <span class="banner__overlay absolute top-0 left-0 w-full h-full pointer-events-none"></span>
+
+        {%- if section.settings.heading_position != 'none' -%}
+          <div class="banner__content overflow-hidden absolute z-1 top-0 left-0 w-full h-full hidden md:block pointer-events-none">
+            <div class="page-width w-full h-full flex {{ section.settings.heading_position }}">
+              <div class="banner__box pointer-events-auto">
+                {%- render 'section-heading', section: section -%}
+              </div>
+            </div>
+          </div>
+        {%- endif -%}
         
         {%- for block in section.blocks -%}
           {%- case block.type -%}
             {%- when 'product' -%}
-              {%- assign product = block.settings.product -%}
+              {%- liquid
+                assign product = block.settings.product
+                if product == null
+                  assign placeholder = true
+                endif
+              -%}
               {% if product != blank %}
                 {%- if settings.product_quick_view -%}
                   <hover-element class="hotspot flex items-center justify-center absolute z-1 cursor-pointer" aria-controls="Quickview-{{ section.id }}-{{ product.id }}" aria-expanded="false" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
                     <div class="hotspot__content hidden md:flex gap-2 items-center absolute pointer-events-none{% if block.settings.horizontal < 15 %} with-left{% elsif block.settings.horizontal > 85 %} with-right{% endif %}{% if block.settings.vertical > 70 %} with-bottom{% endif %}">
                       {%- if product.featured_media -%}
-                        <div class="hidden lg:block media media--square relative overflow-hidden flex-auto">
+                        <div class="hidden lg:block media media--{{ settings.product_image_ratio }}{% unless settings.product_image_fill %} media--contain{% endunless %} relative overflow-hidden flex-auto">
                           {{- product.featured_media | image_url: width: product.featured_media.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
                         </div>
                       {%- endif -%}
                       <div class="rte text-sm leading-none grid gap-2">
-                        <p class="lg:text-base leading-tight font-medium">{{ product.title }}</p>
+                        <p class="heading lg:text-base lg:font-medium leading-tight">{{ product.title }}</p>
 
-                        {%- render 'product-price', product: product -%}
+                        {%- render 'product-price', product: product, placeholder: placeholder -%}
                       </div>
                       {%- render 'icon', icon: 'caret', class: 'absolute' -%}
                     </div>
                   </hover-element>
-                  <quick-view id="Quickview-{{ section.id }}-{{ product.id }}" class="quick-view x-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none" data-product-url="{{ product.url }}" role="dialog" aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}" aria-modal="true">
+                  <quick-view id="Quickview-{{ section.id }}-{{ product.id }}" class="quick-view x-modal drawer z-40 fixed bottom-0 left-0 h-full w-full pointer-events-none" data-product-url="{{ product.url }}" role="dialog" aria-label="{{ 'products.product.choose_product_options' | t: product_name: product.title | escape }}" aria-modal="true">
                     <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="Quickview-{{ section.id }}-{{ product.id }}" aria-expanded="false"></overlay-element>
                     <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-                      <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
+                      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
                         <button class="button button--secondary button--close drawer__close z-1 absolute top-0 right-0 flex items-center justify-center opacity-0" type="button" is="hover-button" aria-controls="Quickview-{{ section.id }}-{{ product.id }}" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
                           <span class="btn-fill" data-fill></span>
                           <span class="btn-text">
@@ -98,33 +136,42 @@
                     </div>
                   </quick-view>
                 {%- else -%}
-                  <a class="hotspot flex items-center justify-center absolute z-1 cursor-pointer"{% if product != blank %} href="{{ product.url }}"{% else %} role="link" aria-disabled="true"{% endif %} id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
+                  <a class="hotspot flex items-center justify-center absolute z-1 cursor-pointer"{% if product != blank %} href="{{ product.url }}" aria-label="{{ product.title | escape }}"{% else %} role="link" aria-disabled="true"{% endif %} id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
                     <div class="hotspot__content hidden md:flex gap-2 items-center absolute pointer-events-none{% if block.settings.horizontal < 15 %} with-left{% elsif block.settings.horizontal > 85 %} with-right{% endif %}{% if block.settings.vertical > 70 %} with-bottom{% endif %}">
                       {%- if product.featured_media -%}
-                        <div class="hidden lg:block media media--square relative overflow-hidden flex-auto">
+                        <div class="hidden lg:block media media--{{ settings.product_image_ratio }}{% unless settings.product_image_fill %} media--contain{% endunless %} relative overflow-hidden flex-auto">
                           {{- product.featured_media | image_url: width: product.featured_media.width | image_tag: loading: 'lazy', widths: '180,360,540', is: 'lazy-image' -}}
                         </div>
                       {%- endif -%}
                       <div class="rte text-sm leading-none grid gap-2">
-                        <p class="lg:text-base leading-tight font-medium">{{ product.title }}</p>
+                        <p class="heading lg:text-base lg:font-medium leading-tight">{{ product.title }}</p>
 
-                        {%- render 'product-price', product: product -%}
+                        {%- render 'product-price', product: product, placeholder: placeholder -%}
                       </div>
                       {%- render 'icon', icon: 'caret', class: 'absolute' -%}
                     </div>
                   </a>
                 {%- endif -%}
               {%- else -%}
-                <a class="hotspot flex items-center justify-center absolute z-1 cursor-pointer"{% if product != blank %} href="{{ product.url }}"{% else %} aria-disabled="true"{% endif %} id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>&nbsp;</a>
+                <a class="hotspot flex items-center justify-center absolute z-1 cursor-pointer"{% if product != blank %} href="{{ product.url }}" aria-label="{{ product.title | escape }}"{% else %} aria-disabled="true"{% endif %} id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>&nbsp;</a>
               {%- endif -%}
 
             {%- when 'content'-%}
-              <a class="hotspot flex items-center justify-center absolute cursor-pointer"{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% else %} role="link" aria-disabled="true" aria-controls="Hotspot-{{ block.id }}" aria-expanded="false"{% endif %} id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
+              <a class="hotspot with-content flex items-center justify-center absolute cursor-pointer"{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% else %} role="link" aria-disabled="true" aria-controls="Hotspot-{{ section.id }}-{{ block.id }}" aria-expanded="false"{% endif %} aria-label="{{ block.settings.heading | escape }}" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
                 {% if block.settings.heading != blank or block.settings.text != blank %}
                   <div class="hotspot__content hidden md:flex gap-2 items-center absolute z-1 pointer-events-none{% if block.settings.horizontal < 15 %} with-left{% elsif block.settings.horizontal > 85 %} with-right{% endif %}{% if block.settings.vertical > 70 %} with-bottom{% endif %}">
-                    <div class="rte text-sm leading-none grid gap-2">
+                    <div class="rte text-sm leading-tight grid gap-2 md:gap-3">
+                      {%- if block.settings.icon_image != blank -%}
+                        <figure class="media media--transparent relative inline-block">
+                          {%- capture sizes -%}{{ block.settings.icon_width }}px{%- endcapture -%}
+                          {%- capture widths -%}{{ block.settings.icon_width }}, {{ block.settings.icon_width | times: 2 | at_most: block.settings.icon_image.width }}{%- endcapture -%}
+                          {{- block.settings.icon_image | image_url: width: block.settings.icon_image.width | image_tag: loading: 'lazy', sizes: sizes, widths: widths, class: 'image-fit' -}}
+                        </figure>
+                      {%- elsif block.settings.icon != 'none' -%}
+                        {%- render 'icon-guarantee', icon: block.settings.icon, size: 'lg', class: 'inline-block' -%}
+                      {%- endif -%}
                       {%- if block.settings.heading != blank -%}
-                        <p class="lg:text-base leading-tight font-medium">{{ block.settings.heading }}</p>
+                        <p class="heading lg:text-base lg:font-medium leading-tight">{{ block.settings.heading }}</p>
                       {%- endif -%}
 
                       {{- block.settings.text -}}
@@ -134,17 +181,17 @@
                 {% endif %}
               </a>
               {% if block.settings.link == blank %}
-                <x-modal id="Hotspot-{{ block.id }}" class="x-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
+                <x-modal id="Hotspot-{{ section.id }}-{{ block.id }}" class="x-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
                   role="dialog"
                   aria-modal="true"
                   aria-label="{{ block.settings.heading | escape }}"
                   hidden
                 >
-                  <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="Hotspot-{{ block.id }}" aria-expanded="false"></overlay-element>
+                  <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="Hotspot-{{ section.id }}-{{ block.id }}" aria-expanded="false"></overlay-element>
                   <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-                    <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
-                      <span class="drawer__title heading font-bold title-md">{{ block.settings.heading | escape }}</span>
-                      <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="Hotspot-{{ block.id }}" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
+                    <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+                      <span class="drawer__title heading title-md">{{ block.settings.heading | escape }}</span>
+                      <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="Hotspot-{{ section.id }}-{{ block.id }}" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
                         <span class="btn-fill" data-fill></span>
                         <span class="btn-text">
                           {%- render 'icon', icon: 'close', size: 'sm' -%}
@@ -280,6 +327,55 @@
       "info": "t:sections.global.settings.heading_tag.info"
     },
     {
+      "type": "select",
+      "id": "heading_position",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.global.settings.content_position.options__10.label"
+        },
+        {
+          "value": "items-start justify-start text-left",
+          "label": "t:sections.global.settings.content_position.options__1.label"
+        },
+        {
+          "value": "items-start justify-center text-center",
+          "label": "t:sections.global.settings.content_position.options__2.label"
+        },
+        {
+          "value": "items-start justify-end text-right",
+          "label": "t:sections.global.settings.content_position.options__3.label"
+        },
+        {
+          "value": "items-center justify-start text-left",
+          "label": "t:sections.global.settings.content_position.options__4.label"
+        },
+        {
+          "value": "items-center justify-center text-center",
+          "label": "t:sections.global.settings.content_position.options__5.label"
+        },
+        {
+          "value": "items-center justify-end text-right",
+          "label": "t:sections.global.settings.content_position.options__6.label"
+        },
+        {
+          "value": "items-end justify-start text-left",
+          "label": "t:sections.global.settings.content_position.options__7.label"
+        },
+        {
+          "value": "items-end justify-center text-center",
+          "label": "t:sections.global.settings.content_position.options__8.label"
+        },
+        {
+          "value": "items-end justify-end text-right",
+          "label": "t:sections.global.settings.content_position.options__9.label"
+        }
+      ],
+      "default": "none",
+      "label": "t:sections.global.settings.heading_position.label",
+      "info": "t:sections.global.settings.heading_position.info"
+    },
+    {
       "type": "text",
       "id": "subheading",
       "label": "t:sections.global.settings.subheading.label"
@@ -299,6 +395,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",
@@ -545,6 +653,257 @@
       "type": "content",
       "name": "t:sections.global.blocks.content.name",
       "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "alert",
+              "label": "t:sections.global.settings.icon.options__2.label"
+            },
+            {
+              "value": "award",
+              "label": "t:sections.global.settings.icon.options__3.label"
+            },
+            {
+              "value": "bag",
+              "label": "t:sections.global.settings.icon.options__4.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "briefcase",
+              "label": "t:sections.global.settings.icon.options__6.label"
+            },
+            {
+              "value": "calendar",
+              "label": "t:sections.global.settings.icon.options__7.label"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "t:sections.global.settings.icon.options__8.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "clipboard",
+              "label": "t:sections.global.settings.icon.options__10.label"
+            },
+            {
+              "value": "cosmetics",
+              "label": "t:sections.global.settings.icon.options__11.label"
+            },
+            {
+              "value": "creadit_card",
+              "label": "t:sections.global.settings.icon.options__12.label"
+            },
+            {
+              "value": "dairy",
+              "label": "t:sections.global.settings.icon.options__13.label"
+            },
+            {
+              "value": "dairy_free",
+              "label": "t:sections.global.settings.icon.options__14.label"
+            },
+            {
+              "value": "devices",
+              "label": "t:sections.global.settings.icon.options__15.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "eye",
+              "label": "t:sections.global.settings.icon.options__17.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "gluten",
+              "label": "t:sections.global.settings.icon.options__20.label"
+            },
+            {
+              "value": "gluten_free",
+              "label": "t:sections.global.settings.icon.options__21.label"
+            },
+            {
+              "value": "headphone",
+              "label": "t:sections.global.settings.icon.options__22.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "iron",
+              "label": "t:sections.global.settings.icon.options__24.label"
+            },
+            {
+              "value": "lightning",
+              "label": "t:sections.global.settings.icon.options__25.label"
+            },
+            {
+              "value": "lock",
+              "label": "t:sections.global.settings.icon.options__26.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            },
+            {
+              "value": "newspaper",
+              "label": "t:sections.global.settings.icon.options__28.label"
+            },
+            {
+              "value": "organic",
+              "label": "t:sections.global.settings.icon.options__29.label"
+            },
+            {
+              "value": "perfume",
+              "label": "t:sections.global.settings.icon.options__30.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "plane",
+              "label": "t:sections.global.settings.icon.options__32.label"
+            },
+            {
+              "value": "planet",
+              "label": "t:sections.global.settings.icon.options__33.label"
+            },
+            {
+              "value": "planet_2",
+              "label": "t:sections.global.settings.icon.options__34.label"
+            },
+            {
+              "value": "recycling",
+              "label": "t:sections.global.settings.icon.options__35.label"
+            },
+            {
+              "value": "return",
+              "label": "t:sections.global.settings.icon.options__36.label"
+            },
+            {
+              "value": "rocket",
+              "label": "t:sections.global.settings.icon.options__37.label"
+            },
+            {
+              "value": "ruler",
+              "label": "t:sections.global.settings.icon.options__38.label"
+            },
+            {
+              "value": "ruler_2",
+              "label": "t:sections.global.settings.icon.options__39.label"
+            },
+            {
+              "value": "ruler_3",
+              "label": "t:sections.global.settings.icon.options__40.label"
+            },
+            {
+              "value": "sale",
+              "label": "t:sections.global.settings.icon.options__41.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "shirt",
+              "label": "t:sections.global.settings.icon.options__43.label"
+            },
+            {
+              "value": "shoe",
+              "label": "t:sections.global.settings.icon.options__44.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "support",
+              "label": "t:sections.global.settings.icon.options__46.label"
+            },
+            {
+              "value": "swatchbook",
+              "label": "t:sections.global.settings.icon.options__47.label"
+            },
+            {
+              "value": "tag",
+              "label": "t:sections.global.settings.icon.options__48.label"
+            },
+            {
+              "value": "tags",
+              "label": "t:sections.global.settings.icon.options__49.label"
+            },
+            {
+              "value": "time",
+              "label": "t:sections.global.settings.icon.options__50.label"
+            },
+            {
+              "value": "trophy",
+              "label": "t:sections.global.settings.icon.options__51.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "users",
+              "label": "t:sections.global.settings.icon.options__53.label"
+            },
+            {
+              "value": "wallet",
+              "label": "t:sections.global.settings.icon.options__54.label"
+            },
+            {
+              "value": "wash",
+              "label": "t:sections.global.settings.icon.options__55.label"
+            },
+            {
+              "value": "watch",
+              "label": "t:sections.global.settings.icon.options__56.label"
+            },
+            {
+              "value": "wrench",
+              "label": "t:sections.global.settings.icon.options__57.label"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "t:sections.global.settings.icon_image.label"
+        },
+        {
+          "type": "range",
+          "id": "icon_width",
+          "label": "t:sections.global.settings.icon_width.label",
+          "default": 24,
+          "min": 20,
+          "max": 120,
+          "step": 2,
+          "unit": "px"
+        },
         {
           "type": "text",
           "id": "heading",

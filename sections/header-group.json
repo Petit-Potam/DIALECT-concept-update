@@ -17,10 +17,10 @@
         "announcement-1": {
           "type": "announcement",
           "settings": {
-            "icon": "truck",
-            "text": "Free shipping and returns",
+            "icon": "bag",
+            "text": "<strong>WINTER SALE - 30% OFF</strong>",
             "link": "",
-            "hide_icon_mobile": true,
+            "hide_icon_mobile": false,
             "text_mobile": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -29,8 +29,20 @@
         "announcement-2": {
           "type": "announcement",
           "settings": {
-            "icon": "email",
-            "text": "A question? Visit our contact page",
+            "icon": "truck",
+            "text": "Free 30-day returns, no questions asked",
+            "link": "",
+            "hide_icon_mobile": false,
+            "text_mobile": "",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "announcement_gB8XJc": {
+          "type": "announcement",
+          "settings": {
+            "icon": "shield",
+            "text": "100% Satisfaction Garuantee",
             "link": "",
             "hide_icon_mobile": true,
             "text_mobile": "",
@@ -41,22 +53,24 @@
       },
       "block_order": [
         "announcement-1",
-        "announcement-2"
+        "announcement-2",
+        "announcement_gB8XJc"
       ],
       "settings": {
         "show_social": true,
         "enable_language_selector": true,
         "enable_country_selector": true,
         "invert_icons_selectors": false,
-        "announcement_position": "center",
+        "announcement_position": "start",
         "autoplay": true,
         "autoplay_speed": 5,
-        "show_navigation": true,
+        "show_navigation": false,
         "color_text": "#fafafa",
         "color_background": "#1f1f1f",
         "gradient_background": "",
         "color_highlight": "#ffddbf",
         "gradient_highlight": "",
+        "hide_homepage": false,
         "full_width": true,
         "rounded": true
       }
@@ -65,10 +79,15 @@
       "type": "header",
       "settings": {
         "menu": "main-menu",
+        "menu_mobile": "",
         "menu_active": "block",
         "hover_menu": true,
         "header_layout": "left-center",
         "sticky_header_type": "always",
+        "enable_language_selector_desktop": false,
+        "enable_country_selector_desktop": false,
+        "show_country_name_dekstop": false,
+        "show_country_flag_desktop": false,
         "logo_position_mobile": "center",
         "show_social": true,
         "enable_language_selector": true,

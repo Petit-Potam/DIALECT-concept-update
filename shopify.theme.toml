@@ -3,3 +3,9 @@ theme = "178110071168"
 store = "dialectfragrances.myshopify.com"
 password  = "shptka_6c0628636ba6fa77a33fec7aa89e5a53"
 ignore = ["templates/", "config/"]
+
+[environments.concept3]
+theme = "178112364928"
+store = "dialectfragrances.myshopify.com"
+password  = "shptka_6c0628636ba6fa77a33fec7aa89e5a53"
+ignore = ["templates/", "config/"]

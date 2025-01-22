@@ -10,11 +10,11 @@
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- render 'section-heading', section: section -%}
 
-    <carousel-element class="text-with-icons block lg:grid grid--{{ section.settings.columns }} relative z-1" watch-css>
+    <carousel-element class="text-with-icons {{ section.settings.style }} block lg:grid grid--{{ section.settings.columns }} relative z-1" watch-css>
       {%- liquid
-        assign withGradient = false
+        assign with_gradient = false
         if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-          assign withGradient = true
+          assign with_gradient = true
         endif
       -%}
       {%- for block in section.blocks -%}
@@ -32,7 +32,7 @@
           <div class="column__content">
             {%- if block.settings.heading != blank -%}
               <p class="column__title heading font-medium leading-tight tracking-none">
-                {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
               </p>
             {%- endif -%}
             {%- if block.settings.text != blank -%}
@@ -51,6 +51,22 @@
 {
   "name": "t:sections.multicolumn-with-icons.name",
   "settings": [
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:sections.faq.settings.style.label",
+      "options": [
+        {
+          "value": "with-border",
+          "label": "t:sections.faq.settings.style.options__1.label"
+        },
+        {
+          "value": "with-background",
+          "label": "t:sections.faq.settings.style.options__2.label"
+        }
+      ],
+      "default": "with-border"
+    },
     {
       "type": "range",
       "id": "columns",
@@ -185,6 +201,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",

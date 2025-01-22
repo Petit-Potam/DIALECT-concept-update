@@ -4,6 +4,12 @@
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- render 'section-variables', section: section -%}
   }
+
+  @media screen and (min-width: 1024px) {
+    #shopify-section-{{ section.id }} .multicolumn {
+      --card-grid-gap: {% if section.settings.gap == 'small' %}var(--sp-4){% elsif section.settings.gap == 'medium' %}var(--sp-6){% else %}clamp(40px, 3.5vw, 60px){% endif %};
+    }
+  }
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
@@ -11,19 +17,19 @@
     {%- render 'section-heading', section: section -%}
 
     <slider-element id="Slider-{{ section.id }}" class="grid slider{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card">
-      <div class="multicolumn card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid relative z-1">
+      <div class="multicolumn with-{{ section.blocks.size }} card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid relative z-1">
         {%- liquid
-          assign withGradient = false
+          assign with_gradient = false
           if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-            assign withGradient = true
+            assign with_gradient = true
           endif
         -%}
         {%- for block in section.blocks -%}
           <div class="multicolumn-card{% if block.settings.show_border %} with-border{% endif %} card flex gap-5 w-full flex-col items-start xl:flex-row md:text-{{ block.settings.text_alignment }} text-{{ block.settings.text_alignment_mobile }}" {{ block.shopify_attributes }}>
-            <div class="grid gap-4 lg:gap-6">
+            <div class="grid gap-4 lg:gap-6 w-full">
               {%- if block.settings.video != blank -%}
-                {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px) , calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px) {%- endcapture -%}
-                <a class="block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+                {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px), calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px){%- endcapture -%}
+                <a class="block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% if block.settings.button_external %} target="_blank" rel="noopener"{% endif %}{% else %} role="link" aria-disabled="true"{% endif %} aria-label="{{ block.settings.heading | escape }}">
                   {%- liquid
                     assign video_alt = block.settings.video.alt | default: block.settings.image.alt
                     assign alt = 'general.accessibility.load_video' | t: description: video_alt | escape
@@ -45,8 +51,8 @@
                   </video-media>
                 </a>
               {%- elsif block.settings.image != blank -%}
-                {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px) , calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px) {%- endcapture -%}
-                <a class="block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
+                {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px), calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px){%- endcapture -%}
+                <a class="block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% if block.settings.button_external %} target="_blank" rel="noopener"{% endif %}{% else %} role="link" aria-disabled="true"{% endif %} aria-label="{{ block.settings.heading | escape }}">
                   {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '180,360,540,720,900,1080,1600', sizes: sizes, is: 'lazy-image', class: 'inline-block' -}}
                 </a>
               {%- endif -%}
@@ -54,8 +60,8 @@
               {%- if block.settings.heading != blank or block.settings.text != blank or block.settings.button_label != blank -%}
                 <div class="multicolumn-card__info grid gap-4 lg:gap-6">
                   {%- if block.settings.heading != blank -%}
-                    <p class="heading {{ block.settings.heading_size }} font-bold leading-tight tracking-tight">
-                      {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                    <p class="heading {{ block.settings.heading_size }} leading-tight tracking-tight">
+                      {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                     </p>
                   {%- endif -%}
     
@@ -67,15 +73,13 @@
     
                   {%- if block.settings.button_label != blank -%}
                     <p>
-                      <a class="button button--secondary button--fixed icon-with-text"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %} is="hover-link">
-                        <span class="btn-fill" data-fill></span>
-                        <span class="btn-text">
-                          {%- liquid
-                            echo block.settings.button_label | escape
-                            render 'icon', icon: 'arrow-right', size: 'sm', class: 'transform'
-                          -%}
-                        </span>
-                      </a>
+                      {%- render 'button',
+                        label: block.settings.button_label,
+                        link: block.settings.button_link,
+                        style: block.settings.button_style,
+                        external: block.settings.button_external,
+                        show_icon: block.settings.button_icon
+                      -%}
                     </p>
                   {%- endif -%}
                 </div>
@@ -92,6 +96,26 @@
 {
   "name": "t:sections.multicolumn.name",
   "settings": [
+    {
+      "type": "select",
+      "id": "gap",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.multicolumn.settings.gap.options__1.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.multicolumn.settings.gap.options__2.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.multicolumn.settings.gap.options__3.label"
+        }
+      ],
+      "default": "large",
+      "label": "t:sections.multicolumn.settings.gap.label"
+    },
     {
       "type": "range",
       "id": "columns",
@@ -246,6 +270,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",
@@ -507,6 +543,38 @@
           "type": "url",
           "id": "button_link",
           "label": "t:sections.global.settings.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.global.settings.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.global.settings.button_style.options__2.label"
+            },
+            {
+              "value": "link",
+              "label": "t:sections.global.settings.button_style.options__3.label"
+            }
+          ],
+          "default": "secondary",
+          "label": "t:sections.global.settings.button_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_external",
+          "label": "t:sections.global.settings.button_external.label",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "button_icon",
+          "label": "t:sections.global.settings.button_icon.label",
+          "default": true
         },
         {
           "type": "header",

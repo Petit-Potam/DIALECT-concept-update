@@ -48,7 +48,7 @@ class CopyButton extends HoverButton {
       return;
     }
 
-    navigator.clipboard.writeText(this.getAttribute('data-text') || '').then(() => {
+    navigator.clipboard.writeText(this.hasAttribute('data-text') ? this.getAttribute('data-text') : '').then(() => {
       if (this.controlElement) {
         this.controlElement.hidden = false;
       }

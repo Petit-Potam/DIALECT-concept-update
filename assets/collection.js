@@ -94,10 +94,13 @@ class FacetForm extends HTMLFormElement {
   }
 
   renderSectionFromFetch(url, event) {
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    
     this.beforeRenderSection();
     const start = performance.now();
 
-    fetch(url)
+    fetch(url, { signal: this.abortController.signal })
       .then((response) => response.text())
       .then((responseText) => {
         const execution = (performance.now() - start);
@@ -114,6 +117,14 @@ class FacetForm extends HTMLFormElement {
 
           this.afterRenderSection();
         }, execution > 500 ? 0 : 500);
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted by user');
+        }
+        else {
+          console.error(error);
+        }
       });
   }
 
@@ -142,12 +153,12 @@ class FacetForm extends HTMLFormElement {
 
     const matchesIndex = (element) => {
       const jsFilter = event ? event.target.closest('[data-filter]') : undefined;
-      return jsFilter ? element.dataset.index === jsFilter.dataset.index : false;
+      return jsFilter ? element.getAttribute('data-index') === jsFilter.getAttribute('data-index') : false;
     };
     const facetsToRender = Array.from(facetElements).filter((element) => !matchesIndex(element));
 
     facetsToRender.forEach((element) => {
-      const filter = document.querySelector(`[data-filter][data-index="${element.dataset.index}"]`);
+      const filter = document.querySelector(`[data-filter][data-index="${element.getAttribute('data-index')}"]`);
       if (filter !== null) {
         if (filter.tagName === 'DETAILS') {
           filter.querySelector('summary + *').innerHTML = element.querySelector('summary + *').innerHTML;
@@ -306,12 +317,14 @@ class FacetSort extends HTMLElement {
 
   hide(immediate = true) {
     if (this.button.hasAttribute('open')) {
-      const btnFill = this.button.querySelector('[data-fill');
-      Motion.animate(btnFill, { y: ['0%', immediate ? '0%' : '-76%'] }, { duration: 0.6, delay: immediate ? 0 : 0.2 });
-
       setTimeout(() => {
         this.button.removeAttribute('open');
       }, 100);
+
+      if (theme.config.isTouch || document.body.getAttribute('data-button-hover') === 'none') return;
+      
+      const btnFill = this.button.querySelector('[data-fill');
+      Motion.animate(btnFill, { y: ['0%', immediate ? '0%' : '-76%'] }, { duration: 0.6, delay: immediate ? 0 : 0.2 });
     }
   }
 
@@ -428,15 +441,25 @@ class InfiniteButton extends HoverButton {
 
   onClick() {
     if (this.hasAttribute('aria-busy')) return;
-    this.enableLoading();
+    this.abortController?.abort();
+    this.abortController = new AbortController();
 
+    this.enableLoading();
     const url = this.buildUrl().toString();
 
-    fetch(url)
+    fetch(url, { signal: this.abortController.signal })
       .then((response) => response.text())
       .then((responseText) => {
         this.renderPagination(responseText);
         this.renderProductGridContainer(responseText);
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted by user');
+        }
+        else {
+          console.error(error);
+        }
       });
   }
 

@@ -19,6 +19,7 @@
 
 {%- if video != blank -%}
   <video-media class="media deferred-media{% if is_mobile %} mobile:deferred-media{% endif %} block {{ class }}"
+    style="--aspect-ratio: {{ video.aspect_ratio }}"
     {%- if video.host %} host="{{ video.host }}"{% endif -%}
     {%- if autoplay %} autoplay{% endif -%}
   >
@@ -31,7 +32,7 @@
         {%- if video.type == 'youtube' -%}
           <iframe src="https://www.youtube.com/embed/{{ video.id }}?playsinline=1&controls=0{% if autoplay %}&autoplay=1{% endif %}{% if muted %}&mute=1{% endif %}{% if loop %}&loop=1{% endif %}&playlist={{ video.id }}&enablejsapi=1&rel=0&modestbranding=1&origin={{ 'https://' | append: request.host | url_encode }}" allow="autoplay; encrypted-media" allowfullscreen="allowfullscreen"></iframe>
         {%- elsif video.type == 'vimeo' -%}
-          <iframe src="https://player.vimeo.com/video/{{ video.id }}?autopause=1&background=1{% if autoplay %}&autoplay=1{% endif %}{% if muted %}&muted=1{% endif %}{% if loop %}&loop=1{% endif %}&transparent=0&responsive=1&portrait=0&title=0&byline=0&color={{ settings.color_text | remove_first: '#' }}" allow="autoplay; encrypted-media;" allowfullscreen="allowfullscreen"></iframe>
+          <iframe src="https://player.vimeo.com/video/{{ video.id }}?autopause=1{% if autoplay %}&autoplay=1{% endif %}{% if muted %}&background=1&muted=1{% endif %}{% if loop %}&loop=1{% endif %}&transparent=0&responsive=1&portrait=0&title=0&byline=0&color={{ settings.color_text | remove_first: '#' }}" allow="autoplay; encrypted-media;" allowfullscreen="allowfullscreen"></iframe>
         {%- endif -%}
       {%- endif -%}
     </template>

@@ -2,8 +2,6 @@ const selectors = {
   customerAddresses: '[data-customer-addresses]',
   addressCountrySelect: '[data-address-country-select]',
   addressContainer: '[data-address]',
-  toggleAddressButton: 'button[aria-expanded]',
-  cancelAddressButton: 'button[type="reset"]',
   deleteAddressButton: 'button[data-confirm-message]'
 };
 
@@ -25,8 +23,6 @@ class CustomerAddresses {
     return container ? {
       container,
       addressContainer: container.querySelector(selectors.addressContainer),
-      toggleButtons: document.querySelectorAll(selectors.toggleAddressButton),
-      cancelButtons: container.querySelectorAll(selectors.cancelAddressButton),
       deleteButtons: container.querySelectorAll(selectors.deleteAddressButton),
       countrySelects: container.querySelectorAll(selectors.addressCountrySelect)
     } : {};
@@ -39,7 +35,7 @@ class CustomerAddresses {
         hideElement: 'AddressProvinceContainerNew'
       });
       this.elements.countrySelects.forEach((select) => {
-        const formId = select.dataset.formId;
+        const formId = select.getAttribute('data-form-id');
         // eslint-disable-next-line no-new
         new Shopify.CountryProvinceSelector(`AddressCountry_${formId}`, `AddressProvince_${formId}`, {
           hideElement: `AddressProvinceContainer_${formId}`
@@ -49,51 +45,15 @@ class CustomerAddresses {
   }
 
   _setupEventListeners() {
-    this.elements.toggleButtons.forEach((element) => {
-      element.addEventListener('click', this._handleAddEditButtonClick);
-    });
-    this.elements.cancelButtons.forEach((element) => {
-      element.addEventListener('click', this._handleCancelButtonClick);
-    });
     this.elements.deleteButtons.forEach((element) => {
       element.addEventListener('click', this._handleDeleteButtonClick);
     });
   }
 
-  _toggleExpanded(target) {
-    target.setAttribute(
-      attributes.expanded,
-      (target.getAttribute(attributes.expanded) === 'false').toString()
-    );
-
-    if (target.getAttribute(attributes.expanded) == 'true') {
-      target
-        .closest(selectors.addressContainer)
-        .setAttribute('open', '')
-    }
-    else {
-      target
-        .closest(selectors.addressContainer)
-        .removeAttribute('open')
-    }
-  }
-
-  _handleAddEditButtonClick = ({ currentTarget }) => {
-    this._toggleExpanded(currentTarget);
-  }
-
-  _handleCancelButtonClick = ({ currentTarget }) => {
-    this._toggleExpanded(
-      currentTarget
-        .closest(selectors.addressContainer)
-        .querySelector(`[${attributes.expanded}]`)
-    )
-  }
-
   _handleDeleteButtonClick = ({ currentTarget }) => {
     // eslint-disable-next-line no-alert
     if (confirm(currentTarget.getAttribute(attributes.confirmMessage))) {
-      theme.utils.postLink(currentTarget.dataset.target, {
+      theme.utils.postLink(currentTarget.getAttribute('data-target'), {
         parameters: { _method: 'delete' },
       });
     }

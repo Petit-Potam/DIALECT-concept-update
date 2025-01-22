@@ -16,7 +16,7 @@
       {%- if sub_collection_link.type == 'collection_link' -%}
         {%- unless parent_link.url == sub_collection_link.url -%}
           <li class="flex items-center justify-center relative">
-            <a class="subcollection{% if sub_collection_link.object.metafields.theme.thumbnail.value != blank %} with-thumbnail{% endif %} block flex items-center relative leading-tight text-lg-2xl" href="{{ sub_collection_link.url }}" is="reveal-link" data-magnet="80">
+            <a class="subcollection{% if sub_collection_link.object.metafields.theme.thumbnail.value != blank %} with-thumbnail{% endif %} block flex items-center relative leading-tight text-lg-2xl" href="{{ sub_collection_link.url }}" is="reveal-link"{% if sub_collection_link.object.metafields.theme.thumbnail.value != blank %} data-magnet="80"{% endif %}>
               <span class="btn-text">
                 {{- sub_collection_link.title | escape -}}
                 {%- if show_count -%}

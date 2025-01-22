@@ -75,7 +75,7 @@
 /*! newsletter-bar */
 
 .newsletter-bar {
-  inset-block-start: 50%;
+  inset-block-start: 50vh;
   transform: translateY(-50%);
   width: var(--sp-13);
   margin-inline: var(--page-padding);
@@ -85,14 +85,25 @@
   box-shadow: 0 0 0 1px rgb(var(--color-border));
 }
 
+@supports (height: 100svh) {
+  .newsletter-bar {
+    inset-block-start: 50svh;
+  }
+}
+
 .newsletter-bar__social ul {
   padding-block-start: var(--sp-1);
   flex-direction: column;
 }
 
-.newsletter-bar__social .social_platform {
+.newsletter-bar__social ul li {
   width: var(--sp-10);
   height: var(--sp-10);
+}
+
+.newsletter-bar__social .social_platform {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,12 +111,12 @@
 }
 
 .newsletter-bar__button {
-  writing-mode: tb-rl;
+  writing-mode: vertical-rl;
   font-size: var(--text-3xs);
   padding-inline: var(--sp-4);
   margin-block: var(--sp-2);
   color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-foreground)/ var(--opacity-045));
+  background-color: rgb(var(--color-foreground)/ 0.045);
 }
 
 .newsletter-bar.left-0 .newsletter-bar__button {
@@ -125,5 +136,16 @@
 
   .has-dropdown-menu .newsletter-bar {
     z-index: 15;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .newsletter-bar.sm\:without-social {
+    padding-block: 0;
+    width: var(--sp-10);
+  }
+
+  .newsletter-bar.sm\:without-social .newsletter-bar__button {
+    margin-block: 0;
   }
 }

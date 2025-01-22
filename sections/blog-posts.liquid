@@ -55,7 +55,7 @@
     {%- if blog != blank -%}
       <slider-element id="Slider-{{ section.id }}" class="grid slider{% if section.settings.carousel_on_desktop %} slider--desktop{% endif %}{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card">
         <motion-list class="blog-grid card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid">
-          {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px) , calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px) {%- endcapture -%}
+          {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px), calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px){%- endcapture -%}
           {%- for article in blog.articles limit: section.settings.post_limit -%}
             {%- render 'article-card',
               article: article,
@@ -92,7 +92,8 @@
 
       {%- if section.settings.carousel_on_desktop -%}
         <p class="hidden lg:block">{{ view_all }}</p>
-      {%- endif -%}{%- else -%}
+      {%- endif -%}
+    {%- else -%}
       <div class="rte">
         {{- 'onboarding.no_content' | t -}}
       </div>

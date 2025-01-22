@@ -95,6 +95,8 @@
               {%- for product in predictive_search.resources.products -%}
                 {%- render 'product-card-horizontal',
                   product: product,
+                  image_ratio: settings.product_image_ratio,
+                  image_fill: settings.product_image_fill,
                   show_vendor: settings.predictive_search_show_vendor,
                   show_price: settings.predictive_search_show_price,
                   show_quick_add: false,
@@ -168,7 +170,7 @@
               <p>
                 {%- render 'icon', icon: 'empty', size: 'xxxl', class: 'inline-block' -%}
               </p>
-              <h2 class="drawer__empty-text font-bold leading-none tracking-tight">{{ 'general.search.no_results' | t: terms: predictive_search.terms }}.</h2>
+              <h2 class="drawer__empty-text heading leading-none tracking-tight">{{ 'general.search.no_results' | t: terms: predictive_search.terms }}.</h2>
               <p class="drawer__empty-message text-sm md:text-base leading-tight">{{ 'general.search.user_different_terms' | t }}</p>
             </div>
           </div>

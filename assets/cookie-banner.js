@@ -11,11 +11,11 @@ class CookieBanner extends ModalElement {
   }
 
   get testMode() {
-    return this.dataset.testMode === 'true';
+    return this.getAttribute('data-test-mode') === 'true';
   }
 
   get delay() {
-    return parseInt(this.dataset.delay) || 5;
+    return this.hasAttribute('data-delay') ? parseInt(this.getAttribute('data-delay')) : 5;
   }
 
   get acceptButton() {

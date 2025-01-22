@@ -14,8 +14,8 @@
 >
   <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="MenuDrawer" aria-expanded="false"></overlay-element>
   <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-    <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
-      <span class="drawer__title heading lg:text-3xl text-2xl font-bold leading-none tracking-tight"></span>
+    <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+      <span class="drawer__title heading lg:text-3xl text-2xl leading-none tracking-tight"></span>
       <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="MenuDrawer" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
         <span class="btn-fill" data-fill></span>
         <span class="btn-text">
@@ -46,7 +46,7 @@
               {%- if link.links != blank or enable_mega_menu -%}
                 {%- render 'header-nav-drawer', link: link, enable_mega_menu: enable_mega_menu, block: mega_menu_block -%}
               {%- else -%}
-                <a class="drawer__menu-item block text-2xl font-bold leading-none tracking-tight" href="{{ link.url }}">{{ link.title | escape }}</a>
+                <a class="drawer__menu-item block heading text-2xl leading-none tracking-tight" href="{{ link.url }}">{{ link.title | escape }}</a>
               {%- endif -%}
             </li>
           {%- endfor -%}
@@ -103,6 +103,8 @@
                               aria-current="true"
                             {% endif %}
                             data-value="{{ language.iso_code }}"
+                            title="{{ language.endonym_name | capitalize | escape }}"
+                            data-no-instant
                           >
                             {{- language.endonym_name | capitalize -}}
                           </a>
@@ -134,6 +136,8 @@
                               aria-current="true"
                             {% endif %}
                             data-value="{{ country.iso_code }}"
+                            title="{{ country.name | escape }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})"
+                            data-no-instant
                           >
                             {{- country.name }} ({{ country.currency.iso_code }} {{ country.currency.symbol }})
                           </a>
@@ -149,11 +153,11 @@
         {%- endif -%}
         <div class="drawer__footer-bottom flex items-center justify-between gap-6">
           {%- if shop.customer_accounts_enabled -%}
-            <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="button button--primary icon-with-text" is="hover-link">
+            <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="button button--primary icon-with-text" is="hover-link" rel="nofollow">
               <span class="btn-fill" data-fill></span>
               <span class="btn-text">
                 {%- liquid
-                  render 'icon', icon: 'account-alt', size: 'xs'
+                  render 'icon', icon: 'account-2', size: 'xs'
                   if customer
                     echo 'customer.account.title' | t
                   else

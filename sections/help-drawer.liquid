@@ -16,8 +16,8 @@
 >
   <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="HelpDrawer" aria-expanded="false"></overlay-element>
   <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-    <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
-      <span class="drawer__title heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">{{ section.settings.heading | escape }}</span>
+    <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+      <span class="drawer__title heading lg:text-3xl text-2xl leading-none tracking-tight">{{ section.settings.heading | escape }}</span>
       <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="HelpDrawer" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
         <span class="btn-fill" data-fill></span>
         <span class="btn-text">
@@ -30,27 +30,27 @@
         <div class="rte text-base">{{ section.settings.description }}</div>
 
         {%- if section.blocks.size > 0 -%}
-          <div class="help-list grid gap-4 md:gap-5">
+          <ul class="help-list grid gap-4 md:gap-5">
             {%- liquid
-              assign withGradient = false
+              assign with_gradient = false
               if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-                assign withGradient = true
+                assign with_gradient = true
               endif
             -%}
             {%- for block in section.blocks -%}
-              <div class="help-list__item grid gap-2d5 md:gap-3d5 relative z-1" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
+              <li class="help-list__item grid gap-2 md:gap-3 relative z-1" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
                 <div class="flex items-center gap-3">
                   {%- render 'icon-guarantee', icon: block.settings.icon -%}
                   <p class="h4 font-medium leading-tight md:text-lg">
-                    {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                    {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                   </p>
                 </div>
                 <div class="rte text-sm">
                   {{- block.settings.text -}}
                 </div>
-              </div>
+              </li>
             {%- endfor -%}
-          </div>
+          </ul>
         {%- endif -%}
       </div>
     </div>

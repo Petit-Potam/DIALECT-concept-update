@@ -39,7 +39,7 @@
 }
 
 .customer__sidebar {
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
   padding: var(--sp-7d5) var(--gap-padding);
   border-radius: var(--rounded-block);
 }
@@ -94,7 +94,7 @@
 }
 
 .addresses .address {
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
   padding: clamp(var(--sp-6), 2.315vw, var(--sp-12)) var(--sp-5);
   border-radius: var(--rounded-block);
 }
@@ -105,16 +105,24 @@
   }
 }
 
-.addresses .address[open] {
-  --color-background: var(--color-base-text);
-  --color-foreground: var(--color-base-background);
-  --color-base-button: var(--color-base-background);
-  --color-base-button-text: var(--color-base-text);
-  --color-button-text: var(--color-base-text);
-  --color-button-border: var(--color-base-background);
-  --color-button-background: var(--color-base-background);
-  color: rgb(var(--color-foreground));
-  background-color: rgb(var(--color-background));
+.addresses .address>div:first-child {
+  margin-block-end: auto;
+}
+
+.address__fields .field {
+  flex-grow: 1;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .address__fields .field {
+    width: calc(50% - var(--sp-6) / 2);
+  }
+
+  .address__fields .field--full {
+    width: 100%;
+  }
 }
 
 .order-details .price__regular {
@@ -155,21 +163,21 @@
     font-size: var(--text-lg);
   }
 
-  .customer__content td:before {
+  .customer__content td::before {
     content: attr(data-label);
     font-size: var(--text-xs);
     text-transform: uppercase;
-    color: rgb(var(--color-foreground)/ .5);
+    color: rgb(var(--color-foreground)/ 0.5);
   }
 
-  .order-history td:first-of-type:before {
+  .order-history td:first-of-type::before {
     font-size: inherit;
     font-weight: var(--font-medium);
     text-transform: none;
     color: rgb(var(--color-foreground));
   }
 
-  .order-details td:first-of-type:before {
+  .order-details td:first-of-type::before {
     content: none;
   }
 
@@ -194,7 +202,7 @@
     font-size: var(--text-lg);
   }
 
-  .order-details tfoot tr:last-child td:before {
+  .order-details tfoot tr:last-child td::before {
     font-size: inherit;
     text-transform: none;
     color: rgb(var(--color-foreground));

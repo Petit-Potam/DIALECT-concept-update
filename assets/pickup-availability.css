@@ -1,6 +1,6 @@
 .pickup-availability {
   padding: var(--sp-5) var(--sp-6);
-  background-color: rgb(var(--color-foreground)/ var(--opacity-045));
+  background-color: rgb(var(--color-foreground)/ 0.045);
 }
 
 [data-rounded-block=round] .pickup-availability {
@@ -26,7 +26,7 @@
 .pickup-availability-list__item {
   padding-block: var(--sp-6);
   padding-inline: var(--sp-7d5);
-  background-color: rgb(var(--color-foreground)/ var(--opacity-025));
+  background-color: rgb(var(--color-foreground)/ 0.025);
 }
 
 [data-rounded-block=round] .pickup-availability-list__item {

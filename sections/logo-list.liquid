@@ -14,15 +14,15 @@
     {%- if section.blocks.size > 0 -%}
       <div class="{{ section.settings.heading_alignment }} overflow-hidden">
         {%- if section.settings.layout == 'marquee' -%}
-          <logo-list class="logo-list block" data-speed="{{ section.settings.speed }}" data-direction="{{ section.settings.direction }}">
+          <logo-list class="logo-list logo-list--{{ section.settings.direction }} flex items-center" data-speed="{{ section.settings.speed }}" data-direction="{{ section.settings.direction }}">
         {%- endif -%}
-          <div class="logo-bar inline-flex flex-wrap items-center justify-center flex-nowrap">
+          <div class="logo-bar inline-flex flex-wrap items-center justify-center{% if section.settings.layout == 'marquee' %} flex-nowrap{% endif %}">
             {%- for block in section.blocks -%}
               {%- liquid
                 assign image_height = block.settings.height
                 assign image_height_2x = block.settings.height | times: 2
               -%}
-              <a class="logo__media media media--transparent relative flex-auto"{% if block.settings.link != blank %} href="{{ block.settings.link }}"{% else %} role="link" aria-disabled="true"{% endif %} style="--image-height: {{ image_height }}px;" {{ block.shopify_attributes }}>
+              <div class="logo__media media media--transparent relative overflow-hidden flex-auto" style="--image-height: {{ image_height }}px;" {{ block.shopify_attributes }}>
                 {%- if block.settings.image != blank -%}
                   <img
                     srcset="{{ block.settings.image | image_url: height: image_height }} 1x, {{ block.settings.image | image_url: height: image_height_2x }} 2x"
@@ -36,7 +36,10 @@
                 {%- else -%}
                   {{- 'logo' | placeholder_svg_tag: 'placeholder' -}}
                 {%- endif -%}
-              </a>
+                {%- if block.settings.link != blank -%}
+                  <a href="{{ block.settings.link }}" class="block absolute top-0 left-0 w-full h-full" aria-hidden="true">&nbsp;</a>
+                {%- endif -%}
+              </div>
             {%- endfor -%}
           </div>
         {%- if section.settings.layout == 'marquee' -%}
@@ -227,6 +230,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",

@@ -9,14 +9,14 @@
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
   <div class="page-width relative">
-    <div id="Recover" class="title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} text-center leading-none grid gap-4">
-      <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}" tabindex="-1">
-        <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ 'customer.recover_password.title' | t }}</split-words>
+    <div id="Recover" class="title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} text-center leading-none hidden gap-4">
+      <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}" tabindex="-1">
+        <split-words class="split-words block" data-animate="fade-up-large">{{ 'customer.recover_password.title' | t }}</split-words>
       </{{ section.settings.heading_tag }}>
       <p class="text-lg md:text-2xl">{{ 'customer.recover_password.subtext' | t }}</p>
     </div>
 
-    <div class="customer">
+    <div class="customer hidden">
       {%- form 'recover_customer_password', class: 'grid gap-12' -%}
         {%- liquid
           if form.errors
@@ -61,8 +61,8 @@
     </div>
 
     <div id="Login" class="title-wrapper{% if section.settings.heading_size == 'title-xl' %} title-wrapper-lg{% endif %} text-center">
-      <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}">
-        <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ 'customer.login.title' | t }}</split-words>
+      <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
+        <split-words class="split-words block" data-animate="fade-up-large">{{ 'customer.login.title' | t }}</split-words>
       </{{ section.settings.heading_tag }}>
     </div>
     
@@ -79,6 +79,13 @@
             render 'alert', status: 'success', content: success_message
           endif
         -%}
+
+        {%- if section.settings.enable_shop_login_button -%}
+          <div class="sign-in-with-shop-provider rte text-center">
+            {{- shop | login_button -}}
+            <p>{{ 'customer.login.alternate_provider_separator' | t }}</p>
+          </div>
+        {%- endif -%}
         
         <div class="grid gap-5">
           <div class="field">
@@ -158,6 +165,12 @@
 {
   "name": "t:sections.main-login.name",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_shop_login_button",
+      "label": "t:sections.main-login.settings.enable_shop_login_button.label",
+      "default": false
+    },
     {
       "type": "header",
       "content": "t:sections.global.settings.header__heading.content"

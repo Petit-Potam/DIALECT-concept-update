@@ -14,9 +14,9 @@
 
     {%- if section.blocks.size > 0 -%}
       {%- liquid
-        assign withGradient = false
+        assign with_gradient = false
         if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-          assign withGradient = true
+          assign with_gradient = true
         endif
 
         assign contact = section.blocks | where: "type", "contact" | first
@@ -29,11 +29,11 @@
                 {%- if section.settings.heading != blank or section.settings.description != blank -%}
                   <div class="title-wrapper leading-none grid gap-4 {{ section.settings.heading_alignment }}">
                     {%- if section.settings.heading != blank -%}
-                      <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}">
+                      <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
                         {%- if section.settings.highlighted_text == 'none' -%}
-                          <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ section.settings.heading }}</split-words>
+                          <split-words class="split-words block" data-animate="fade-up-large">{{ section.settings.heading }}</split-words>
                         {%- else -%}
-                          {%- render 'highlighted-text', content: section.settings.heading, style: section.settings.highlighted_text, scribble: section.settings.highlighted_scribble, gradient: withGradient -%}
+                          {%- render 'highlighted-text', content: section.settings.heading, style: section.settings.highlighted_text, scribble: section.settings.highlighted_scribble, gradient: with_gradient -%}
                         {%- endif -%}
                       </{{ section.settings.heading_tag }}>
                     {%- endif -%}
@@ -48,10 +48,13 @@
 
                 {%- if section.settings.button_label != blank -%}
                   <p>
-                    <a class="button button--secondary"{% if section.settings.button_link == blank %} role="link" aria-disabled="true"{% else %} href="{{ section.settings.button_link }}"{% endif %} is="hover-link">
-                      <span class="btn-fill" data-fill></span>
-                      <span class="btn-text">{{ section.settings.button_label | escape }}</span>
-                    </a>
+                    {%- render 'button',
+                      style: 'secondary',
+                      label: section.settings.button_label,
+                      link: section.settings.button_link,
+                      external: section.settings.button_external,
+                      show_icon: section.settings.button_icon
+                    -%}
                   </p>
                 {%- endif -%}
               </div>
@@ -62,13 +65,15 @@
               {%- case block.type -%}
                 {%- when 'rich-text' -%}
                   {%- if forloop.index0 > 0 -%}
-                  </div>
-                  <div class="faq">
+                    {% # theme-check-disable UnclosedHTMLElement %}
+                    </div>
+                    <div class="faq">
+                    {% # theme-check-enable UnclosedHTMLElement %}
                   {%- endif -%}
                   <div class="accordion accordion--text" {{ block.shopify_attributes }}>
                     <div class="grid gap-2d5">
-                      <p class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">
-                        {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                      <p class="heading lg:text-3xl text-2xl leading-none tracking-tight">
+                        {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                       </p>
                       <div class="text-opacity text-base rte">
                         {{- block.settings.text -}}
@@ -81,9 +86,9 @@
                     <details class="details" is="accordion-details" {{ block.shopify_attributes }}>
                       <summary class="details__summary flex items-center justify-between gap-2 cursor-pointer">
                         <span class="text-base lg:text-lg xl:text-xl font-medium leading-tight">
-                          {%- render 'highlighted-text', content: block.settings.title, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                          {%- render 'highlighted-text', content: block.settings.title, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                         </span>
-                        {%- render 'icon', icon: 'plus-alt', size: 'xs', class: 'flex-auto' -%}
+                        {%- render 'icon', icon: 'plus-2', size: 'xs', class: 'flex-auto' -%}
                       </summary>
                       <div class="details__content text-base rte">
                         {{- block.settings.text -}}
@@ -101,8 +106,8 @@
             <sticky-element class="contact__sidebar grid gap-7d5 md:gap-10 sticky top-0">
               <div class="flex justify-between gap-6">
                 <div class="grid gap-2d5">
-                  <p class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">
-                    {%- render 'highlighted-text', content: contact.settings.heading, style: contact.settings.highlighted_text, scribble: contact.settings.highlighted_scribble, gradient: withGradient -%}
+                  <p class="heading lg:text-3xl text-2xl leading-none tracking-tight">
+                    {%- render 'highlighted-text', content: contact.settings.heading, style: contact.settings.highlighted_text, scribble: contact.settings.highlighted_scribble, gradient: with_gradient -%}
                   </p>
                   <div class="text-opacity text-base rte">
                     {{- contact.settings.text -}}
@@ -163,7 +168,7 @@
                     placeholder="{{ 'contact.form.email' | t | escape }}"
                     required
                   >
-                  <label class="label is-floating" for="ContactFormEmail-{{ section.id }}">{{- 'contact.form.email' | t }}</label>
+                  <label class="label is-floating" for="ContactFormEmail-{{ section.id }}">{{ 'contact.form.email' | t }}</label>
                 </div>
 
                 {%- if contact.settings.show_phone -%}
@@ -372,6 +377,18 @@
       "label": "t:sections.global.settings.button_link.label"
     },
     {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
+    },
+    {
       "type": "header",
       "content": "t:sections.global.settings.header__highlight.content",
       "info": "t:sections.global.settings.header__highlight.info"
@@ -485,6 +502,22 @@
       "type": "color_background",
       "id": "color_button_gradient",
       "label": "t:sections.global.settings.color_button_gradient.label"
+    },
+    {
+      "type": "color",
+      "id": "color_overlay",
+      "label": "t:sections.global.settings.color_overlay.label",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "label": "t:sections.global.settings.overlay_opacity.label",
+      "default": 4
     },
     {
       "type": "header",
@@ -738,6 +771,7 @@
           "id": "avatar_height",
           "min": 20,
           "max": 100,
+          "step": 1,
           "unit": "px",
           "label": "t:sections.faq.blocks.contact.settings.avatar_height.label",
           "default": 60

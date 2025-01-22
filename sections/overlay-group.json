@@ -27,11 +27,9 @@
         "show_cart_recommendations_vendor": false,
         "show_cart_recommendations_price": true,
         "cart_recommendations_products": [
-
         ],
-        "empty_cart_message": "<p>Not sure where to start?<br\/>Try these collections:<\/p>",
+        "empty_cart_message": "<p>Not sure where to start?<br\/>Try these collections:</p>",
         "empty_cart_collections": [
-
         ],
         "recent_products_enabled": true,
         "recent_products_heading": "Recently viewed",
@@ -51,7 +49,7 @@
         "text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>FIRST TIMER?<\/p>",
+            "text": "<p>FIRST TIMER?</p>",
             "text_size": "subtext-custom",
             "text_max_size": 12,
             "text_font": "body",
@@ -63,14 +61,14 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Sign up and get <em>20% off<\/em> your first order",
+            "heading": "Sign up and get <em>20% off</em> your first order",
             "heading_size": "text-2xl lg:text-3xl",
             "heading_tag": "h2",
             "highlighted_text": "scribble",
             "highlighted_scribble": "basic-underline"
           }
         },
-        "spacing-1": {
+        "spacing": {
           "type": "spacing",
           "settings": {
             "height": 32,
@@ -85,7 +83,7 @@
         "text-2": {
           "type": "text",
           "settings": {
-            "text": "<p>Subscribe to our newsletter and be the first to hear about our new arrivals, special promotions and online exclusives.<\/p>",
+            "text": "<p>Subscribe to our newsletter and be the first to hear about our new arrivals, special promotions and online exclusives.</p>",
             "text_size": "text-sm",
             "text_max_size": 32,
             "text_font": "body",
@@ -116,7 +114,7 @@
       "block_order": [
         "text-1",
         "heading",
-        "spacing-1",
+        "spacing",
         "form",
         "text-2",
         "media",
@@ -156,7 +154,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Are you 18 years old or older?<\/p>",
+            "text": "<p>Are you 18 years old or older?</p>",
             "text_size": "text-base",
             "text_max_size": 32,
             "text_font": "body",
@@ -221,7 +219,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>This site uses cookies for better user experience and analytics.<\/p>",
+            "text": "<p>This site uses cookies for better user experience and analytics.</p>",
             "text_size": "text-base",
             "text_max_size": 32,
             "text_font": "body",
@@ -267,28 +265,28 @@
     "mobile-dock": {
       "type": "mobile-dock",
       "blocks": {
-        "mobile-dock-0": {
+        "mobile-dock-1": {
           "type": "home",
           "settings": {
             "custom_icon": "",
             "title": "Home"
           }
         },
-        "mobile-dock-1": {
+        "mobile-dock-2": {
           "type": "menu",
           "settings": {
             "custom_icon": "",
             "title": "Menu"
           }
         },
-        "mobile-dock-2": {
+        "mobile-dock-3": {
           "type": "search",
           "settings": {
             "custom_icon": "",
             "title": "Search"
           }
         },
-        "mobile-dock-3": {
+        "mobile-dock-4": {
           "type": "link",
           "settings": {
             "custom_icon": "",
@@ -296,14 +294,14 @@
             "link": "shopify:\/\/collections\/all"
           }
         },
-        "mobile-dock-4": {
+        "mobile-dock-5": {
           "type": "cart",
           "settings": {
             "custom_icon": "",
             "title": "Cart"
           }
         },
-        "mobile-dock-5": {
+        "mobile-dock-6": {
           "type": "account",
           "settings": {
             "custom_icon": "",
@@ -312,12 +310,12 @@
         }
       },
       "block_order": [
-        "mobile-dock-0",
         "mobile-dock-1",
         "mobile-dock-2",
         "mobile-dock-3",
         "mobile-dock-4",
-        "mobile-dock-5"
+        "mobile-dock-5",
+        "mobile-dock-6"
       ],
       "settings": {
         "color_text": "#000000",

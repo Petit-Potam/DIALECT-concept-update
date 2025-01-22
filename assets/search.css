@@ -12,12 +12,6 @@
   padding-block-start: clamp(var(--sp-8), 2.526vw, var(--sp-12));
 }
 
-.collection .search__form {
-  width: 100%;
-  max-width: 50rem;
-  margin-inline: auto;
-}
-
 .collection .empty-state {
   margin-block: var(--sp-12) var(--sp-5);
 }
@@ -74,7 +68,7 @@
 }
 
 .collection .search__overlay {
-  background: linear-gradient(to top,rgb(var(--color-drawer-overlay)/ .2) 0%, rgb(var(--color-drawer-overlay)/ .5) 100%);
+  background: linear-gradient(to top,rgb(var(--color-drawer-overlay)/ 0.2) 0%, rgb(var(--color-drawer-overlay)/ 0.5) 100%);
   transition: opacity var(--animation-primary);
 }
 

@@ -13,15 +13,15 @@
     {%- if section.blocks.size > 0 -%}
       <testimonials-element class="testimonials block rte relative z-1" initial-index="{{ section.blocks.size | minus: 1 }}" watch-css>
         {%- liquid
-          assign withGradient = false
+          assign with_gradient = false
           if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-            assign withGradient = true
+            assign with_gradient = true
           endif
         -%}
         {%- for block in section.blocks -%}
           <div class="testimonial with-{{ block.settings.icon }} w-full" {{ block.shopify_attributes }}>
             <blockquote>
-              {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+              {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
               
               {%- if block.settings.image != blank -%}
                 <figure class="inline-block media media--{{ block.settings.image_ratio }} media--transparent relative overflow-hidden">
@@ -29,8 +29,19 @@
                 </figure>
               {%- endif -%}
 
-              {%- if block.settings.author != blank -%}
-                <cite>— {{ block.settings.author }}</cite>
+              {%- if block.settings.author != blank or block.settings.author_info != blank -%}
+                <cite>—&nbsp;
+                  {%- if block.settings.author_url != blank -%}
+                    <a href="{{ block.settings.author_url }}" class="reversed-link">
+                  {%- endif -%}
+                    {{- block.settings.author -}}
+                  {%- if block.settings.author_url != blank -%}
+                    </a>
+                  {%- endif -%}
+                  {%- if block.settings.author_info != blank -%}
+                    <span class="block text-base font-normal">{{ block.settings.author_info }}</span>
+                  {%- endif -%}
+                </cite>
               {%- endif -%}
             </blockquote>
           </div>
@@ -164,6 +175,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",
@@ -369,6 +392,16 @@
           "id": "author",
           "label": "t:sections.testimonials.blocks.testimonial.settings.author.label",
           "default": "Author's name"
+        },
+        {
+          "type": "text",
+          "id": "author_info",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author_info.label"
+        },
+        {
+          "type": "url",
+          "id": "author_url",
+          "label": "t:sections.testimonials.blocks.testimonial.settings.author_url.label"
         },
         {
           "type": "image_picker",

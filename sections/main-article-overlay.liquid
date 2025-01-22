@@ -8,12 +8,10 @@
 {%- liquid
   echo 'article.css' | asset_url | stylesheet_tag
 
-  # theme-check-disable UndefinedObject
   assign number_of_comments = article.comments_count
   if comment.status == 'pending'
     assign number_of_comments = article.comments_count | plus: 1
   endif
-  # theme-check-enable UndefinedObject
 -%}
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
@@ -39,7 +37,7 @@
             <div class="flex flex-wrap items-center justify-between" {{ block.shopify_attributes }}>
               {%- liquid
                 assign article_url = request.origin | append: article.url
-                render 'social-sharing', section_id: section.id, share_label: block.settings.share_label, share_title: article.title, share_link: article_url, share_image: article.image
+                render 'social-sharing', section_id: section.id, share_id: article.id, share_label: block.settings.share_label, share_title: article.title, share_link: article_url, share_image: article.image
               -%}
 
               {%- if block.settings.show_comments -%}
@@ -86,7 +84,7 @@
                         </ul>
                       {%- endif -%}
                       <p>
-                        <a class="article-card__title reversed-link text-lg-2xl font-bold leading-tight tracking-tight" href="{{ blog.previous_article.url }}">
+                        <a class="article-card__title heading reversed-link text-lg-2xl leading-tight tracking-tight" href="{{ blog.previous_article.url }}">
                           {{- blog.previous_article.title -}}
                         </a>
                       </p>
@@ -124,7 +122,7 @@
                         </ul>
                       {%- endif -%}
                       <p>
-                        <a class="article-card__title reversed-link text-lg-2xl font-bold leading-tight tracking-tight" href="{{ blog.next_article.url }}">
+                        <a class="article-card__title heading reversed-link text-lg-2xl leading-tight tracking-tight" href="{{ blog.next_article.url }}">
                           {{- blog.next_article.title -}}
                         </a>
                       </p>
@@ -141,18 +139,16 @@
                 {%- paginate article.comments by 5 -%}
                   {%- if number_of_comments > 0 -%}
                     <div class="flex flex-col gap-5 md:gap-12">
-                      <h3 class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight text-center md:text-left">
+                      <h3 class="heading lg:text-3xl text-2xl leading-none tracking-tight text-center md:text-left">
                         {{- 'blogs.comments.with_count' | t: count: number_of_comments -}}
                       </h3>
 
                       <ul class="grid gap-5">
-                        {% # theme-check-disable UndefinedObject %}
                         {%- if comment.status == 'pending' -%}
                           <li id="Comment-{{ comment.id }}" class="comment-card">
                             {%- render 'article-comment', comment: comment, show_gravatar: block.settings.show_gravatar -%}
                           </li>
                         {%- endif -%}
-                        {% # theme-check-enable UndefinedObject %}
           
                         {%- for comment in article.comments -%}
                           <li id="Comment-{{ comment.id }}" class="comment-card">
@@ -188,7 +184,7 @@
                       -%}
 
                       <div class="grid gap-2">
-                        <h3 class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">{{ 'blogs.comments.title' | t }}</h3>
+                        <h3 class="heading lg:text-3xl text-2xl leading-none tracking-tight">{{ 'blogs.comments.title' | t }}</h3>
                         {%- if blog.moderated? -%}
                           <p class="text-sm">{{ 'blogs.comments.moderated' | t }}</p>
                         {%- endif -%}
@@ -245,34 +241,7 @@
 {%- endif -%}
 
 <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "articleBody": {{ article.content | strip_html | json }},
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": {{ request.origin | append: page.url | json }}
-    },
-    "headline": {{ article.title | json }},
-    {% if article.excerpt != blank %}
-      "description": {{ article.excerpt | strip_html | json }},
-    {% endif %}
-    {% if article.image %}
-      "image": [
-        {{ article | image_url: width: 1920 | prepend: "https:" | json }}
-      ],
-    {% endif %}
-    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "author": {
-      "@type": "Person",
-      "name": {{ article.author | json }}
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": {{ shop.name | json }}
-    }
-  }
+  {{- article | structured_data -}}
 </script>
 
 {% schema %}

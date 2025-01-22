@@ -42,8 +42,8 @@
 
       {%- if before_image != blank -%}
         <div class="comparison__before w-full h-full" {{ before_image.shopify_attributes }}>
-          {%- if before_image.settings.image != blank -%}
-            <picture class="media media--height w-full h-full block relative">
+          <picture class="media media--height w-full h-full block relative">
+            {%- if before_image.settings.image != blank -%}
               {%- if before_image.settings.image_mobile -%}
                 <source
                   media="(max-width: 767px)"
@@ -54,12 +54,10 @@
               {%- endif -%}
   
               {{- before_image.settings.image | image_url: width: before_image.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image' -}}
-            </picture>
-          {%- else -%}
-            <div class="media media--height w-full h-full relative">
+            {%- else -%}
               {{- 'lifestyle-1' | placeholder_svg_tag: 'placeholder' -}}
-            </div>
-          {%- endif -%}
+            {%- endif -%}
+          </picture>
           {%- if before_image.settings.subheading != blank or before_image.settings.heading != blank -%}
             <div class="comparison__box comparison__box--{{ before_image.settings.content_position }} grid items-start absolute top-0 left-0 w-full h-full" style="--color-foreground: {{ before_image.settings.color_text.rgb }};">
               <div class="grid gap-1 md:gap-2">
@@ -67,7 +65,7 @@
                   <p class="text-xs md:text-base lg:text-lg text-medium leading-none">{{ before_image.settings.subheading | escape }}</p>
                 {%- endif -%}
                 {%- if before_image.settings.heading != blank -%}
-                  <p class="heading text-base md:text-2xl lg:text-3xl font-bold leading-none tracking-tight">{{ before_image.settings.heading | escape }}</p>
+                  <p class="heading text-base md:text-2xl lg:text-3xl leading-none tracking-tight">{{ before_image.settings.heading | escape }}</p>
                 {%- endif -%}
               </div>
             </div>
@@ -77,8 +75,8 @@
 
       {%- if after_image != blank -%}
         <div class="comparison__after absolute top-0 left-0 w-full h-full z-1" {{ after_image.shopify_attributes }}>
-          {%- if after_image.settings.image != blank -%}
-            <picture class="media media--height w-full h-full block relative">
+          <picture class="media media--height w-full h-full block relative">
+            {%- if after_image.settings.image != blank -%}
               {%- if after_image.settings.image_mobile -%}
                 <source
                   media="(max-width: 767px)"
@@ -89,20 +87,18 @@
               {%- endif -%}
   
               {{- after_image.settings.image | image_url: width: after_image.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image' -}}
-            </picture>
-          {%- else -%}
-            <div class="media media--height w-full h-full relative">
+            {%- else -%}
               {{- 'lifestyle-2' | placeholder_svg_tag: 'placeholder' -}}
-            </div>
-          {%- endif -%}
+            {%- endif -%}
+          </picture>
           {%- if after_image.settings.subheading != blank or after_image.settings.heading != blank -%}
-            <div class="comparison__box comparison__box--{{ after_image.settings.content_position }} grid items-start absolute top-0 left-0 w-full h-full text-right" style="--color-foreground: {{ before_image.settings.color_text.rgb }};">
+            <div class="comparison__box comparison__box--{{ after_image.settings.content_position }} grid items-start absolute top-0 left-0 w-full h-full text-right" style="--color-foreground: {{ after_image.settings.color_text.rgb }};">
               <div class="grid gap-1 md:gap-2">
                 {%- if after_image.settings.subheading != blank -%}
                   <p class="text-xs md:text-base lg:text-lg text-medium leading-none">{{ after_image.settings.subheading | escape }}</p>
                 {%- endif -%}
                 {%- if after_image.settings.heading != blank -%}
-                  <p class="heading text-base md:text-2xl lg:text-3xl font-bold leading-none tracking-tight">{{ after_image.settings.heading | escape }}</p>
+                  <p class="heading text-base md:text-2xl lg:text-3xl leading-none tracking-tight">{{ after_image.settings.heading | escape }}</p>
                 {%- endif -%}
               </div>
             </div>
@@ -180,10 +176,18 @@
         },
         {
           "label": "t:sections.global.settings.image_height.options__10.label",
-          "value": "100vh"
+          "value": "850px"
         },
         {
           "label": "t:sections.global.settings.image_height.options__11.label",
+          "value": "900px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__12.label",
+          "value": "100vh"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__13.label",
           "value": "adapt"
         }
       ],
@@ -357,6 +361,18 @@
       "type": "url",
       "id": "button_link",
       "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",

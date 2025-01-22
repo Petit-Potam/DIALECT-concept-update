@@ -13,11 +13,11 @@
   assign white_logo_mobile = settings.white_logo_mobile | default: white_logo
 -%}
 
-{%- if template == 'index' -%}
-  <h1 class="header__logo flex justify-center z-1" itemscope itemtype="http://schema.org/Organization">
+{%- if request.page_type == 'index' -%}
+  <h1 class="header__logo flex justify-center z-2" itemscope itemtype="http://schema.org/Organization">
     <span class="sr-only">{{ shop.name }}</span>
 {%- else -%}
-  <div class="header__logo flex justify-center z-1" itemscope itemtype="http://schema.org/Organization">
+  <div class="header__logo flex justify-center z-2" itemscope itemtype="http://schema.org/Organization">
 {%- endif -%}
 
   {%- if logo != blank -%}
@@ -64,7 +64,7 @@
     <a href="{{ routes.root_url }}" itemprop="url" class="h3">{{ shop.name }}</a>
   {%- endif -%}
 
-{%- if template == 'index' -%}
+{%- if request.page_type == 'index' -%}
   </h1>
 {%- else -%}
   </div>

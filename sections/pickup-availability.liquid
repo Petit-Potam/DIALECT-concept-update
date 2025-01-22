@@ -39,7 +39,7 @@
     {%- endif -%}
   </div>
 
-  <drawer-element id="PickupAvailability" class="pickup-availability-drawer drawer drawer--end z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
+  <drawer-element id="PickupAvailability" class="pickup-availability-drawer drawer drawer--end z-45 fixed bottom-0 left-0 h-full w-full pointer-events-none"
     role="dialog"
     aria-modal="true"
     aria-label="{{ 'products.pickup_availability.title' | t | escape }}"
@@ -48,8 +48,8 @@
   >
     <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="PickupAvailability" aria-expanded="false"></overlay-element>
     <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-      <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
-        <span class="drawer__title heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">
+      <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative">
+        <span class="drawer__title heading lg:text-3xl text-2xl leading-none tracking-tight">
           {{- 'products.pickup_availability.title' | t | escape -}}
         </span>
         <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="PickupAvailability" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
@@ -82,25 +82,25 @@
               </p>
             {%- endunless -%}
           </div>
-          <div class="pickup-availability-list grid gap-4 md:gap-5">
+          <ul class="pickup-availability-list grid gap-4 md:gap-5">
             {%- for availability in pick_up_availabilities -%}
               <li class="pickup-availability-list__item grid gap-2 md:gap-3">
                 <h4 class="font-medium leading-tight md:text-lg">{{ availability.location.name | escape }}</h4>
                 {%- if availability.available -%}
                   <div class="pickup-availability-info flex gap-2 items-center">
                     {%- render 'icon', icon: 'check-circle-filled', size: 'sm', class: 'flex-auto' -%}
-                    <p class="text-sm leading-none">
+                    <p class="text-sm leading-tight">
                       {{- 'products.pickup_availability.pick_up_available' | t }},
                       {{ availability.pick_up_time | downcase -}}
                     </p>
                   </div>
                 {%- else -%}
-                <div class="pickup-availability-info flex gap-2 items-center">
-                  {%- render 'icon', icon: 'alert-circle-filled', size: 'sm', class: 'flex-auto' -%}
-                  <p class="text-sm leading-none">
-                    {{- 'products.pickup_availability.pick_up_unavailable' | t -}}
-                  </p>
-                </div>
+                  <div class="pickup-availability-info flex gap-2 items-center">
+                    {%- render 'icon', icon: 'alert-circle-filled', size: 'sm', class: 'flex-auto' -%}
+                    <p class="text-sm leading-tight">
+                      {{- 'products.pickup_availability.pick_up_unavailable' | t -}}
+                    </p>
+                  </div>
                 {%- endif -%}
 
                 {%- assign address = availability.location.address -%}
@@ -113,7 +113,7 @@
                 </address>
               </li>
             {%- endfor -%}
-          </div>
+          </ul>
         </div>
       </div>
     </div>

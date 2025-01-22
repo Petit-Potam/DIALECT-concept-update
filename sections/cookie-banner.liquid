@@ -7,22 +7,28 @@
     --color-drawer-button-text: {{ section.settings.color_drawer_button_text.rgb }};
     --color-highlight: {{ section.settings.color_drawer_highlight.rgb }};
   }
+
+  #shopify-pc__banner {
+    display: none !important;
+  }
 </style>
 
-{{ 'cookie-banner.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'cookie-banner.css' | asset_url }}" media="print" onload="this.media='all'">
+<noscript>{{ 'cookie-banner.css' | asset_url | stylesheet_tag }}</noscript>
 <script src="{{ 'cookie-banner.js' | asset_url }}" defer="defer"></script>
 
-<cookie-banner id="CookieBanner" class="x-modal cookie-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
+<cookie-banner id="CookieBanner" class="x-modal cookie-modal drawer z-35 fixed bottom-0 left-0 h-full w-full pointer-events-none"
   data-delay="{{ section.settings.delay }}"
   data-test-mode="{% if section.settings.mode == 'testing' %}true{% else %}false{% endif %}"
   role="dialog"
+  aria-labelledby="Dialog-{{ section.id }}-Heading1"
   aria-modal="false"
   shopify-design-mode
   hidden
 >
   <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="CookieBanner" aria-expanded="false"></overlay-element>
-  <div class="drawer__inner z-10 absolute bottom-0 {{ section.settings.content_position }} flex flex-col w-full h-full overflow-hidden pointer-events-auto">
-    <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative sr-only">
+  <div class="drawer__inner z-10 absolute bottom-0 {{ section.settings.content_position }} flex flex-col w-full h-full overflow-hidden">
+    <gesture-element class="drawer__header flex justify-between opacity-0 invisible relative sr-only">
       <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="AgeVerifier" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
         <span class="btn-fill" data-fill></span>
         <span class="btn-text">
@@ -34,9 +40,9 @@
       <div class="drawer__scrollable relative w-full">
         <div class="cookie-banner text-{{ section.settings.text_alignment }}">
           {%- liquid
-            assign withGradient = false
+            assign with_gradient = false
             if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-              assign withGradient = true
+              assign with_gradient = true
             endif
 
             assign delay = 0
@@ -49,11 +55,11 @@
               {%- when 'heading' -%}
                 {%- if block.settings.heading != blank -%}
                   {%- assign delay = delay | plus: 1 -%}
-                  <{{ block.settings.heading_tag }} class="heading font-bold leading-none tracking-none {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
+                  <{{ block.settings.heading_tag }} id="Dialog-{{ section.id }}-Heading{{ delay }}" class="heading leading-none tracking-none {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
                     {%- if block.settings.highlighted_text == 'none' -%}
-                      <split-words class="split-words flex flex-wrap" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
+                      <split-words class="split-words block" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
                     {%- else -%}
-                      {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                      {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                     {%- endif -%}
                   </{{ block.settings.heading_tag }}>
                 {%- endif -%}
@@ -61,7 +67,7 @@
               {%- when 'text' -%}
                 {%- if block.settings.text != blank -%}
                   <div class="rte leading-normal {{ block.settings.text_font }} {{ block.settings.text_size }}{% if block.settings.secondary_color %} text-opacity{% endif %}"{% if block.settings.text_size == 'subtext-custom' %} style="--subtext-size:{{ block.settings.text_max_size }}px;"{% endif %} {{ block.shopify_attributes }}>
-                    {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                    {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                   </div>
                 {%- endif -%}
 
@@ -93,20 +99,35 @@
                   </div>
                 </div>
 
+              {%- when 'icon' -%}
+                {%- if block.settings.icon_image != blank -%}
+                  <div class="leading-none" {{ block.shopify_attributes }}>
+                    <figure class="media media--transparent relative inline-block">
+                      {%- capture sizes -%}{{ block.settings.icon_width }}px{%- endcapture -%}
+                      {%- capture widths -%}{{ block.settings.icon_width }}, {{ block.settings.icon_width | times: 2 | at_most: block.settings.icon_image.width }}{%- endcapture -%}
+                      {{- block.settings.icon_image | image_url: width: block.settings.icon_image.width | image_tag: loading: 'lazy', sizes: sizes, widths: widths, class: 'image-fit' -}}
+                    </figure>
+                  </div>
+                {%- elsif block.settings.icon != 'none' -%}
+                  <p class="leading-none" {{ block.shopify_attributes }}>
+                    {%- render 'icon-guarantee', icon: block.settings.icon, size: 'lg', class: 'inline-block' -%}
+                  </p>
+                {%- endif -%}
+
               {%- when 'image' -%}
                 {%- if block.settings.image != blank -%}
-                  <div {{ block.shopify_attributes }}>
-                    <p class="media media--transparent relative inline-block">
+                  <div class="leading-none" {{ block.shopify_attributes }}>
+                    <figure class="media media--transparent relative inline-block">
                       {%- if block.settings.image_width == 'custom' -%}
                         {%- capture style -%}--image-max-width: {{ block.settings.image_max_width }}px; --image-max-width-mobile: {{ block.settings.image_max_width_mobile }}px{%- endcapture -%}
                         {%- capture sizes -%}(max-width: 767px) min({{ block.settings.image_max_width_mobile }}px, 100vw), min({{ block.settings.image_max_width }}px, 100vw){%- endcapture -%}
                         {%- capture widths -%}{{ block.settings.image_max_width_mobile }},{{ block.settings.image_max_width_mobile | times: 2 }},{{ block.settings.image_max_width }},{{ block.settings.image_max_width | times: 2 }}{%- endcapture -%}
                       {%- else -%}
                         {%- assign sizes = 'min(100vw, var(--page-width))' -%}
-                        {%- assign widths = '50, 75, 100, 150, 200, 300, 400, 500, 750, 1000, 1250, 1500, 1750, 2000, 2250, 2500, 2750, 3000, 3200' -%}
+                        {%- assign widths = '50,75,100,150,200,300,400,500,750,1000,1250,1500,1750,2000,2250,2500,2750,3000,3200' -%}
                       {%- endif -%}
-                      {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: widths, style: style, is: 'lazy-image', class: 'image-fit inline-block' -}}
-                    </p>
+                      {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: widths, style: style, is: 'lazy-image', class: 'image-fit' -}}
+                    </figure>
                   </div>
                 {%- endif -%}
 
@@ -531,6 +552,263 @@
           "default": "No",
           "label": "t:sections.cookie-banner.blocks.buttons.settings.button_label_2.label",
           "info": "t:sections.cookie-banner.blocks.buttons.settings.button_label_2.info"
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "t:sections.global.blocks.icon.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "t:sections.global.settings.icon.label",
+          "default": "none",
+          "options": [
+            {
+              "value": "none",
+              "label": "t:sections.global.settings.icon.options__1.label"
+            },
+            {
+              "value": "alert",
+              "label": "t:sections.global.settings.icon.options__2.label"
+            },
+            {
+              "value": "award",
+              "label": "t:sections.global.settings.icon.options__3.label"
+            },
+            {
+              "value": "bag",
+              "label": "t:sections.global.settings.icon.options__4.label"
+            },
+            {
+              "value": "box",
+              "label": "t:sections.global.settings.icon.options__5.label"
+            },
+            {
+              "value": "briefcase",
+              "label": "t:sections.global.settings.icon.options__6.label"
+            },
+            {
+              "value": "calendar",
+              "label": "t:sections.global.settings.icon.options__7.label"
+            },
+            {
+              "value": "chat_bubble",
+              "label": "t:sections.global.settings.icon.options__8.label"
+            },
+            {
+              "value": "check_mark",
+              "label": "t:sections.global.settings.icon.options__9.label"
+            },
+            {
+              "value": "clipboard",
+              "label": "t:sections.global.settings.icon.options__10.label"
+            },
+            {
+              "value": "cosmetics",
+              "label": "t:sections.global.settings.icon.options__11.label"
+            },
+            {
+              "value": "creadit_card",
+              "label": "t:sections.global.settings.icon.options__12.label"
+            },
+            {
+              "value": "dairy",
+              "label": "t:sections.global.settings.icon.options__13.label"
+            },
+            {
+              "value": "dairy_free",
+              "label": "t:sections.global.settings.icon.options__14.label"
+            },
+            {
+              "value": "devices",
+              "label": "t:sections.global.settings.icon.options__15.label"
+            },
+            {
+              "value": "email",
+              "label": "t:sections.global.settings.icon.options__16.label"
+            },
+            {
+              "value": "eye",
+              "label": "t:sections.global.settings.icon.options__17.label"
+            },
+            {
+              "value": "file_text",
+              "label": "t:sections.global.settings.icon.options__18.label"
+            },
+            {
+              "value": "gift",
+              "label": "t:sections.global.settings.icon.options__19.label"
+            },
+            {
+              "value": "gluten",
+              "label": "t:sections.global.settings.icon.options__20.label"
+            },
+            {
+              "value": "gluten_free",
+              "label": "t:sections.global.settings.icon.options__21.label"
+            },
+            {
+              "value": "headphone",
+              "label": "t:sections.global.settings.icon.options__22.label"
+            },
+            {
+              "value": "heart",
+              "label": "t:sections.global.settings.icon.options__23.label"
+            },
+            {
+              "value": "iron",
+              "label": "t:sections.global.settings.icon.options__24.label"
+            },
+            {
+              "value": "lightning",
+              "label": "t:sections.global.settings.icon.options__25.label"
+            },
+            {
+              "value": "lock",
+              "label": "t:sections.global.settings.icon.options__26.label"
+            },
+            {
+              "value": "map_pin",
+              "label": "t:sections.global.settings.icon.options__27.label"
+            },
+            {
+              "value": "newspaper",
+              "label": "t:sections.global.settings.icon.options__28.label"
+            },
+            {
+              "value": "organic",
+              "label": "t:sections.global.settings.icon.options__29.label"
+            },
+            {
+              "value": "perfume",
+              "label": "t:sections.global.settings.icon.options__30.label"
+            },
+            {
+              "value": "phone",
+              "label": "t:sections.global.settings.icon.options__31.label"
+            },
+            {
+              "value": "plane",
+              "label": "t:sections.global.settings.icon.options__32.label"
+            },
+            {
+              "value": "planet",
+              "label": "t:sections.global.settings.icon.options__33.label"
+            },
+            {
+              "value": "planet_2",
+              "label": "t:sections.global.settings.icon.options__34.label"
+            },
+            {
+              "value": "recycling",
+              "label": "t:sections.global.settings.icon.options__35.label"
+            },
+            {
+              "value": "return",
+              "label": "t:sections.global.settings.icon.options__36.label"
+            },
+            {
+              "value": "rocket",
+              "label": "t:sections.global.settings.icon.options__37.label"
+            },
+            {
+              "value": "ruler",
+              "label": "t:sections.global.settings.icon.options__38.label"
+            },
+            {
+              "value": "ruler_2",
+              "label": "t:sections.global.settings.icon.options__39.label"
+            },
+            {
+              "value": "ruler_3",
+              "label": "t:sections.global.settings.icon.options__40.label"
+            },
+            {
+              "value": "sale",
+              "label": "t:sections.global.settings.icon.options__41.label"
+            },
+            {
+              "value": "shield",
+              "label": "t:sections.global.settings.icon.options__42.label"
+            },
+            {
+              "value": "shirt",
+              "label": "t:sections.global.settings.icon.options__43.label"
+            },
+            {
+              "value": "shoe",
+              "label": "t:sections.global.settings.icon.options__44.label"
+            },
+            {
+              "value": "star",
+              "label": "t:sections.global.settings.icon.options__45.label"
+            },
+            {
+              "value": "support",
+              "label": "t:sections.global.settings.icon.options__46.label"
+            },
+            {
+              "value": "swatchbook",
+              "label": "t:sections.global.settings.icon.options__47.label"
+            },
+            {
+              "value": "tag",
+              "label": "t:sections.global.settings.icon.options__48.label"
+            },
+            {
+              "value": "tags",
+              "label": "t:sections.global.settings.icon.options__49.label"
+            },
+            {
+              "value": "time",
+              "label": "t:sections.global.settings.icon.options__50.label"
+            },
+            {
+              "value": "trophy",
+              "label": "t:sections.global.settings.icon.options__51.label"
+            },
+            {
+              "value": "truck",
+              "label": "t:sections.global.settings.icon.options__52.label"
+            },
+            {
+              "value": "users",
+              "label": "t:sections.global.settings.icon.options__53.label"
+            },
+            {
+              "value": "wallet",
+              "label": "t:sections.global.settings.icon.options__54.label"
+            },
+            {
+              "value": "wash",
+              "label": "t:sections.global.settings.icon.options__55.label"
+            },
+            {
+              "value": "watch",
+              "label": "t:sections.global.settings.icon.options__56.label"
+            },
+            {
+              "value": "wrench",
+              "label": "t:sections.global.settings.icon.options__57.label"
+            }
+          ]
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "t:sections.global.settings.icon_image.label"
+        },
+        {
+          "type": "range",
+          "id": "icon_width",
+          "label": "t:sections.global.settings.icon_width.label",
+          "default": 48,
+          "min": 20,
+          "max": 120,
+          "step": 2,
+          "unit": "px"
         }
       ]
     },

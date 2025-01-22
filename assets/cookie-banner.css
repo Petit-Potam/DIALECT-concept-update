@@ -8,10 +8,6 @@ html.js .cookie-modal[active] .overlay {
   pointer-events: none;
 }
 
-.cookie-modal[open] {
-  pointer-events: none;
-}
-
 .cookie-modal .drawer__header {
   border-block-end: 0;
   padding: 0;

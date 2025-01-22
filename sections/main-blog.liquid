@@ -20,20 +20,18 @@
               assign subtext_size = 'subtext-lg'
             endif
           -%}
-          <p class="heading font-medium {{ subtext_size }} leading-none tracking-none">
+          <p class="heading normal-case font-medium {{ subtext_size }} leading-none tracking-none">
             {{- section.settings.subheading | escape -}}
           </p>
         {%- endif -%}
 
-        <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}">
-          <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ blog.title }}</split-words>
+        <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
+          <split-words class="split-words block" data-animate="fade-up-large">{{ blog.title }}</split-words>
         </{{ section.settings.heading_tag }}>
 
         {%- if section.settings.description != blank -%}
           {%- liquid
-            if section.settings.heading_size == 'title-sm'
-              assign subtext_size = 'subtext-sm'
-            elsif section.settings.heading_size == 'title-md'
+            if section.settings.heading_size == 'title-sm' or section.settings.heading_size == 'title-md'
               assign subtext_size = 'subtext-md'
             else
               assign subtext_size = 'subtext-lg'
@@ -64,7 +62,8 @@
 
           <div class="blog-filter field md:hidden">
             <div class="inline-block relative">
-              <select class="select" is="tag-filter">
+              <label for="TagFilter" class="sr-only">{{ 'blogs.article.filter' | t }}</label>
+              <select id="TagFilter" class="select" is="tag-filter">
                 <option value="{{ blog.url }}">{{ 'blogs.article.all_tags' | t }}</option>
                 {%- for tag in blog.all_tags -%}
                   <option value="{{ blog.url }}/tagged/{{ tag | handleize }}" {% if current_tags contains tag %}selected{% endif %}>{{ tag }}</option>
@@ -82,7 +81,7 @@
             {%- if section.settings.layout == 'collage' and forloop.first -%}
               {%- capture sizes -%}(max-width: 1023px) 100vw, calc(min(100vw, {{ settings.page_width }}px) * 0.65){%- endcapture -%}
             {%- else -%}
-              {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px) , calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px) {%- endcapture -%}
+              {%- capture sizes -%}(max-width: 639px) 100vw, (max-width: 1023px) calc(100vw / 2 - 40px), (max-width: 1535px) calc(min(100vw, {{ settings.page_width }}px) / 3 - 40px), calc(min(100vw, {{ settings.page_width }}px) / 3 - 80px){%- endcapture -%}
             {%- endif -%}
 
             {%- render 'article-card',

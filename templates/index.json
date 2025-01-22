@@ -9,85 +9,379 @@
  */
 {
   "sections": {
-    "slideshow": {
-      "type": "slideshow",
+    "video_with_text_overlay_JQ6xAL": {
+      "type": "video-with-text-overlay",
       "blocks": {
-        "slide-1": {
-          "type": "image",
+        "subheading_Uhk3Bk": {
+          "type": "subheading",
+          "disabled": true,
           "settings": {
-            "image": "",
-            "image_mobile": "",
-            "heading": "IMAGE SLIDE 1",
-            "heading_size": "title-md",
-            "heading_tag": "h2",
-            "button_label": "Shop Now",
-            "button_link": "",
-            "button_secondary_style": false
+            "subheading": "Add a tagline",
+            "subheading_size": "subtitle-md",
+            "secondary_color": true
           }
         },
-        "slide-2": {
-          "type": "image",
+        "heading_N4KVxq": {
+          "type": "heading",
           "settings": {
-            "image": "",
-            "image_mobile": "",
-            "heading": "IMAGE SLIDE 2",
-            "heading_size": "title-md",
+            "heading": "LOVE AT",
+            "heading_size": "title-sm",
             "heading_tag": "h2",
-            "button_label": "Shop Now",
-            "button_link": "",
-            "button_secondary_style": false
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
           }
         },
-        "slide-3": {
-          "type": "video",
+        "heading_mQyFQ4": {
+          "type": "heading",
           "settings": {
-            "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-            "description": "",
-            "video_url_mobile": "",
-            "heading": "VIDEO SLIDE",
+            "heading": "FIRST <em>SCENT</em>",
             "heading_size": "title-md",
             "heading_tag": "h2",
-            "button_label": "Shop Now",
-            "button_link": "",
-            "button_secondary_style": false
+            "highlighted_text": "scribble",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_gqqxGn": {
+          "type": "text",
+          "settings": {
+            "text": "<p>🛍️ WINTER SALE—30% OFF ALL 50ml</p>",
+            "text_size": "subtext-custom",
+            "text_max_size": 24,
+            "text_font": "body",
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "image_Gq7mHU": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/CRO-RETURNS.png",
+            "image_width": "custom",
+            "image_max_width": 300,
+            "image_max_width_mobile": 300
+          }
+        },
+        "button_Bt69nX": {
+          "type": "button",
+          "settings": {
+            "button_label": "For Her",
+            "button_link": "shopify://collections/perfume-for-women",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
+          }
+        },
+        "button_wDRFdd": {
+          "type": "button",
+          "settings": {
+            "button_label": "For Him",
+            "button_link": "shopify://collections/perfume-for-men",
+            "button_style": "primary",
+            "button_size": "md",
+            "button_external": false,
+            "button_icon": true
           }
         }
       },
       "block_order": [
-        "slide-1",
-        "slide-2",
-        "slide-3"
+        "subheading_Uhk3Bk",
+        "heading_N4KVxq",
+        "heading_mQyFQ4",
+        "text_gqqxGn",
+        "image_Gq7mHU",
+        "button_Bt69nX",
+        "button_wDRFdd"
+      ],
+      "custom_css": [
+        ".play-button {display: none;}",
+        ".banner__box > :last-child:is(.button, .social-icons) {margin-block-start: var(--sp-4);}",
+        "h2 {font-family: Sequel75 !important;}"
       ],
       "settings": {
-        "autoplay": false,
-        "autoplay_speed": 7,
-        "show_navigation": true,
-        "image_height": "750px",
-        "content_width": "small",
-        "image_height_mobile": "500px",
+        "transparent_header": true,
+        "video": "shopify://files/videos/Banner DIALECT concept - Deskotp.mp4",
+        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+        "cover_image": "shopify://shop_images/Banner_DIALECT_concept_-_Deskotp-Cover.jpg",
+        "description": "",
+        "enable_video_autoplay": true,
+        "enable_video_looping": true,
+        "image_height": "650px",
+        "content_width": "large",
+        "content_position": "md:items-center md:justify-start",
+        "text_alignment": "left",
+        "video_mobile": "shopify://files/videos/Banner DIALECT concept - Mobile.mp4",
+        "cover_image_mobile": "shopify://shop_images/Banner_DIALECT_concept_-_Mobile-Cover.jpg",
+        "image_height_mobile": "600px",
+        "content_position_mobile": "items-center justify-center",
+        "text_alignment_mobile": "center",
         "color_text": "#ffffff",
-        "color_background": "#ffffff",
-        "gradient_background": "",
+        "color_highlight": "#e97a21",
+        "gradient_highlight": "",
         "color_button_text": "#171717",
         "color_button_background": "#ffffff",
         "color_button_gradient": "",
-        "color_overlay": "#000000",
+        "color_overlay": "#171717",
+        "overlay_opacity": 50,
         "padding_top": 0,
         "padding_bottom": 0,
         "divider": false,
         "full_width": true,
-        "rounded": false,
-        "enable_parallax": false,
-        "parallax_direction": "vertical"
+        "rounded": false
       }
     },
-    "rich-text": {
+    "multicolumn_with_icons_CrjGCn": {
+      "type": "multicolumn-with-icons",
+      "blocks": {
+        "column_YpUmem": {
+          "type": "column",
+          "settings": {
+            "icon": "star",
+            "custom_icon": "",
+            "heading": "Rated <em>4.6</em> on 500+ reviews",
+            "text": "<p>Don't take our word for it, our customers already expressed their love for us</p>",
+            "highlighted_text": "scribble",
+            "highlighted_scribble": "basic-underline"
+          }
+        },
+        "column_LazttE": {
+          "type": "column",
+          "settings": {
+            "icon": "box",
+            "custom_icon": "",
+            "heading": "Fast and free shipping",
+            "text": "<p>Get your favorite scents delivered straight to your door for free on all 3+ items orders, dispatched within 24 hours</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_9UdLBj": {
+          "type": "column",
+          "settings": {
+            "icon": "shield",
+            "custom_icon": "",
+            "heading": "Secure payment",
+            "text": "<p>Your payment information is processed securely with your favourite payment solution</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "column_yy6eg9": {
+          "type": "column",
+          "settings": {
+            "icon": "none",
+            "custom_icon": "",
+            "heading": "Example title",
+            "text": "<p>Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "column_YpUmem",
+        "column_LazttE",
+        "column_9UdLBj",
+        "column_yy6eg9"
+      ],
+      "settings": {
+        "style": "with-border",
+        "columns": 4,
+        "text_alignment": "left",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": true
+      }
+    },
+    "featured_collections_YwYYCN": {
+      "type": "featured-collections",
+      "blocks": {
+        "collection_FNJ4Dd": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfume-for-women",
+            "products": [],
+            "title": ""
+          }
+        },
+        "collection_r6Kyia": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfume-for-men",
+            "products": [],
+            "title": ""
+          }
+        },
+        "collection_PDiBcC": {
+          "type": "collection",
+          "settings": {
+            "collection": "unisexe-perfume",
+            "products": [],
+            "title": ""
+          }
+        }
+      },
+      "block_order": [
+        "collection_FNJ4Dd",
+        "collection_r6Kyia",
+        "collection_PDiBcC"
+      ],
+      "settings": {
+        "product_limit": 6,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "Our <em>Best Sellers</em>",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "text",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "#000000",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "reveal_testimonials_d7LmLN": {
+      "type": "reveal-testimonials",
+      "blocks": {
+        "testimonial_BjKhWh": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "none",
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "author": "Author's name aze azea",
+            "author_info": "aze",
+            "author_url": "",
+            "image": "shopify://shop_images/Banner_DIALECT_concept_-_Mobile-Cover.jpg",
+            "image_ratio": "rounded",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "testimonial_hTqgrg": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "quote",
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "author": "Author's name",
+            "author_info": "",
+            "author_url": "",
+            "image_ratio": "rounded",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "testimonial_JAWfqy": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "quote",
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "author": "Author's name",
+            "author_info": "",
+            "author_url": "",
+            "image_ratio": "rounded",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "testimonial_z3xdrg": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "quote",
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "author": "Author's name",
+            "author_info": "",
+            "author_url": "",
+            "image_ratio": "rounded",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "testimonial_BtM7G3": {
+          "type": "testimonial",
+          "settings": {
+            "icon": "quote",
+            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
+            "author": "Author's name",
+            "author_info": "",
+            "author_url": "",
+            "image_ratio": "rounded",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_BjKhWh",
+        "testimonial_hTqgrg",
+        "testimonial_JAWfqy",
+        "testimonial_z3xdrg",
+        "testimonial_BtM7G3"
+      ],
+      "disabled": true,
+      "settings": {
+        "heading": "What people are saying",
+        "heading_size": "title-md",
+        "heading_tag": "h2",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "rounded": false
+      }
+    },
+    "rich-text-1": {
       "type": "rich-text",
       "blocks": {
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.<br/><br/>Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store. Share information about your brand with your customers. Describe a product, make announcements, or welcome customers to your store.</p>",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.<br/><br/>Share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store. Share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
             "text_size": "subtext-md",
             "text_max_size": 32,
             "text_font": "body",
@@ -106,11 +400,14 @@
         "heading": "Talk about your <em>brand</em>",
         "heading_size": "title-md",
         "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_width": "small",
         "heading_tag": "h2",
         "subheading": "",
         "description": "",
         "button_label": "Our Story",
         "button_link": "",
+        "button_external": false,
+        "button_icon": true,
         "highlighted_text": "scribble",
         "highlighted_scribble": "basic-underline",
         "color_text": "",
@@ -134,8 +431,7 @@
         "collection-1": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "image": "",
+            "collection": "all-perfume",
             "title": "All products",
             "description": "Check out all our products",
             "overlay_content": true,
@@ -147,10 +443,9 @@
         "collection-2": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "image": "",
-            "title": "Collection 1",
-            "description": "Collection description",
+            "collection": "perfume-for-women",
+            "title": "",
+            "description": "",
             "overlay_content": false,
             "color_text": "#ffffff",
             "color_overlay": "#000000",
@@ -160,10 +455,9 @@
         "collection-3": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "image": "",
-            "title": "Collection 2",
-            "description": "Collection description",
+            "collection": "perfume-for-men",
+            "title": "",
+            "description": "",
             "overlay_content": false,
             "color_text": "#ffffff",
             "color_overlay": "#000000",
@@ -173,36 +467,9 @@
         "collection-4": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "image": "",
-            "title": "Collection 3",
-            "description": "Collection description",
-            "overlay_content": false,
-            "color_text": "#ffffff",
-            "color_overlay": "#000000",
-            "overlay_opacity": 40
-          }
-        },
-        "collection-5": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "image": "",
-            "title": "Collection 4",
-            "description": "Collection description",
-            "overlay_content": false,
-            "color_text": "#ffffff",
-            "color_overlay": "#000000",
-            "overlay_opacity": 40
-          }
-        },
-        "collection-6": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "image": "",
-            "title": "Collection 5",
-            "description": "Collection description",
+            "collection": "unisexe-perfume",
+            "title": "",
+            "description": "",
             "overlay_content": false,
             "color_text": "#ffffff",
             "color_overlay": "#000000",
@@ -214,9 +481,7 @@
         "collection-1",
         "collection-2",
         "collection-3",
-        "collection-4",
-        "collection-5",
-        "collection-6"
+        "collection-4"
       ],
       "settings": {
         "columns": 4,
@@ -250,287 +515,32 @@
         "rounded": false
       }
     },
-    "video-with-text-overlay": {
-      "type": "video-with-text-overlay",
+    "reveal_image_with_text_overlay_W6PQNi": {
+      "type": "reveal-image-with-text-overlay",
       "blocks": {
-        "heading": {
+        "heading_NJg7M9": {
           "type": "heading",
           "settings": {
-            "heading": "Video with text overlay",
-            "heading_size": "title-md",
+            "heading": "DIALECT FRAGRANCES",
+            "heading_size": "title-lg tracking-heading",
             "heading_tag": "h2",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
-        "text": {
+        "subheading_etGPEP": {
+          "type": "subheading",
+          "settings": {
+            "subheading": "Luxury Inspired By Perfumes",
+            "subheading_size": "subtitle-md",
+            "secondary_color": false
+          }
+        },
+        "text_i9tqXH": {
           "type": "text",
           "settings": {
-            "text": "<p>Give customers details about the banner image(s) or content on the template.</p>",
+            "text": "<p>Welcome to Dialect Fragrances, where luxury meets affordability. Our mission is to provide high-quality, designer-inspired scents at a fraction of the cost. Embrace the essence of opulence with our exquisite range of perfumes for both men and women, crafted from premium ingredients and designed to offer long-lasting, captivating aromas. With a commitment to sustainability and cruelty-free practices, Dialect Fragrances allows you to enjoy a sophisticated fragrance experience while being mindful of the environment. Discover your signature scent today and elevate your fragrance game effortlessly.</p>",
             "text_size": "subtext-md",
-            "text_max_size": 32,
-            "text_font": "body",
-            "secondary_color": true,
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "button": {
-          "type": "button",
-          "settings": {
-            "button_label": "Shop now",
-            "button_link": "",
-            "button_size": "md",
-            "button_secondary_style": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "text",
-        "button"
-      ],
-      "settings": {
-        "transparent_header": false,
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "image_height": "750px",
-        "content_width": "medium",
-        "content_position": "md:items-center md:justify-center",
-        "text_alignment": "center",
-        "video_url_mobile": "",
-        "image_height_mobile": "auto",
-        "content_position_mobile": "items-center justify-center",
-        "text_alignment_mobile": "center",
-        "color_text": "#ffffff",
-        "color_highlight": "#e0a580",
-        "gradient_highlight": "",
-        "color_button_text": "#171717",
-        "color_button_background": "#ffffff",
-        "color_button_gradient": "",
-        "color_overlay": "#000000",
-        "overlay_opacity": 50,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": true,
-        "rounded": true
-      }
-    },
-    "featured-product": {
-      "type": "featured-product",
-      "blocks": {
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "{{ section.settings.product.vendor }}",
-            "text_size": "text-base"
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {
-            "title_size": "product-title-md",
-            "show_price": true,
-            "show_rating": true
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {
-            "text_size": "text-base"
-          }
-        },
-        "countdown": {
-          "type": "countdown",
-          "settings": {
-            "heading": "Hurry up!",
-            "subheading": "Sale end in:",
-            "color_text": "#e11d48",
-            "color_background": "#fff1f2",
-            "gradient_background": ""
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {
-            "show_variant_labels": true,
-            "picker_type": "button",
-            "enable_color_swatches": true,
-            "color_swatch_type": "color",
-            "size_chart": ""
-          }
-        },
-        "inventory": {
-          "type": "inventory",
-          "settings": {
-            "inventory_threshold": 15,
-            "show_inventory_transfer": true,
-            "color_scheme": "accent-1"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_quantity_selector": false,
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false
-          }
-        },
-        "pickup_availability": {
-          "type": "pickup_availability",
-          "settings": {}
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share",
-            "show_help_desk": true,
-            "help_label": "Need help?",
-            "help_page": ""
-          }
-        },
-        "read_more": {
-          "type": "read_more",
-          "settings": {}
-        },
-        "spinning_text": {
-          "type": "spinning_text",
-          "settings": {
-            "text": "Featured product"
-          }
-        }
-      },
-      "block_order": [
-        "text",
-        "title",
-        "description",
-        "countdown",
-        "variant_picker",
-        "inventory",
-        "buy_buttons",
-        "pickup_availability",
-        "share",
-        "read_more",
-        "spinning_text"
-      ],
-      "settings": {
-        "product": "",
-        "enable_sticky_info": true,
-        "media_size": 64,
-        "gallery_layout": "thumbnail",
-        "thumbnail_position": "beside",
-        "image_zoom": "lightbox",
-        "hide_variants": false,
-        "enable_video_autoplay": true,
-        "enable_video_looping": true,
-        "mobile_layout": "full_width",
-        "mobile_thumbnail": false,
-        "padding_top": 120,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": false,
-        "rounded": true
-      }
-    },
-    "image-comparison": {
-      "type": "image-comparison",
-      "blocks": {
-        "image-1": {
-          "type": "image",
-          "settings": {
-            "image": "",
-            "subheading": "",
-            "heading": "Before image",
-            "content_position": "end",
-            "color_text": "#ffffff"
-          }
-        },
-        "image-2": {
-          "type": "image",
-          "settings": {
-            "image": "",
-            "subheading": "",
-            "heading": "After image",
-            "content_position": "end",
-            "color_text": "#ffffff"
-          }
-        }
-      },
-      "block_order": [
-        "image-1",
-        "image-2"
-      ],
-      "settings": {
-        "layout": "horizontal",
-        "image_height": "750px",
-        "image_height_mobile": "300px",
-        "heading": "<em>Image comparison</em>",
-        "heading_size": "title-md",
-        "heading_alignment": "text-center md:items-center",
-        "heading_tag": "h2",
-        "subheading": "Add a tagline",
-        "description": "",
-        "button_label": "",
-        "button_link": "",
-        "highlighted_text": "text",
-        "highlighted_scribble": "circle",
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "color_highlight": "",
-        "gradient_highlight": "linear-gradient(90deg, rgba(249, 197, 141, 1), rgba(43, 43, 43, 1) 100%)",
-        "color_button_text": "",
-        "color_button_background": "",
-        "color_button_gradient": "",
-        "padding_top": 100,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": false,
-        "rounded": false
-      }
-    },
-    "scrolling-text-1": {
-      "type": "scrolling-text",
-      "blocks": {
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<strong>Free shipping and returns</strong>",
-            "text_size": 160,
-            "text_font": "body",
-            "stencil_text": true
-          }
-        }
-      },
-      "block_order": [
-        "text"
-      ],
-      "settings": {
-        "direction": "left",
-        "speed": 2,
-        "grid_horizontal": 70,
-        "enable_twin": false,
-        "enable_parallax": true,
-        "color_text": "",
-        "color_background": "",
-        "gradient_background": "",
-        "padding_top": 120,
-        "padding_bottom": 120,
-        "divider": false,
-        "rounded": false
-      }
-    },
-    "countdown-timer": {
-      "type": "countdown-timer",
-      "blocks": {
-        "text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Countdown timer</p>",
-            "text_size": "subtext-custom",
             "text_max_size": 32,
             "text_font": "body",
             "secondary_color": false,
@@ -538,122 +548,62 @@
             "highlighted_scribble": "circle"
           }
         },
-        "spacing": {
-          "type": "spacing",
-          "settings": {
-            "height": 24,
-            "height_mobile": 16
-          }
-        },
-        "timer": {
-          "type": "timer",
-          "settings": {
-            "year": "2024",
-            "month": "12",
-            "day": "1",
-            "hour": "03",
-            "minute": "00",
-            "text_font": "heading",
-            "text_size": "title-lg tracking-heading",
-            "message": ""
-          }
-        },
-        "button": {
+        "button_GBhfWV": {
           "type": "button",
           "settings": {
-            "button_label": "Discover sales",
-            "button_link": "",
+            "button_label": "Find your perferct scent",
+            "button_link": "shopify://pages/find-your-perfect-scent",
+            "button_style": "primary",
             "button_size": "md",
-            "button_secondary_style": true
+            "button_external": false,
+            "button_icon": true
           }
         }
       },
       "block_order": [
-        "text",
-        "spacing",
-        "timer",
-        "button"
+        "heading_NJg7M9",
+        "subheading_etGPEP",
+        "text_i9tqXH",
+        "button_GBhfWV"
       ],
       "settings": {
-        "transparent_header": false,
-        "image": "",
-        "image_height": "750px",
-        "content_width": "medium",
+        "image": "shopify://shop_images/Banner_DIALECT_concept_-_Deskotp-Cover.jpg",
+        "content_width": "large",
         "content_position": "md:items-center md:justify-center",
         "text_alignment": "center",
-        "image_mobile": "",
-        "image_height_mobile": "500px",
         "content_position_mobile": "items-center justify-center",
         "text_alignment_mobile": "center",
         "color_text": "#ffffff",
-        "color_highlight": "#fcd34d",
+        "color_highlight": "",
         "gradient_highlight": "",
-        "color_button_text": "#171717",
-        "color_button_background": "#ffffff",
+        "color_button_text": "",
+        "color_button_background": "",
         "color_button_gradient": "",
-        "color_overlay": "#000000",
-        "overlay_opacity": 30,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "divider": false,
-        "full_width": true,
-        "rounded": true,
-        "enable_parallax": true,
-        "parallax_direction": "vertical"
+        "color_overlay": "#171717",
+        "overlay_opacity": 70,
+        "enable_parallax": true
       }
     },
-    "shop-the-look": {
-      "type": "shop-the-look",
-      "blocks": {
-        "product-1": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "color_text": "#ffffff",
-            "vertical": 27,
-            "horizontal": 8,
-            "vertical_mobile": 25,
-            "horizontal_mobile": 25
-          }
-        },
-        "product-2": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "color_text": "#ffffff",
-            "vertical": 55,
-            "horizontal": 24,
-            "vertical_mobile": 75,
-            "horizontal_mobile": 65
-          }
-        },
-        "product-3": {
-          "type": "product",
-          "settings": {
-            "product": "",
-            "color_text": "#ffffff",
-            "vertical": 56,
-            "horizontal": 53,
-            "vertical_mobile": 50,
-            "horizontal_mobile": 50
-          }
-        }
-      },
-      "block_order": [
-        "product-1",
-        "product-2",
-        "product-3"
+    "rich-text-2": {
+      "type": "rich-text",
+      "custom_css": [
+        "@media screen and (min-width: 1536px) and (max-width: 1920px) {.collage, .collage .title-wrapper {padding-inline: 0; }}",
+        "@media screen and (min-width: 1920px) {.collage, .collage .title-wrapper {padding-inline: var(--grid-gap); }}"
       ],
       "settings": {
-        "image": "",
-        "heading": "Shop the <em>look</em>",
-        "heading_size": "title-sm",
-        "heading_alignment": "text-center md:items-center",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "heading": "Build your <em>Bundle</em>",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_width": "large",
         "heading_tag": "h2",
-        "subheading": "Add a tagline",
-        "description": "",
+        "subheading": "",
+        "description": "<p>The choice is yours. With our bundle builder, you can select any combination from our range of products. The easiest way to keep everyone happy.</p>",
         "button_label": "",
         "button_link": "",
+        "button_external": false,
+        "button_icon": true,
         "highlighted_text": "scribble",
         "highlighted_scribble": "squiggle-underline",
         "color_text": "",
@@ -664,121 +614,59 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "color_overlay": "#171717",
-        "overlay_opacity": 40,
-        "padding_top": 100,
-        "padding_bottom": 100,
+        "padding_top": 120,
+        "padding_bottom": 52,
         "divider": false,
-        "full_width": false,
-        "rounded": true
+        "narrow": false,
+        "rounded": false
       }
     },
-    "testimonials-banner": {
-      "type": "testimonials-banner",
+    "timeline_LMdYzb": {
+      "type": "timeline",
       "blocks": {
-        "testimonial-1": {
-          "type": "testimonial",
+        "content_B7ftqR": {
+          "type": "content",
           "settings": {
-            "icon": "quote",
-            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
-            "author": "Author's name",
-            "image": "",
-            "image_ratio": "rounded",
+            "image": "shopify://shop_images/Screenshot_2023-02-12_at_22.25.59_1200x_aa63693d-913a-4f24-87c2-d22a0aed1be0.webp",
+            "subheading": "Quality",
+            "heading": "A better, fairer way to enjoy fragrances.",
+            "heading_tag": "h6",
+            "text": "<p>We believe fragrance as a form of expression should be available to anyone, anywhere without compromising on the high end experience and quality ingredients. We’re here to offer an affordable alternative to all the scents you love, now and in the future.</p>",
+            "button_label": "Learn more",
+            "button_link": "shopify://pages/about-us",
+            "button_style": "link",
+            "button_external": false,
+            "button_icon": true,
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
-        "testimonial-2": {
-          "type": "testimonial",
+        "content_BjTaHm": {
+          "type": "content",
           "settings": {
-            "icon": "quote",
-            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
-            "author": "Author's name",
-            "image": "",
-            "image_ratio": "rounded",
-            "highlighted_text": "none",
-            "highlighted_scribble": "circle"
-          }
-        },
-        "testimonial-3": {
-          "type": "testimonial",
-          "settings": {
-            "icon": "quote",
-            "text": "<p>Add customer reviews and testimonials to showcase your store’s happy customers.</p>",
-            "author": "Author's name",
-            "image": "",
-            "image_ratio": "rounded",
+            "image": "shopify://shop_images/316416092_148237317956777_72617467387536344_n.jpg",
+            "subheading": "Sustainability",
+            "heading": "Heading",
+            "heading_tag": "h2",
+            "text": "<p>Use this text to share information about your brand with your customers. Describe a product, share announcements, or welcome customers to your store.</p>",
+            "button_label": "",
+            "button_link": "",
+            "button_style": "primary",
+            "button_external": false,
+            "button_icon": true,
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         }
       },
       "block_order": [
-        "testimonial-1",
-        "testimonial-2",
-        "testimonial-3"
+        "content_B7ftqR",
+        "content_BjTaHm"
       ],
       "settings": {
-        "transparent_header": false,
-        "image": "",
-        "image_height": "750px",
-        "content_position": "md:items-center md:justify-center",
-        "image_height_mobile": "500px",
-        "content_position_mobile": "items-center justify-center",
-        "color_text": "#ffffff",
-        "color_highlight": "",
-        "gradient_highlight": "",
-        "color_overlay": "#171717",
-        "overlay_opacity": 40,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "divider": false,
-        "rounded": true,
-        "enable_parallax": true,
-        "parallax_direction": "vertical"
-      }
-    },
-    "featured-collections": {
-      "type": "featured-collections",
-      "blocks": {
-        "collection-1": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "products": [],
-            "title": "Collection 1"
-          }
-        },
-        "collection-2": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "products": [],
-            "title": "Collection 2"
-          }
-        },
-        "collection-3": {
-          "type": "collection",
-          "settings": {
-            "collection": "",
-            "products": [],
-            "title": "Collection 3"
-          }
-        }
-      },
-      "block_order": [
-        "collection-1",
-        "collection-2",
-        "collection-3"
-      ],
-      "settings": {
-        "product_limit": 6,
-        "columns": 4,
-        "carousel_on_desktop": true,
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "heading": "Best Sellers",
+        "image_ratio": "adapt",
+        "image_ratio_mobile": "landscape",
+        "heading": "Why we are making perfumes",
         "heading_size": "title-md",
         "heading_alignment": "text-left md:items-end md:flex-row",
         "heading_tag": "h2",
@@ -794,94 +682,107 @@
         "color_button_text": "",
         "color_button_background": "",
         "color_button_gradient": "",
-        "padding_top": 100,
-        "padding_bottom": 100,
+        "padding_top": 72,
+        "padding_bottom": 72,
         "divider": false,
         "full_width": false,
-        "rounded": true
+        "rounded": false
       }
     },
-    "scrolling-text-2": {
-      "type": "scrolling-text",
+    "faq_iV9JRL": {
+      "type": "faq",
       "blocks": {
-        "image-1": {
-          "type": "image",
+        "rich_text_FkbtTh": {
+          "type": "rich-text",
           "settings": {
-            "image": "",
-            "height": 60
+            "heading": "<strong>Do you have a question? We've got the </strong><em><strong>answers</strong></em><strong>!</strong>",
+            "text": "<p>Here are some of the most frequent question we get everyday. You can find out more on <a href=\"https://dialectfragrances.myshopify.com/pages/faq\" title=\"FAQ\">our complete FAQ page </a>and reach our to us with our chat or on our <a href=\"https://dialectfragrances.myshopify.com/pages/contact\" title=\"Contact\">Contact us page</a></p>",
+            "highlighted_text": "scribble",
+            "highlighted_scribble": "circle"
           }
         },
-        "image-2": {
-          "type": "image",
+        "question_kxwf6g": {
+          "type": "question",
           "settings": {
-            "image": "",
-            "height": 60
+            "title": "Are these fragrances <strong>long lasting</strong>?",
+            "text": "<p>Each fragrance goes through extensive testing. We have specialised frameworks in place and use industry experts to ensure their longevity. We also have a perfumer that extensively vets our products.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
           }
         },
-        "image-3": {
-          "type": "image",
+        "question_eUBFKE": {
+          "type": "question",
           "settings": {
-            "image": "",
-            "height": 60
+            "title": "What is your <strong>return policy</strong>?",
+            "text": "<p>Dialect Fragrances offer free returns! You can return or exchange any fragrance that you don’t like within 30 days of receiving your order. To know more about the process, check out our <a href=\"https://dialectfragrances.com/policies/refund-policy\" title=\"https://dialectfragrances.com/policies/refund-policy\">Refund Policy</a> dedicated page.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
           }
         },
-        "image-4": {
-          "type": "image",
+        "question_NnzPM4": {
+          "type": "question",
           "settings": {
-            "image": "",
-            "height": 60
+            "title": "Is shipping <strong>free and fast</strong>?",
+            "text": "<p>We offer Free Shipping for every order of 3+ items, they are typically dispatched within 1 business and take 1 to 2 days to arrive with Royal Mail.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
           }
         },
-        "image-5": {
-          "type": "image",
+        "question_i64LXd": {
+          "type": "question",
           "settings": {
-            "image": "",
-            "height": 60
-          }
-        },
-        "image-6": {
-          "type": "image",
-          "settings": {
-            "image": "",
-            "height": 60
-          }
-        },
-        "image-7": {
-          "type": "image",
-          "settings": {
-            "image": "",
-            "height": 60
+            "title": "Can I <strong>exchange</strong> a fragrance or get a refund if I don't like it?",
+            "text": "<p>Of course! If you want to exchange a fragrance, please contact our Customer Services team on our<a href=\"https://dialectfragrances.com/pages/contact\" title=\"Contact\">contact page </a>or use our chatbot on the bottom right of your screen.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
           }
         }
       },
       "block_order": [
-        "image-1",
-        "image-2",
-        "image-3",
-        "image-4",
-        "image-5",
-        "image-6",
-        "image-7"
+        "rich_text_FkbtTh",
+        "question_kxwf6g",
+        "question_eUBFKE",
+        "question_NnzPM4",
+        "question_i64LXd"
+      ],
+      "custom_css": [
+        ".faqs {background-color: #ffffff; border-radius: 20px;}"
       ],
       "settings": {
-        "direction": "right",
-        "speed": 2.5,
-        "grid_horizontal": 140,
-        "enable_twin": true,
-        "enable_parallax": true,
+        "style": "with-border",
+        "heading": "FAQs",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h3",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "button_external": false,
+        "button_icon": true,
+        "highlighted_text": "scribble",
+        "highlighted_scribble": "circle",
         "color_text": "",
-        "color_background": "#fde68a",
+        "color_background": "#fffbeb",
         "gradient_background": "",
-        "padding_top": 36,
-        "padding_bottom": 36,
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "color_overlay": "#ffffff",
+        "overlay_opacity": 4,
+        "padding_top": 72,
+        "padding_bottom": 72,
         "divider": false,
-        "rounded": false
+        "narrow": true,
+        "rounded": true
       }
     },
     "blog-posts-collage": {
       "type": "blog-posts-collage",
       "settings": {
-        "blog": "",
+        "blog": "news",
         "post_limit": 3,
         "show_view_all": true,
         "image_ratio": "landscape",
@@ -915,18 +816,16 @@
     }
   },
   "order": [
-    "slideshow",
-    "rich-text",
+    "video_with_text_overlay_JQ6xAL",
+    "multicolumn_with_icons_CrjGCn",
+    "featured_collections_YwYYCN",
+    "reveal_testimonials_d7LmLN",
+    "rich-text-1",
     "collection-list",
-    "video-with-text-overlay",
-    "featured-product",
-    "image-comparison",
-    "scrolling-text-1",
-    "countdown-timer",
-    "shop-the-look",
-    "testimonials-banner",
-    "featured-collections",
-    "scrolling-text-2",
+    "reveal_image_with_text_overlay_W6PQNi",
+    "rich-text-2",
+    "timeline_LMdYzb",
+    "faq_iV9JRL",
     "blog-posts-collage"
   ]
 }

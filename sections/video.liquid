@@ -1,8 +1,9 @@
 {%- liquid
   assign poster = section.settings.video.preview_image | default: section.settings.cover_image
+  assign video_mobile = section.settings.video_mobile | default: section.settings.video
 
-  if section.settings.video_mobile
-    assign poster_mobile = section.settings.video_mobile.preview_image | default: section.settings.cover_image_mobile
+  if video_mobile
+    assign poster_mobile = video_mobile.preview_image | default: section.settings.cover_image_mobile
   endif
 -%}
 
@@ -160,6 +161,14 @@
         },
         {
           "label": "t:sections.global.settings.image_height.options__10.label",
+          "value": "850px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__11.label",
+          "value": "900px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__12.label",
           "value": "100vh"
         }
       ],

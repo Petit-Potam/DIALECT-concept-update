@@ -11,12 +11,7 @@
 {%- if block.settings.logo or block.settings.show_social or shop.features.follow_on_shop? and block.settings.enable_follow_on_shop -%}
   <div class="footer__logo flex flex-col gap-10" {{ block.shopify_attributes }}>
     {%- if block.settings.logo -%}
-      <style>
-        .footer__logo>a {
-          height: {{ block.settings.logo_height }}px;
-        }
-      </style>
-      <p class="inline-flex leading-none">
+      <p class="leading-none">
         <a href="{{ routes.root_url }}">
           <span class="sr-only">{{ shop.name }}</span>
           {%- capture sizes -%}{{ block.settings.logo_height | times: block.settings.logo.aspect_ratio }}px{%- endcapture -%}

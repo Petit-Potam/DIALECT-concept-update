@@ -14,50 +14,87 @@
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
-    {%- capture title_wrapper -%}
-      {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.subheading != blank -%}
-        <div class="title-wrapper leading-none {{ section.settings.heading_alignment }} grid gap-4{% if section.settings.layout == 'grid' %} xl:hidden{% endif %} relative z-1">
-          {%- if section.settings.subheading != blank -%}
-            {%- liquid
-              if section.settings.heading_size == 'title-sm'
-                assign subtext_size = 'subtext-md'
-              else
-                assign subtext_size = 'subtext-lg'
-              endif
-            -%}
-            <p class="leading-normal font-medium {{ subtext_size }}">{{ section.settings.subheading | escape }}</p>
-          {%- endif -%}
+    {%- capture view_all -%}
+      {%- if section.settings.button_label != blank -%}
+        {%- render 'button',
+          style: 'secondary',
+          label: section.settings.button_label,
+          link: section.settings.button_link,
+          external: section.settings.button_external,
+          show_icon: section.settings.button_icon
+        -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- capture indicators -%}
+      {%- if section.blocks.size > 0 and section.settings.carousel_on_desktop -%}
+        <div class="indicators hidden lg:flex gap-2d5">
+          <button class="button button--secondary" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
+            <span class="btn-fill" data-fill></span>
+            <span class="btn-text">
+              {%- render 'icon', icon: 'chevron-left', class: 'transform' -%}
+            </span>
+          </button>
+          <button class="button button--secondary" type="button" is="next-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
+            <span class="btn-fill" data-fill></span>
+            <span class="btn-text">
+              {%- render 'icon', icon: 'chevron-right', class: 'transform' -%}
+            </span>
+          </button>
+        </div>
+        <p class="lg:hidden">{{ view_all }}</p>
+      {%- endif -%}
+    {%- endcapture -%}
 
-          {%- if section.settings.heading != blank -%}
-            <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}">
-              {%- if section.settings.highlighted_text == 'none' -%}
-                <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ section.settings.heading }}</split-words>
-              {%- else -%}
-                {%- liquid
-                  assign withGradient = false
-                  if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-                    assign withGradient = true
-                  endif
-                -%}
-                {%- render 'highlighted-text', content: section.settings.heading, style: section.settings.highlighted_text, scribble: section.settings.highlighted_scribble, gradient: withGradient -%}
-              {%- endif -%}
-            </{{ section.settings.heading_tag }}>
-          {%- endif -%}
-          
-          {%- if section.settings.description != blank -%}
-            {%- liquid
-              if section.settings.heading_size == 'title-sm'
-                assign subtext_size = 'subtext-sm'
-              elsif section.settings.heading_size == 'title-md'
-                assign subtext_size = 'subtext-md'
-              else
-                assign subtext_size = 'subtext-lg'
-              endif
-            -%}
-            <div class="page-width--narrow rte leading-normal {{ subtext_size }}">
-              {%- if section.settings.subheading != blank -%}<p class="spacing-section"></p>{%- endif -%}
-              {{- section.settings.description -}}
-            </div>
+    {%- capture title_wrapper -%}
+      {%- if section.settings.heading != blank or section.settings.description != blank or section.settings.subheading != blank or section.settings.button_label != blank -%}
+        <div class="portfolio-title md:flex md:items-end md:justify-between md:gap-8{% if section.settings.layout == 'grid' %} xl:hidden{% endif %} {{ section.settings.heading_alignment }}">
+          <div class="title-wrapper leading-none grid gap-4 relative z-1">
+            {%- if section.settings.subheading != blank -%}
+              {%- liquid
+                if section.settings.heading_size == 'title-sm'
+                  assign subtext_size = 'subtext-md'
+                else
+                  assign subtext_size = 'subtext-lg'
+                endif
+              -%}
+              <p class="heading normal-case font-medium {{ subtext_size }} leading-none tracking-none">{{ section.settings.subheading | escape }}</p>
+            {%- endif -%}
+
+            {%- if section.settings.heading != blank -%}
+              <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}">
+                {%- if section.settings.highlighted_text == 'none' -%}
+                  <split-words class="split-words block" data-animate="fade-up-large">{{ section.settings.heading }}</split-words>
+                {%- else -%}
+                  {%- liquid
+                    assign with_gradient = false
+                    if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
+                      assign with_gradient = true
+                    endif
+                  -%}
+                  {%- render 'highlighted-text', content: section.settings.heading, style: section.settings.highlighted_text, scribble: section.settings.highlighted_scribble, gradient: with_gradient -%}
+                {%- endif -%}
+              </{{ section.settings.heading_tag }}>
+            {%- endif -%}
+            
+            {%- if section.settings.description != blank -%}
+              {%- liquid
+                if section.settings.heading_size == 'title-sm' or section.settings.heading_size == 'title-md'
+                  assign subtext_size = 'subtext-md'
+                else
+                  assign subtext_size = 'subtext-lg'
+                endif
+              -%}
+              <div class="description rte leading-normal {{ subtext_size }}">
+                {%- if section.settings.subheading != blank -%}<p class="spacing-section"></p>{%- endif -%}
+                {{- section.settings.description -}}
+              </div>
+            {%- endif -%}
+          </div>
+
+          {%- if section.settings.layout == 'default' and indicators != blank -%}
+            <div class="button-wrapper">{{ indicators }}</div>
+          {%- else -%}
+            <p class="button-wrapper">{{ view_all }}</p>
           {%- endif -%}
         </div>
       {%- endif -%}
@@ -66,70 +103,25 @@
     {{- title_wrapper -}}
 
     {%- if section.blocks.size > 0 -%}
-      <slider-element class="grid slider{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card">
+      <slider-element id="Slider-{{ section.id }}" class="grid slider{% if section.settings.carousel_on_desktop %} slider--desktop{% endif %}{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card">
         <motion-list class="portfolio card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid">
           {%- if section.settings.layout == 'grid' and title_wrapper != blank -%}
-            <div class="profile slide hidden xl:grid items-end">
+            <div class="profile card slide hidden xl:grid items-end">
               {{- title_wrapper -}}
             </div>
           {%- endif -%}
 
-          {%- for block in section.blocks -%}
-            <div class="profile card relative" id="shopify-block-{{ block.id }}" {{ block.shopify_attributes }}>
-              {%- if block.settings.image != blank -%}
-                {%- assign sizes = '(max-width: 767px) 100vw, 50vw' -%}
-                <picture class="media media--{{ section.settings.image_ratio }} mobile:media--{{ section.settings.image_ratio_mobile }} block relative overflow-hidden">
-                  {%- if block.settings.image_mobile -%}
-                    <source
-                      media="(max-width: 767px)"
-                      srcset="{{ block.settings.image_mobile | image_url: width: '400x' }} 400w, {{ block.settings.image_mobile | image_url: width: '600x' }} 600w, {{ block.settings.image_mobile | image_url: width: '800x' }} 800w, {{ block.settings.image_mobile | image_url: width: '1000x' }} 1000w"
-                      width="{{ block.settings.image_mobile.width }}"
-                      height="{{ block.settings.image_mobile.height }}"
-                    >
-                  {%- endif -%}
-
-                  {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600', is: 'lazy-image' -}}
-                </picture>
-              {%- else -%}
-                <div class="media media--{{ section.settings.image_ratio }} mobile:media--{{ section.settings.image_ratio_mobile }} relative overflow-hidden">
-                  {%- capture placeholder -%}{% cycle 'collection-1', 'collection-2', 'collection-3', 'collection-4', 'collection-5', 'collection-6' %}{%- endcapture -%}
-                  {{- placeholder | placeholder_svg_tag: 'placeholder' -}}
-                </div>
-              {%- endif -%}
-              <div class="profile__content absolute left-0 bottom-0 w-full flex items-center justify-between gap-8">
-                <p class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">{{ block.settings.heading | escape }}</p>
-                <button type="button" class="profile__button flex items-center justify-center rounded-full flex-auto" aria-controls="Profile-{{ block.id }}" aria-expanded="false">
-                  {%- render 'icon', icon: 'plus-alt' -%}
-                </button>
-              </div>
-              <x-modal id="Profile-{{ block.id }}" class="profile-modal x-modal drawer z-30 fixed bottom-0 left-0 h-full w-full pointer-events-none"
-                role="dialog"
-                aria-modal="true"
-                aria-label="{{ block.settings.heading | escape }}"
-                hidden
-              >
-                <overlay-element class="overlay fixed-modal invisible opacity-0 fixed bottom-0 left-0 w-full h-screen pointer-events-none" aria-controls="Profile-{{ block.id }}" aria-expanded="false"></overlay-element>
-                <div class="drawer__inner z-10 absolute top-0 flex flex-col w-full h-full overflow-hidden">
-                  <gesture-element class="drawer__header flex items-center justify-between opacity-0 invisible relative">
-                    <span class="drawer__title heading font-bold title-md">{{ block.settings.heading | escape }}</span>
-                    <button class="button button--secondary button--close drawer__close hidden sm:flex items-center justify-center" type="button" is="hover-button" aria-controls="Profile-{{ block.id }}" aria-expanded="false" aria-label="{{ 'general.accessibility.close' | t | escape }}">
-                      <span class="btn-fill" data-fill></span>
-                      <span class="btn-text">
-                        {%- render 'icon', icon: 'close', size: 'sm' -%}
-                      </span>
-                    </button>
-                  </gesture-element>
-                  <div class="drawer__content opacity-0 invisible flex flex-col h-full grow shrink">
-                    <div class="drawer__scrollable relative flex flex-col gap-5 md:gap-7 grow shrink">
-                      <div class="rte text-base md:text-lg">{{ block.settings.text }}</div>
-                    </div>
-                  </div>
-                </div>
-              </x-modal>
-            </div>
-          {%- endfor -%}
+          {%- render 'portfolio', section: section -%}
         </motion-list>
       </slider-element>
+
+      {%- if indicators != blank -%}
+        {%- if section.settings.layout == 'grid' -%}
+          {{- indicators -}}
+        {%- else -%}
+          <p class="hidden lg:block">{{ view_all }}</p>
+        {%- endif -%}
+      {%- endif -%}
     {%- endif -%}
   </div>
 </div>
@@ -137,7 +129,8 @@
 {% schema %}
 {
   "name": "t:sections.portfolio.name",
-  "max_blocks": 9,
+  "class": "portfolio-section",
+  "max_blocks": 15,
   "settings": [
     {
       "type": "range",
@@ -147,6 +140,12 @@
       "step": 1,
       "default": 4,
       "label": "t:sections.global.settings.columns.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "carousel_on_desktop",
+      "label": "t:sections.global.settings.carousel_on_desktop.label",
+      "default": false
     },
     {
       "type": "select",
@@ -354,6 +353,29 @@
       "type": "richtext",
       "id": "description",
       "label": "t:sections.global.settings.description.label"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "t:sections.global.settings.button_label.label",
+      "info": "t:sections.global.settings.button_label.info"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "t:sections.global.settings.button_link.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "button_external",
+      "label": "t:sections.global.settings.button_external.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "button_icon",
+      "label": "t:sections.global.settings.button_icon.label",
+      "default": true
     },
     {
       "type": "header",

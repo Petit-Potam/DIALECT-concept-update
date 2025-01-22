@@ -18,12 +18,10 @@
 
   assign article_alt = article_image.alt | default: article.title
 
-  # theme-check-disable UndefinedObject
   assign number_of_comments = article.comments_count
   if comment.status == 'pending'
     assign number_of_comments = article.comments_count | plus: 1
   endif
-  # theme-check-enable UndefinedObject
 -%}
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
@@ -74,8 +72,8 @@
         </div>
       {%- endif -%}
 
-      <{{ section.settings.heading_tag }} class="heading font-bold {{ section.settings.heading_size }}" itemprop="headline">
-        <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ article.title }}</split-words>
+      <{{ section.settings.heading_tag }} class="heading {{ section.settings.heading_size }}" itemprop="headline">
+        <split-words class="split-words block" data-animate="fade-up-large">{{ article.title }}</split-words>
       </{{ section.settings.heading_tag }}>
       
       {%- if article_meta -%}
@@ -88,10 +86,10 @@
     {%- if article_image != blank -%}
       <div class="article__media w-full media--{{ section.settings.image_height }}">
         <media-element class="article__image block h-full overflow-hidden"{% if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif %}>
-          <animate-element data-animate="zoom-out" class="media media--height block w-full h-full relative overflow-hidden" itemprop="image">
+          <picture class="media media--height block w-full h-full relative overflow-hidden" itemprop="image" is="animate-picture" data-animate="zoom-out">
             {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
             {{- article_image | image_url: width: article_image.width | image_tag: loading: 'eager', widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', sizes: sizes, is: 'lazy-image', alt: article_alt -}}
-          </animate-element>
+          </picture>
         </media-element>
       </div>
     {%- endif -%}
@@ -117,7 +115,7 @@
             <div class="flex flex-wrap items-center justify-between" {{ block.shopify_attributes }}>
               {%- liquid
                 assign article_url = request.origin | append: article.url
-                render 'social-sharing', section_id: section.id, share_label: block.settings.share_label, share_title: article.title, share_link: article_url, share_image: article_image
+                render 'social-sharing', section_id: section.id, share_id: article.id, share_label: block.settings.share_label, share_title: article.title, share_link: article_url, share_image: article_image
               -%}
 
               {%- if block.settings.show_comments -%}
@@ -164,7 +162,7 @@
                         </ul>
                       {%- endif -%}
                       <p>
-                        <a class="article-card__title reversed-link text-lg-2xl font-bold leading-tight tracking-tight" href="{{ blog.previous_article.url }}">
+                        <a class="article-card__title heading reversed-link text-lg-2xl leading-tight tracking-tight" href="{{ blog.previous_article.url }}">
                           {{- blog.previous_article.title -}}
                         </a>
                       </p>
@@ -202,7 +200,7 @@
                         </ul>
                       {%- endif -%}
                       <p>
-                        <a class="article-card__title reversed-link text-lg-2xl font-bold leading-tight tracking-tight" href="{{ blog.next_article.url }}">
+                        <a class="article-card__title heading reversed-link text-lg-2xl leading-tight tracking-tight" href="{{ blog.next_article.url }}">
                           {{- blog.next_article.title -}}
                         </a>
                       </p>
@@ -219,18 +217,16 @@
                 {%- paginate article.comments by 5 -%}
                   {%- if number_of_comments > 0 -%}
                     <div class="flex flex-col gap-5 md:gap-12">
-                      <h3 class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight text-center md:text-left">
+                      <h3 class="heading lg:text-3xl text-2xl leading-none tracking-tight text-center md:text-left">
                         {{- 'blogs.comments.with_count' | t: count: number_of_comments -}}
                       </h3>
 
                       <ul class="grid gap-5">
-                        {% # theme-check-disable UndefinedObject %}
                         {%- if comment.status == 'pending' -%}
                           <li id="Comment-{{ comment.id }}" class="comment-card">
                             {%- render 'article-comment', comment: comment, show_gravatar: block.settings.show_gravatar -%}
                           </li>
                         {%- endif -%}
-                        {% # theme-check-enable UndefinedObject %}
           
                         {%- for comment in article.comments -%}
                           <li id="Comment-{{ comment.id }}" class="comment-card">
@@ -266,7 +262,7 @@
                       -%}
 
                       <div class="grid gap-2">
-                        <h3 class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">{{ 'blogs.comments.title' | t }}</h3>
+                        <h3 class="heading lg:text-3xl text-2xl leading-none tracking-tight">{{ 'blogs.comments.title' | t }}</h3>
                         {%- if blog.moderated? -%}
                           <p class="text-sm">{{ 'blogs.comments.moderated' | t }}</p>
                         {%- endif -%}
@@ -323,34 +319,7 @@
 {%- endif -%}
 
 <script type="application/ld+json">
-  {
-    "@context": "http://schema.org",
-    "@type": "Article",
-    "articleBody": {{ article.content | strip_html | json }},
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": {{ request.origin | append: page.url | json }}
-    },
-    "headline": {{ article.title | json }},
-    {% if article.excerpt != blank %}
-      "description": {{ article.excerpt | strip_html | json }},
-    {% endif %}
-    {% if article_image %}
-      "image": [
-        {{ article | image_url: width: 1920 | prepend: "https:" | json }}
-      ],
-    {% endif %}
-    "datePublished": {{ article.published_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "dateCreated": {{ article.created_at | date: '%Y-%m-%dT%H:%M:%SZ' | json }},
-    "author": {
-      "@type": "Person",
-      "name": {{ article.author | json }}
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": {{ shop.name | json }}
-    }
-  }
+  {{- article | structured_data -}}
 </script>
 
 {% schema %}
@@ -513,6 +482,14 @@
         },
         {
           "label": "t:sections.global.settings.image_height.options__10.label",
+          "value": "850px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__11.label",
+          "value": "900px"
+        },
+        {
+          "label": "t:sections.global.settings.image_height.options__12.label",
           "value": "100vh"
         }
       ],

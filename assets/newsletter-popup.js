@@ -20,15 +20,15 @@ class NewsletterModal extends ModalElement {
   }
 
   get testMode() {
-    return this.dataset.testMode === 'true';
+    return this.getAttribute('data-test-mode') === 'true';
   }
 
   get delay() {
-    return parseInt(this.dataset.delay) || 5;
+    return this.hasAttribute('data-delay') ? parseInt(this.getAttribute('data-delay')) : 5;
   }
 
   get expiry() {
-    return parseInt(this.dataset.expiry) || 30;
+    return this.hasAttribute('data-expiry') ? parseInt(this.getAttribute('data-expiry')) : 30;
   }
 
   get cookieName() {

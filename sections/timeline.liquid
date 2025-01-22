@@ -33,17 +33,17 @@
       <slider-element id="Slider-{{ section.id }}" class="grid slider slider--desktop slider--tablet" selector=".card-grid>.card">
         <motion-list class="timeline card-grid grid{% if section.blocks.size == 1 %} with-only1{% endif %}">
           {%- liquid
-            assign withGradient = false
+            assign with_gradient = false
             if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-              assign withGradient = true
+              assign with_gradient = true
             endif
           -%}
           {%- for block in section.blocks -%}
-            <div class="timeline__item card{% if forloop.first %} selected{% endif %}" {{ block.shopify_attributes }}>
+            <div class="timeline__item card{% if forloop.first %} selected{% endif %} relative" {{ block.shopify_attributes }}>
               <div class="flex flex-col md:grid grid-cols-2 overflow-hidden">
-                {%- if block.settings.image != blank -%}
-                  {%- assign sizes = '(max-width: 767px) 100vw, 50vw' -%}
-                  <picture class="media media--{{ section.settings.image_ratio }} mobile:media--{{ section.settings.image_ratio_mobile }} block relative overflow-hidden">
+                <picture class="media media--{{ section.settings.image_ratio }} mobile:media--{{ section.settings.image_ratio_mobile }} block relative overflow-hidden">
+                  {%- if block.settings.image != blank -%}
+                    {%- assign sizes = '(max-width: 767px) 100vw, 50vw' -%}
                     {%- if block.settings.image_mobile -%}
                       <source
                         media="(max-width: 767px)"
@@ -54,40 +54,41 @@
                     {%- endif -%}
 
                     {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600', is: 'lazy-image' -}}
-                  </picture>
-                {%- else -%}
-                  <div class="media media--{{ section.settings.image_ratio }} mobile:media--{{ section.settings.image_ratio_mobile }} relative overflow-hidden">
+                  {%- else -%}
                     {%- capture placeholder -%}{% cycle 'collection-1', 'collection-2', 'collection-3', 'collection-4', 'collection-5', 'collection-6' %}{%- endcapture -%}
                     {{- placeholder | placeholder_svg_tag: 'placeholder' -}}
-                  </div>
-                {%- endif -%}
+                  {%- endif -%}
+                </picture>
                 <div class="timeline__item-content flex flex-col gap-4">
                   {%- if block.settings.subheading != blank -%}
                     <p class="text-opacity text-base lg:text-lg font-bold tracking-tight">{{ block.settings.subheading | escape }}</p>
                   {%- endif -%}
 
                   {%- if block.settings.heading != blank -%}
-                    <{{ block.settings.heading_tag }} class="heading lg:text-3xl text-2xl font-bold leading-none tracking-tight">
+                    <{{ block.settings.heading_tag }} class="heading lg:text-3xl text-2xl leading-none tracking-tight">
                       {%- if block.settings.highlighted_text == 'none' -%}
-                        <split-words class="split-words flex flex-wrap" data-animate="fade-up-large">{{ block.settings.heading }}</split-words>
+                        <split-words class="split-words block" data-animate="fade-up-large">{{ block.settings.heading }}</split-words>
                       {%- else -%}
-                        {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                        {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                       {%- endif -%}
                     </{{ block.settings.heading_tag }}>
                   {%- endif -%}
 
                   {%- if block.settings.text != blank -%}
                     <div class="rte text-opacity text-base lg:text-lg">
-                      {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                      {%- render 'highlighted-text', content: block.settings.text, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                     </div>
                   {%- endif -%}
 
                   {%- if block.settings.button_label != blank -%}
                     <p>
-                      <a class="button button--primary button--fixed"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %} is="hover-link">
-                        <span class="btn-fill" data-fill></span>
-                        <span class="btn-text">{{ block.settings.button_label | escape }} </span>
-                      </a>
+                      {%- render 'button',
+                        label: block.settings.button_label,
+                        link: block.settings.button_link,
+                        style: block.settings.button_style,
+                        external: block.settings.button_external,
+                        show_icon: block.settings.button_icon
+                      -%}
                     </p>
                   {%- endif -%}
                 </div>
@@ -99,9 +100,9 @@
 
       {%- if section.blocks.size > 1 -%}
         <div class="scroll-area">
-          <slider-dots class="timeline-dots grid gap-2d5" aria-controls="Slider-{{ section.id }}">
+          <slider-dots class="timeline-dots grid gap-2d5" align-selected=".scroll-area" aria-controls="Slider-{{ section.id }}">
             {%- for block in section.blocks -%}
-              <button type="button" class="text-lg text-left font-bold flex items-center gap-2d5" data-index="{{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}">
+              <button type="button" class="heading text-lg text-left flex items-center gap-2d5" data-index="{{ forloop.index }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}">
                 <span class="sr-only">{{ 'general.pagination.page' | t: number: forloop.index }}</span>
                 {%- liquid
                   if block.settings.subheading != blank
@@ -122,7 +123,7 @@
 {% schema %}
 {
   "name": "t:sections.timeline.name",
-  "max_blocks": 9,
+  "max_blocks": 15,
   "settings": [
     {
       "type": "select",
@@ -535,6 +536,38 @@
           "type": "url",
           "id": "button_link",
           "label": "t:sections.global.settings.button_link.label"
+        },
+        {
+          "type": "select",
+          "id": "button_style",
+          "options": [
+            {
+              "value": "primary",
+              "label": "t:sections.global.settings.button_style.options__1.label"
+            },
+            {
+              "value": "secondary",
+              "label": "t:sections.global.settings.button_style.options__2.label"
+            },
+            {
+              "value": "link",
+              "label": "t:sections.global.settings.button_style.options__3.label"
+            }
+          ],
+          "default": "primary",
+          "label": "t:sections.global.settings.button_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "button_external",
+          "label": "t:sections.global.settings.button_external.label",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "button_icon",
+          "label": "t:sections.global.settings.button_icon.label",
+          "default": true
         },
         {
           "type": "header",

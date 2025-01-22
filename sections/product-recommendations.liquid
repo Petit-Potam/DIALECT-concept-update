@@ -33,6 +33,8 @@
             {%- for recommendation in recommendations.products -%}
               {%- render 'product-card',
                 product: recommendation,
+                product_id: recommendation.id,
+                section_id: section.id,
                 lazy_load: false,
                 image_ratio: settings.product_image_ratio,
                 image_fill: settings.product_image_fill,
@@ -44,8 +46,7 @@
                 show_quick_add: settings.product_quick_add,
                 show_quick_view: settings.product_quick_view,
                 show_save_amount: settings.product_save_amount,
-                save_type: settings.product_save_type,
-                section_id: section.id
+                save_type: settings.product_save_type
               -%}
             {%- endfor -%}
           </motion-list>

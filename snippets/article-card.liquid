@@ -1,4 +1,4 @@
-<div class="card article-card relative flex flex-col gap-5 md:gap-8 leading-none">
+<div class="card article-card relative flex flex-col gap-5 md:gap-8 leading-none{% if article.image == blank %} without-image{% endif %}">
   {%- if article.image != blank -%}
     <div class="article-card__media relative overflow-hidden">
       {%- if show_tags and article.tags.size > 0 -%}
@@ -51,7 +51,7 @@
       {%- endif -%}
 
       <p>
-        <a class="article-card__title reversed-link text-lg-2xl font-bold leading-tight tracking-tight" href="{{ article.url }}">
+        <a class="article-card__title heading reversed-link text-lg-2xl leading-tight tracking-tight" href="{{ article.url }}">
           {{- article.title -}}
         </a>
       </p>

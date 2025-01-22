@@ -9,11 +9,11 @@ if (!customElements.get('pickup-availability')) {
 
         this.errorHtml = this.querySelector('template').content.firstElementChild.cloneNode(true);
         this.onClickRefreshList = this.onClickRefreshList.bind(this);
-        this.fetchAvailability(this.dataset.variantId);
+        this.fetchAvailability(this.getAttribute('data-variant-id'));
       }
 
       fetchAvailability(variantId) {
-        let rootUrl = this.dataset.rootUrl;
+        let rootUrl = this.getAttribute('data-root-url');
         if (!rootUrl.endsWith('/')) {
           rootUrl = rootUrl + '/';
         }
@@ -34,8 +34,19 @@ if (!customElements.get('pickup-availability')) {
           });
       }
 
-      onClickRefreshList(evt) {
-        this.fetchAvailability(this.dataset.variantId);
+      onClickRefreshList() {
+        this.fetchAvailability(this.getAttribute('data-variant-id'));
+      }
+
+      update(variant) {
+        if (variant?.available) {
+          this.fetchAvailability(variant.id);
+        }
+        else {
+          this.innerHTML = '';
+          this.removeAttribute('available');
+          this.setAttribute('hidden', '');
+        }
       }
 
       renderError() {

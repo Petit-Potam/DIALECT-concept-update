@@ -1,4 +1,4 @@
-{% comment %}
+{%- comment -%}
   Renders a set of links for paginated results. Must be used within paginate tags.
 
   Usage:
@@ -9,9 +9,9 @@
   Accepts:
   - paginate: {Object}
   - mode: {String} (optional) How additional pages of products are navigated
-{% endcomment %}
+{%- endcomment -%}
 
-<div class="pagination flex align-self-center md:gap-2 text-sm md:text-base">
+<div class="pagination flex flex-wrap justify-center align-self-center md:gap-2 text-sm md:text-base">
   {%- if mode == 'infinite' or mode == 'click' -%}
     {%- if paginate.next -%}
       <button type="button" class="infinite-scroll button button--primary button--fixed" action="{{ shop.url }}{{ paginate.next.url }}" mode="{{ mode }}" is="infinite-button">

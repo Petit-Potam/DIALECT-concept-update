@@ -1,15 +1,14 @@
-{% comment %}
+{%- comment -%}
   Renders active facets
 
   Accepts:
   - results: {Object} Liquid 'collection' or 'search' object
   - enable_color_swatches: {Boolean}
+  - filter_count: {Number}
 
   Usage:
-  {% render 'facets-active' %}
+  {% render 'facets-active', results: collection, enable_color_swatches: true, filter_count: count %}
 {%- endcomment -%}
-
-{%- assign active_values_count = 0 -%}
 
 {%- capture active_facets -%}
   {%- for filter in results.filters -%}
@@ -25,8 +24,6 @@
             </span>
           </a>
         </div>
-
-        {%- assign active_values_count = active_values_count | plus: 1 -%}
       {%- endif -%}
     {%- else -%}
       {%- for active_value in filter.active_values -%}
@@ -36,20 +33,27 @@
               {%- liquid
                 assign is_color = false
                 if enable_color_swatches
-                  assign swatch_trigger = 'products.general.color_swatch_trigger' | t | downcase
+                  assign swatch_trigger_list = 'products.general.color_swatch_trigger' | t | downcase | split: ','
                   assign downcased_label = filter.label | downcase
-                  if downcased_label contains swatch_trigger
-                    assign is_color = true
-                  elsif swatch_trigger == 'color' and downcased_label contains 'colour'
-                    assign is_color = true
-                  endif
+                  for trigger in swatch_trigger_list
+                    assign swatch_trigger = trigger | strip
+                    if downcased_label contains swatch_trigger
+                      assign is_color = true
+                    elsif swatch_trigger == 'color' and downcased_label contains 'colour'
+                      assign is_color = true
+                    endif
+
+                    if is_color == true
+                      break
+                    endif
+                  endfor
                 endif
 
                 if is_color or filter.presentation == 'swatch'
                   if filter.presentation == 'swatch'
-                    render 'swatch', value: active_value.value, href: active_value.url_to_remove, title: active_value.label, class: 'pointer-events-none', swatch: active_value.swatch
+                    render 'swatch', value: active_value.value, href: active_value.url_to_remove, title: active_value.label, class: 'pointer-events-none', no_instant: true, swatch: active_value.swatch
                   else
-                    render 'swatch', value: active_value.label, href: active_value.url_to_remove, title: active_value.label, class: 'pointer-events-none'
+                    render 'swatch', value: active_value.label, href: active_value.url_to_remove, title: active_value.label, class: 'pointer-events-none', no_instant: true
                   endif
                 endif
               -%}
@@ -69,13 +73,11 @@
             </span>
           </a>
         </div>
-
-        {%- assign active_values_count = active_values_count | plus: 1 -%}
       {%- endfor -%}
     {%- endif -%}
   {%- endfor -%}
 
-  {%- if active_values_count > 1 -%}
+  {%- if filter_count > 1 -%}
     {%- liquid
       if results.url
         assign results_url = results.url

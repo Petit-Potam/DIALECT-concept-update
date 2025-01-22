@@ -1,4 +1,4 @@
-{%- style -%}
+<style>
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
@@ -6,7 +6,7 @@
     --color-foreground: {{ section.settings.color_text.rgb }};
     --color-transparent: {{ section.settings.transparent_color_text.rgb }};
   }
-{%- endstyle -%}
+</style>
 
 {%- liquid
   assign header_layout = section.settings.header_layout
@@ -34,7 +34,7 @@
   render 'header-drawer', section: section
 -%}
 
-<header data-section-id="{{ section.id }}" class="header header--{{ header_layout }} mobile:header--{{ section.settings.logo_position_mobile }} page-width{% if section.settings.full_width %} page-width--full{% endif %} section--padding grid items-center z-20 relative w-full"{% if section.settings.sticky_header_type != 'none' %} is="sticky-header" data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %} is="custom-header"{% endif %}>
+<header data-section-id="{{ section.id }}" class="header header--{{ header_layout }} mobile:header--{{ section.settings.logo_position_mobile }} page-width{% if section.settings.full_width %} page-width--full{% endif %} section{% if section.settings.rounded %} section--rounded{% endif %} section--padding grid items-center z-20 relative w-full"{% if section.settings.sticky_header_type != 'none' %} is="sticky-header" data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %} is="custom-header"{% endif %}>
   {%- liquid
     render 'header-icons', show_search: true, show_hamburger: true, show_toggle: show_toggle, dir: 'start'
 
@@ -81,9 +81,9 @@
 </header>
 
 {%- if section.settings.hover_menu -%}
-  <span class="overlay opacity-0 fixed left-0 w-full pointer-events-none"></span>
+  <span class="overlay opacity-0 z-1 fixed left-0 w-full pointer-events-none"></span>
 {%- else -%}
-  <overlay-element class="overlay opacity-0 fixed left-0 w-full pointer-events-none"></overlay-element>
+  <overlay-element class="overlay opacity-0 z-1 fixed left-0 w-full pointer-events-none"></overlay-element>
 {%- endif -%}
 
 <script>
@@ -193,6 +193,40 @@
     },
     {
       "type": "header",
+      "content": "t:sections.header.settings.header__language_selector.content",
+      "info": "t:sections.header.settings.header__language_selector.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_language_selector_desktop",
+      "label": "t:sections.header.settings.enable_language_selector.label",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:sections.header.settings.header__country_selector.content",
+      "info": "t:sections.header.settings.header__country_selector.info"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_country_selector_desktop",
+      "label": "t:sections.header.settings.enable_country_selector.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_name_dekstop",
+      "label": "t:sections.header.settings.show_country_name.label",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_country_flag_desktop",
+      "label": "t:sections.header.settings.show_country_flag.label",
+      "default": false
+    },
+    {
+      "type": "header",
       "content": "t:sections.global.settings.header__mobile.content"
     },
     {
@@ -226,15 +260,13 @@
       "type": "checkbox",
       "id": "enable_language_selector",
       "default": true,
-      "label": "t:sections.header.settings.enable_language_selector.label",
-      "info": "t:sections.header.settings.enable_language_selector.info"
+      "label": "t:sections.header.settings.enable_language_selector.label"
     },
     {
       "type": "checkbox",
       "id": "enable_country_selector",
       "default": true,
-      "label": "t:sections.header.settings.enable_country_selector.label",
-      "info": "t:sections.header.settings.enable_country_selector.info"
+      "label": "t:sections.header.settings.enable_country_selector.label"
     },
     {
       "type": "header",
@@ -315,6 +347,26 @@
           "id": "menu_title",
           "label": "t:sections.header.blocks.mega_menu.settings.menu_title.label",
           "info": "t:sections.header.blocks.mega_menu.settings.menu_title.info"
+        },
+        {
+          "type": "select",
+          "id": "menu_width",
+          "options": [
+            {
+              "value": "small",
+              "label": "t:sections.header.blocks.mega_menu.settings.menu_width.options__1.label"
+            },
+            {
+              "value": "medium",
+              "label": "t:sections.header.blocks.mega_menu.settings.menu_width.options__2.label"
+            },
+            {
+              "value": "large",
+              "label": "t:sections.header.blocks.mega_menu.settings.menu_width.options__3.label"
+            }
+          ],
+          "default": "medium",
+          "label": "t:sections.header.blocks.mega_menu.settings.menu_width.label"
         },
         {
           "type": "checkbox",

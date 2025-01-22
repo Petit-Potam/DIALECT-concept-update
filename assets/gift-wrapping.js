@@ -1,45 +1,3 @@
-class GiftQuantity extends CartQuantity {
-  constructor() {
-    super();
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    this.giftWrapping = document.querySelector('gift-wrapping');
-    this.cartItemsSize = parseInt(this.getAttribute('cart-items-size'));
-    this.giftWrapsInCart = parseInt(this.getAttribute('gift-wraps-in-cart'));
-    this.itemsInCart = parseInt(this.getAttribute('items-in-cart'));
-
-    // If we have nothing but gift-wrap items in the cart.
-    if (this.cartItemsSize == 1 && this.giftWrapsInCart > 0) {
-      this.giftWrapping.removeGiftWrap();
-    }
-    // If we don't have the right amount of gift-wrap items in the cart.
-    else if (this.giftWrapsInCart > 0 & this.giftWrapsInCart != this.itemsInCart) {
-      this.update();
-    }
-    // If we have a gift-wrap item in the cart but our gift-wrapping cart attribute has not been set.
-    else if (this.giftWrapsInCart > 0 && this.giftWrapping.length == 0) {
-      this.update();
-    }
-    // If we have no gift-wrap item in the cart but our gift-wrapping cart attribute has been set.
-    else if (this.giftWrapsInCart == 0 && this.giftWrapping.length > 0) {
-      this.update();
-    }
-  }
-
-  update() {
-    this.input.value = this.itemsInCart;
-    this.input.dispatchEvent(this.changeEvent);
-  }
-
-  validateQtyRules() {
-    // nothing
-  }
-}
-customElements.define('gift-quantity', GiftQuantity);
-
 class RemoveGiftWrap extends HTMLAnchorElement {
   constructor() {
     super();
@@ -48,7 +6,7 @@ class RemoveGiftWrap extends HTMLAnchorElement {
       event.preventDefault();
 
       const cartItems = this.closest('cart-items');
-      cartItems.enableLoading(this.dataset.index);
+      cartItems.enableLoading(this.getAttribute('data-index'));
 
       const giftWrapping = document.querySelector('gift-wrapping');
       giftWrapping.removeGiftWrap();
@@ -61,8 +19,8 @@ class GiftWrapping extends HTMLElement {
   constructor() {
     super();
 
-    this.giftWrapId = this.dataset.giftWrapId;
-    this.giftWrapping = this.dataset.giftWrapping;
+    this.giftWrapId = this.getAttribute('data-gift-wrap-id');
+    this.giftWrapping = this.getAttribute('data-gift-wrapping');
     this.cartItemsSize = parseInt(this.getAttribute('cart-items-size'));
     this.giftWrapsInCart = parseInt(this.getAttribute('gift-wraps-in-cart'));
     this.itemsInCart = parseInt(this.getAttribute('items-in-cart'));
@@ -70,25 +28,25 @@ class GiftWrapping extends HTMLElement {
 
   connectedCallback() {
     // When the gift-wrapping checkbox is checked or unchecked.
-    this.querySelector('[name="attributes[gift-wrapping]"]').addEventListener("change", (event) => {
+    this.querySelector('[name="attributes[gift-wrapping]"]').addEventListener('change', theme.utils.debounce((event) => {
       event.target.checked ? this.setGiftWrap() : this.removeGiftWrap();
-    });
+    }, 300));
 
     // If we have nothing but gift-wrap items in the cart.
     if (this.cartItemsSize == 1 && this.giftWrapsInCart > 0) {
-      this.removeGiftWrap();
+      return this.removeGiftWrap();
     }
     // If we don't have the right amount of gift-wrap items in the cart.
-    else if (this.giftWrapsInCart > 0 & this.giftWrapsInCart != this.itemsInCart) {
-      this.setGiftWrap();
+    if (this.giftWrapsInCart > 0 & this.giftWrapsInCart != this.itemsInCart) {
+      return this.setGiftWrap();
     }
     // If we have a gift-wrap item in the cart but our gift-wrapping cart attribute has not been set.
-    else if (this.giftWrapsInCart > 0 && this.giftWrapping.length == 0) {
-      this.setGiftWrap();
+    if (this.giftWrapsInCart > 0 && this.giftWrapping.length == 0) {
+      return this.setGiftWrap();
     }
     // If we have no gift-wrap item in the cart but our gift-wrapping cart attribute has been set.
-    else if (this.giftWrapsInCart == 0 && this.giftWrapping.length > 0) {
-      this.setGiftWrap();
+    if (this.giftWrapsInCart == 0 && this.giftWrapping.length > 0) {
+      return this.setGiftWrap();
     }
   }
 
@@ -135,7 +93,7 @@ class GiftWrapping extends HTMLElement {
     fetch(`${theme.routes.cart_update_url}`, { ...theme.utils.fetchConfig(), ...{ body } })
       .then((response) => response.json())
       .then((parsedState) => {
-        theme.pubsub.publish(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, { cart: parsedState });
+        theme.pubsub.publish(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, { source: 'gift-wrapping', cart: parsedState });
       })
       .catch((error) => {
         console.log(error);

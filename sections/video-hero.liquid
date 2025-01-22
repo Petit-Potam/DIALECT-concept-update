@@ -53,19 +53,19 @@
       <div class="video-hero__content{% if section.settings.full_width %} page-width{% endif %} text-center relative pointer-events-none">
         <text-scrolling class="banner__box banner__box--{{ section.settings.content_width }} inline-block">
           {%- liquid
-            assign withGradient = false
+            assign with_gradient = false
             if section.settings.gradient_highlight != blank and section.settings.gradient_highlight != 'rgba(0,0,0,0)'
-              assign withGradient = true
+              assign with_gradient = true
             endif
           -%}
           {%- for block in section.blocks -%}
             <div {{ block.shopify_attributes }}>
               {%- if block.settings.heading != blank -%}
-                <{{ block.settings.heading_tag }} class="heading font-bold {{ block.settings.heading_size }}">
+                <{{ block.settings.heading_tag }} class="heading {{ block.settings.heading_size }}">
                   {%- if block.settings.highlighted_text == 'none' -%}
-                    <split-words class="split-words flex flex-wrap justify-center" data-animate="fade-up-large">{{ block.settings.heading }}</split-words>
+                    <split-words class="split-words block" data-animate="fade-up-large">{{ block.settings.heading }}</split-words>
                   {%- else -%}
-                    {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
+                    {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: with_gradient -%}
                   {%- endif -%}
                 </{{ block.settings.heading_tag }}>
               {%- endif -%}
@@ -210,7 +210,7 @@
       "step": 1,
       "unit": "%",
       "label": "t:sections.global.settings.overlay_opacity.label",
-      "default": 10
+      "default": 40
     },
     {
       "type": "header",

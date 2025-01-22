@@ -25,16 +25,16 @@ class SearchTyped extends HTMLElement {
   }
 
   get startDelay() {
-    return parseFloat(this.dataset.delay || 0);
+    return this.hasAttribute('data-delay') ? parseFloat(this.getAttribute('data-delay')) : 0;
   }
 
   async init() {
     this.insertCursor();
-    await this.start(this.dataset.firstText, this.startDelay);
+    await this.start(this.getAttribute('data-first-text'), this.startDelay);
 
     setTimeout(async () => {
       await this.reset();
-      await this.start(this.dataset.lastText, 0);
+      await this.start(this.getAttribute('data-last-text'), 0);
     }, 600);
   }
 
@@ -120,7 +120,7 @@ class PredictiveSearch extends HTMLFormElement {
     const url = new URL(`${theme.routes.shop_url}${theme.routes.predictive_search_url}`);
 
     url.searchParams.set('q', this.getQuery());
-    url.searchParams.set('resources[limit]', this.dataset.limit || 3);
+    url.searchParams.set('resources[limit]', this.hasAttribute('data-limit') ? parseInt(this.getAttribute('data-limit')) : 3);
     url.searchParams.set('resources[limit_scope]', 'each');
     url.searchParams.set('section_id', theme.utils.sectionId(this));
     return url;
@@ -152,9 +152,12 @@ class PredictiveSearch extends HTMLFormElement {
   }
 
   renderSectionFromFetch(url) {
+    this.abortController?.abort();
+    this.abortController = new AbortController();
+    
     this.setAttribute('loading', '');
 
-    fetch(url)
+    fetch(url, { signal: this.abortController.signal })
       .then((response) => response.text())
       .then((responseText) => {
         this.renderSearchResults(responseText);
@@ -162,6 +165,14 @@ class PredictiveSearch extends HTMLFormElement {
 
         this.removeAttribute('loading');
         this.setAttribute('results', '');
+      })
+      .catch((error) => {
+        if (error.name === 'AbortError') {
+          console.log('Fetch aborted by user');
+        }
+        else {
+          console.error(error);
+        }
       });
   }
 
