@@ -42,7 +42,7 @@
       {%- endif -%}
 
       {%- if enable_filtering or enable_sorting or subcollections != blank -%}
-        <div class="collection__topbar hidden xl:flex items-center gap-4">
+        <div class="items-center hidden gap-4 collection__topbar xl:flex">
           {%- if filter_type == 'drawer' and collection.all_products_count > 0 -%}
             {%- render 'facets-drawer',
               results: collection,
@@ -81,24 +81,24 @@
                 endif
               endfor
             -%}
-            <div class="facet-sorting inline-flex items-center gap-6" id="SortByContainer">
+            <div class="inline-flex items-center gap-6 facet-sorting" id="SortByContainer">
               <span>{{ 'collections.sorting.sort_by_label' | t }}</span>
-              <facet-sort class="sort-wrapper relative">
-                <hover-element class="button button--secondary sort-by whitespace-nowrap overflow-hidden z-3">
+              <facet-sort class="relative sort-wrapper">
+                <hover-element class="overflow-hidden button button--secondary sort-by whitespace-nowrap z-3">
                   <span class="btn-fill" data-fill></span>
                   <div class="btn-text">
-                    <span class="sort-header flex items-center justify-center gap-5 relative w-full">
+                    <span class="relative flex items-center justify-center w-full gap-5 sort-header">
                       <span class="sort-selection">{{ sort_by_name | escape }}</span>
-                      <span class="sort-title text-sm uppercase absolute left-0 opacity-0 tracking-widest">{{ 'collections.sorting.sort_button' | t }}</span>
-                      <span class="sort-close flex items-center justify-center rounded-full">
+                      <span class="absolute left-0 text-sm tracking-widest uppercase opacity-0 sort-title">{{ 'collections.sorting.sort_button' | t }}</span>
+                      <span class="flex items-center justify-center rounded-full sort-close">
                         {%- render 'icon', icon: 'close', size: 'sm' -%}
                       </span>
                     </span>
-                    <ul class="sort-listbox text-left grid gap-2 absolute left-0 opacity-0 invisible w-full h-auto">
+                    <ul class="absolute left-0 grid invisible w-full h-auto gap-2 text-left opacity-0 sort-listbox">
                       {%- for option in collection.sort_options -%}
-                        <li class="opacity-0 relative">
+                        <li class="relative opacity-0">
                           <input id="SortBy-{{ option.value }}" class="sr-only" name="sort_by" type="radio" value="{{ option.value }}"{% if option.value == sort_by %} checked{% endif %} />
-                          <label for="SortBy-{{ option.value }}" class="reversed-link text-xl">{{ option.name | escape }}</label>
+                          <label for="SortBy-{{ option.value }}" class="text-xl reversed-link">{{ option.name | escape }}</label>
                         </li>
                       {%- endfor -%}
                     </ul>
@@ -116,10 +116,10 @@
         endif
       -%}
 
-      <div class="collection__content flex">
+      <div class="flex collection__content">
         {%- if enable_filtering and filter_type == 'sidebar' and collection.all_products_count > 0 -%}
           <div class="hidden xl:block" id="FacetFiltersContainer">
-            <sticky-element class="facets__scroll block sticky top-0">
+            <sticky-element class="sticky top-0 block facets__scroll">
               {%- render 'facets',
                 context: 'sidebar',
                 results: collection,
@@ -132,7 +132,7 @@
 
         <div class="flex flex-col gap-12 grow" id="ProductGridContainer">
           {%- if collection.products.size == 0 -%}
-            <div class="empty-state grid items-center justify-center text-center gap-7d5">
+            <div class="grid items-center justify-center text-center empty-state gap-7d5">
               {%- if collection.all_products_count > 0 -%}
                 <div class="flex flex-col items-center gap-3">
                   {%- render 'icon', icon: 'empty', size: 'xxxl' -%}
@@ -166,12 +166,13 @@
               {%- for product in collection.products -%}
                 {%- liquid
                   for block in section.blocks
-                    if block.type == 'promotion'
-                      if forloop.parentloop.index != block.settings.position
-                        continue
+                    if block.type == 'offer'
+                      if forloop.parentloop.index == block.settings.position_dsk
+                        render 'offer-card', block: block, class: "max-md:!jc-hidden", index: forloop.index
                       endif
-
-                      render 'promotion-card', block: block
+                      if forloop.parentloop.index == block.settings.position_mob
+                        render 'offer-card', block: block, class: "md:!jc-hidden", index: forloop.index
+                      endif
                     endif
                   endfor
 
@@ -414,30 +415,30 @@
       "limit": 1
     },
     {
-      "type": "promotion",
-      "name": "t:sections.main-collection.blocks.promotion.name",
+      "type": "offer",
+      "name": "Offer",
       "settings": [
         {
-          "type": "paragraph",
-          "content": "t:sections.main-collection.blocks.promotion.settings.paragraph.content"
-        },
-        {
-          "type": "range",
-          "id": "position",
-          "min": 1,
-          "max": 50,
+          "type": "number",
+          "id": "position_dsk",
           "default": 4,
-          "label": "t:sections.main-collection.blocks.promotion.settings.position.label"
+          "label": "t:sections.main-collection.blocks.promotion.settings.position_desktop.label"
+        },
+        {
+          "type": "number",
+          "id": "position_mob",
+          "default": 4,
+          "label": "t:sections.main-collection.blocks.promotion.settings.position_mobile.label"
         },
         {
           "type": "image_picker",
-          "id": "image",
-          "label": "t:sections.global.settings.image.label"
+          "id": "image_dsk",
+          "label": "Image (desktop)"
         },
         {
           "type": "image_picker",
-          "id": "icon",
-          "label": "t:sections.global.settings.icon.label"
+          "id": "image_mob",
+          "label": "Image (mobile)"
         },
         {
           "type": "text",
@@ -447,7 +448,7 @@
         },
         {
           "type": "richtext",
-          "id": "content",
+          "id": "subheading",
           "label": "t:sections.global.settings.description.label",
           "default": "<p>Share information about your brand with your customers.</p>"
         },
@@ -463,65 +464,26 @@
           "label": "t:sections.global.settings.button_link.label"
         },
         {
-          "type": "select",
-          "id": "content_position",
-          "options": [
-            {
-              "value": "md:items-start",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__1.label"
-            },
-            {
-              "value": "md:items-center",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__2.label"
-            },
-            {
-              "value": "md:items-end",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__3.label"
-            }
-          ],
-          "default": "md:items-center",
-          "label": "t:sections.global.settings.content_position.label"
-        },
-        {
-          "type": "text_alignment",
-          "id": "text_alignment",
-          "default": "center",
-          "label": "t:sections.global.settings.text_alignment.label"
-        },
-        {
-          "type": "header",
-          "content": "t:sections.global.settings.header__mobile.content"
-        },
-        {
-          "type": "image_picker",
-          "id": "image_mobile",
-          "label": "t:sections.global.settings.image_mobile.label"
+          "type": "url",
+          "id": "image_link",
+          "label": "Image link",
+          "info": "Only available if the heading, description, button text are empty. Specifying this url will turn the cover image into a link."
         },
         {
           "type": "select",
-          "id": "content_position_mobile",
+          "id": "mobile_layout",
+          "label": "Mobile layout",
           "options": [
             {
-              "value": "items-start",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__1.label"
+              "value": "compact",
+              "label": "Compact"
             },
             {
-              "value": "items-center",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__2.label"
+              "value": "default",
+              "label": "Default"
             },
-            {
-              "value": "items-end",
-              "label": "t:sections.main-collection.blocks.promotion.settings.content_position.options__3.label"
-            }
           ],
-          "default": "items-center",
-          "label": "t:sections.global.settings.content_position_mobile.label"
-        },
-        {
-          "type": "text_alignment",
-          "id": "text_alignment_mobile",
-          "default": "center",
-          "label": "t:sections.global.settings.text_alignment_mobile.label"
+          "default": "default",
         },
         {
           "type": "header",
@@ -548,24 +510,8 @@
         },
         {
           "type": "color_background",
-          "id": "color_button_gradient",
-          "label": "t:sections.global.settings.color_button_gradient.label"
-        },
-        {
-          "type": "color",
-          "id": "color_overlay",
-          "label": "t:sections.global.settings.color_overlay.label",
-          "default": "#171717"
-        },
-        {
-          "type": "range",
-          "id": "overlay_opacity",
-          "min": 0,
-          "max": 100,
-          "step": 1,
-          "unit": "%",
-          "label": "t:sections.global.settings.overlay_opacity.label",
-          "default": 40
+          "id": "background_color",
+          "label": "Block background"
         }
       ]
     }

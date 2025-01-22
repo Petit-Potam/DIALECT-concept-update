@@ -1,0 +1,39 @@
+{% comment %}
+  Snippet: scent-quality
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - root: {Object} corresponding metaobject entry object
+{% endcomment %}
+
+{%- unless root.image == blank and root.title == blank and root.subtitle == blank -%}
+  <div class="jc-border jc-flex jc-flex-col md:jc-flex-row jc-items-center jc-gap-y-4 jc-border-solid jc-border-platinum jc-rounded-lg jc-bg-white jc-px-2 md:jc-px-6 jc-py-4 jc-w-1/3">
+    {%- if root.image != blank -%}
+      {% render 'g-render-image',
+        class: 'jc-w-19 jc-h-19 jc-rounded-full jc-object-cover',
+        img_src: root.image.src,
+        img: root.image,
+        size: '300 500 700',
+        alt: root.image.url,
+        width: '100',
+        height: '50',
+        loading: 'lazy',
+        id: root.image.id
+      %}
+    {%- endif -%}
+
+    {%- unless root.title == blank and root.subtitle == blank -%}
+      <div class="md:jc-ml-4 md:jc-my-auto [&_p]:jc-m-0">
+        {%- if root.title != blank -%}
+          <h3 class="jc-text-sm md:jc-text-xl jc-leading-5 md:jc-leading-6 md:jc-text-left jc-text-center jc-mb-1">
+            {{ root.title }}
+          </h3>
+        {%- endif -%}
+
+        {%- if root.subtitle != blank -%}
+          <p class="jc-text-xs jc-leading-4 md:jc-text-sm md:jc-leading-5 max-md:jc-text-center jc-whitespace-nowrap">{{ root.subtitle }}</p>
+        {%- endif -%}
+      </div>
+    {%- endunless -%}
+  </div>
+{%- endunless -%}

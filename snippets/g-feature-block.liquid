@@ -1,0 +1,60 @@
+{% comment %}
+  Snippet: g-feature-block
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - block: {Object} feature block object
+
+  Render example:
+    {% render 'g-feature-block', block: feature %}
+{% endcomment %}
+
+{% liquid
+  unless block == blank
+    assign left_icon = block.settings.left_icon
+    assign right_icon = block.settings.right_icon
+    assign left_icon_alt = 'left_icon'
+    assign right_icon_alt = 'right_icon'
+
+    if left_icon.alt != blank
+      assign left_icon_alt = left_icon.alt
+    endif
+    if right_icon.alt != blank
+      assign right_icon_alt = right_icon.alt
+    endif
+  endunless
+%}
+
+{% unless block == blank %}
+  <div class="jc-flex jc-items-stretch jc-w-full jc-bg-antiFlashWhite jc-py-1.5 jc-rounded-full">
+    <span class="jc-flex jc-items-center jc-justify-center jc-flex-shrink-0 jc-px-4 md:jc-px-16 jc-py-2">
+      {% render 'g-render-image',
+        class: 'jc-w-8 jc-h-8 jc-object-cover',
+        img_src: left_icon.src,
+        img: left_icon,
+        size: '100 200',
+        alt: left_icon_alt,
+        width: left_icon.width,
+        height: left_icon.height,
+        loading: 'lazy',
+        id: left_icon.id
+      -%}
+    </span>
+    <span class="jc-flex jc-items-center jc-justify-center jc-px-2 md:jc-px-8 md:jc-py-3 jc-bg-white jc-rounded-full jc-text-sm md:jc-text-base jc-text-center jc-leading-5 jc-font-['Sequel45'] jc-flex-grow">
+      {{- block.settings.text -}}
+    </span>
+    <span class="jc-flex jc-items-center jc-justify-center jc-flex-shrink-0 jc-px-4 md:jc-px-16 jc-py-2">
+      {% render 'g-render-image',
+        class: 'jc-w-8 jc-h-8 jc-object-cover',
+        img_src: right_icon.src,
+        img: right_icon,
+        size: '100 200',
+        alt: right_icon_alt,
+        width: right_icon.width,
+        height: right_icon.height,
+        loading: 'lazy',
+        id: right_icon.id
+      -%}
+    </span>
+  </div>
+{% endunless %}

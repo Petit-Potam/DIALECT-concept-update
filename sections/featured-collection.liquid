@@ -11,7 +11,7 @@
   assign products = section.settings.products | default: collection.products
 -%}
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
-  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
+  <div class="jc-container{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- capture view_all -%}
       {%- if section.settings.show_view_all and collection != blank and section.settings.product_limit < collection.all_products_count -%}
         <a class="button button--secondary icon-with-text" href="{{ collection.url }}" is="hover-link" aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: collection.title }}">
@@ -27,7 +27,7 @@
     {%- endcapture -%}
     {%- capture indicators -%}
       {%- if section.settings.carousel_on_desktop -%}
-        <div class="indicators hidden lg:flex gap-2d5">
+        <div class="hidden indicators lg:flex gap-2d5">
           <button class="button button--secondary" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
             <span class="btn-fill" data-fill></span>
             <span class="btn-text">
@@ -92,14 +92,14 @@
 
       {%- if section.settings.heading == blank and section.settings.subheading == blank and section.settings.description == blank -%}
         {%- if section.settings.carousel_on_desktop -%}
-          <div class="indicators hidden lg:flex gap-2d5 items-center absolute top-0 left-0 w-full h-full pointer-events-none opacity-0 page-width">
-            <button class="button button--primary pointer-events-auto" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
+          <div class="absolute top-0 left-0 items-center hidden w-full h-full opacity-0 pointer-events-none indicators lg:flex gap-2d5 page-width">
+            <button class="pointer-events-auto button button--primary" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
               <span class="btn-fill" data-fill></span>
               <span class="btn-text">
                 {%- render 'icon', icon: 'chevron-left', class: 'stroke-2 transform' -%}
               </span>
             </button>
-            <button class="button button--primary pointer-events-auto" type="button" is="next-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
+            <button class="pointer-events-auto button button--primary" type="button" is="next-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
               <span class="btn-fill" data-fill></span>
               <span class="btn-text">
                 {%- render 'icon', icon: 'chevron-right', class: 'stroke-2 transform' -%}

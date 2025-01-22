@@ -38,6 +38,11 @@
       "back_to_home": "Go to the home page",
       "continue_shopping": "Continue shopping"
     },
+    "label": {
+      "color": "Color,Colour",
+      "white": "White",
+      "size": "Size"
+    },
     "meta": {
       "tags": "Tagged \"{{ tags }}\"",
       "page": "Page {{ page }}"
@@ -179,8 +184,8 @@
     "map": {
       "address_error": "Error looking up that address",
       "address_no_results": "No results for that address",
-      "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https:\/\/developers.google.com\/maps\/premium\/usage-limits\">Premium Plan<\/a>.",
-      "auth_error_html": "There was a problem authenticating your Google Maps account. Create and enable the <a href=\"https:\/\/developers.google.com\/maps\/documentation\/javascript\/get-api-key\">JavaScript API<\/a> and <a href=\"https:\/\/developers.google.com\/maps\/documentation\/geocoding\/get-api-key\">Geocoding API<\/a> permissions of your app."
+      "address_query_limit_html": "You have exceeded the Google API usage limit. Consider upgrading to a <a href=\"https://developers.google.com/maps/premium/usage-limits\">Premium Plan</a>.",
+      "auth_error_html": "There was a problem authenticating your Google Maps account. Create and enable the <a href=\"https://developers.google.com/maps/documentation/javascript/get-api-key\">JavaScript API</a> and <a href=\"https://developers.google.com/maps/documentation/geocoding/get-api-key\">Geocoding API</a> permissions of your app."
     },
     "slideshow": {
       "play_slideshow": "Play slideshow",
@@ -219,10 +224,15 @@
       "taxes_included_and_shipping_policy_html": "Tax included. <a href=\"{{ link }}\">Shipping</a> calculated at checkout.",
       "taxes_and_shipping_at_checkout": "Taxes included and shipping calculated at checkout.",
       "update": "Update cart",
-      "checkout": "Check out",
+      "checkout": "Secure Checkout",
       "we_accept": "We accept",
       "empty": "Your cart is currently empty.",
-      "continue_shopping": "Continue shopping"
+      "continue_shopping": "Continue shopping",
+      "free": "Free",
+      "bundle_savings_discount_name": "Buy 2 Get 3",
+      "discount_applied": "Discount applied",
+      "recommendations_heading": "You may also like",
+      "edit_bundle": "Edit bundle"
     },
     "headings": {
       "product": "Product",
@@ -416,26 +426,30 @@
       "regular_price": "Regular price",
       "sale_price": "Sale price",
       "unit_price": "Unit price",
-      "from_text_html": "<small>From<\/small> {{ price }}"
+      "from_text_html": "<small>From</small> {{ price }}"
     },
     "product": {
       "product_variants": "Product variants",
       "sold_out": "Sold Out",
       "unavailable": "Unavailable",
       "add_to_cart": "Add to cart",
-      "choose_options": "Choose options",
+      "add_to_cart_short": "+ Add to cart",
+      "choose_options": "Choose size",
       "choose_product_options": "Choose options for {{ product_name }}",
       "view_product": "View product",
       "pre_order": "Pre-order",
       "vendor": "Vendor",
       "include_taxes": "Tax included.",
-      "shipping_policy_html": "<a href='{{ link }}'>Shipping<\/a> calculated at checkout.",
+      "shipping_policy_html": "<a href='{{ link }}'>Shipping</a> calculated at checkout.",
       "will_not_ship_until": "Ready to ship {{ date }}",
       "will_be_in_stock_after": "Back in stock {{ date }}",
       "waiting_for_stock": "Inventory on the way",
       "read_more": "View full details",
       "quick_add": "Add",
-      "quick_view": "View"
+      "quick_view": "View",
+      "discount_html": "Save {{ savings }}",
+      "from_price_html": "From <br>{{ price_min }}",
+      "mix_and_match_slogan": "Build your bundle"
     },
     "media": {
       "open_media": "Open media {{ index }} in modal",
@@ -459,7 +473,8 @@
       "out_of_stock_continue_selling": "In stock",
       "will_not_ship_until": "Ready to ship {{ date }}",
       "will_be_in_stock_after": "Back in stock {{ date }}",
-      "waiting_for_stock": "Inventory on the way"
+      "waiting_for_stock": "Inventory on the way",
+      "notify_me": "Notify me"
     },
     "pickup_availability": {
       "title": "Pickup availability",

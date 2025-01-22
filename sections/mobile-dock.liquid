@@ -15,7 +15,7 @@
     {%- for block in section.blocks -%}
       {%- case block.type -%}
         {%- when 'account' -%}
-          <a class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" {{ block.shopify_attributes }}>
+          <a class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" {{ block.shopify_attributes }}>
             {%- liquid
               if block.settings.custom_icon != blank
                 echo block.settings.custom_icon
@@ -23,11 +23,11 @@
                 render 'icon-dock', icon: 'account', size: 'sm'
               endif
             -%}
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
           </a>
 
         {%- when 'cart' -%}
-          <a class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" href="{{ routes.cart_url }}" aria-controls="CartDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
+          <a class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" href="{{ routes.cart_url }}" aria-controls="CartDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
             <span class="relative">
               {%- liquid
                 if block.settings.custom_icon != blank
@@ -36,13 +36,13 @@
                   render 'icon-dock', icon: 'cart', size: 'sm'
                 endif
               -%}
-              <cart-count class="count absolute text-3xs leading-none" aria-label="{{ 'general.cart.cart_count' | t: count: cart.item_count | escape }}"{% if cart == empty %} hidden{% endif %}>{{ cart.item_count }}</cart-count>
+              <cart-count class="absolute leading-none count text-3xs" aria-label="{{ 'general.cart.cart_count' | t: count: cart.item_count | escape }}"{% if cart == empty %} hidden{% endif %}>{{ cart.item_count }}</cart-count>
             </span>
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
           </a>
 
         {%- when 'home' -%}
-          <a class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" href="{{ routes.root_url }}" {{ block.shopify_attributes }}>
+          <a class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" href="{{ routes.root_url }}" {{ block.shopify_attributes }}>
             {%- liquid
               if block.settings.custom_icon != blank
                 echo block.settings.custom_icon
@@ -50,11 +50,11 @@
                 render 'icon-dock', icon: 'home', size: 'sm'
               endif
             -%}
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
           </a>
 
         {%- when 'menu' -%}
-          <div class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" aria-controls="MenuDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
+          <div class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" aria-controls="MenuDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
             {%- liquid
               if block.settings.custom_icon != blank
                 echo block.settings.custom_icon
@@ -62,11 +62,11 @@
                 render 'icon-dock', icon: 'hamburger', size: 'sm'
               endif
             -%}
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
           </div>
 
         {%- when 'search' -%}
-          <a class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" href="{{ routes.search_url }}" aria-controls="SearchDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
+          <a class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" href="{{ routes.search_url }}" aria-controls="SearchDrawer" aria-expanded="false" {{ block.shopify_attributes }}>
             {%- liquid
               if block.settings.custom_icon != blank
                 echo block.settings.custom_icon
@@ -74,11 +74,11 @@
                 render 'icon-dock', icon: 'search', size: 'sm'
               endif
             -%}
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
             </a>
 
         {%- when 'link' -%}
-          <a class="dock__item flex flex-col items-center justify-center gap-1d5 grow shrink-0 cursor-pointer" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
+          <a class="flex flex-col items-center justify-center cursor-pointer dock__item gap-1d5 grow shrink-0" href="{{ block.settings.link }}" {{ block.shopify_attributes }}>
             {%- liquid
               if block.settings.custom_icon != blank
                 echo block.settings.custom_icon
@@ -86,7 +86,7 @@
                 render 'icon-dock', icon: 'grid', size: 'sm'
               endif
             -%}
-            <span class="text-3xs leading-none">{{ block.settings.title | escape }}</span>
+            <span class="leading-none text-3xs">{{ block.settings.title | escape }}</span>
           </a>
       {%- endcase %}
     {%- endfor %}

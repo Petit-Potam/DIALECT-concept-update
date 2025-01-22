@@ -10,7 +10,14 @@
     endif
   endif
 -%}
-<div class="badges{% if class != blank %} {{ class }}{% endif %} pointer-events-none">
+<div
+  class="
+    badges{% if class != blank %} {{ class }}{% endif %} min-[639px]:!jc-w-[calc(100%_-_24px)] !jc-w-[calc(100%_-_16px)]
+    {% if is_vertical_on_mobile == false %}
+      max-[639px]:jc-flex-col
+    {% endif %} pointer-events-none  jc-justify-between
+  "
+>
   {%- if product.metafields.theme.label.value != blank -%}
     {%- capture styles -%}
       {%- if product.metafields.theme.label_color.value != blank -%}
@@ -18,14 +25,46 @@
       {%- endif -%}
     {%- endcapture -%}
     {%- for label in product.metafields.theme.label.value -%}
-      <span class="badge flex items-center gap-1d5 font-medium leading-none rounded-full"{% if styles != blank %} style="{{ styles }}"{% endif %}>
-        {{- label | escape -}}
-      </span>
+      {% comment %}DIALECT - START Add label name in badge class so we can style it easily{% endcomment %}
+      {%- assign label = label | replace: ' ', '-' -%}
+      {% comment %} Add an exception for Bestsellers {% endcomment %}
+      {%- unless label contains 'Best Seller' -%}
+        <span
+          class="{{- label | remove:" " | escape | append: " " -}} badge !jc-tracking-[0.045em] jc-uppercase flex items-center gap-1d5 font-medium leading-none rounded-full"
+          {% if styles != blank %}
+            style="{{ styles }}"
+          {% endif %}
+        >
+          {{- label | escape -}}
+        </span>
+      {%- endunless -%}
+      {% comment %}DIALECT - END Add label name in badge class so we can style it easily{% endcomment %}
     {%- endfor -%}
   {%- endif -%}
+</div>
 
-  {%- if saved_amount != blank -%}
-     <span class="badge badge--onsale flex items-center gap-1d5 font-medium leading-none rounded-full">
+{% comment %}START DIALECT - Added Sale Badge in another badges container to place it in the up-right corner{% endcomment %}
+{%- if saved_amount != blank -%}
+  <div class="badges cust_badges-right{% if class != blank %} {{ class }}{% endif %} pointer-events-none">
+    {% comment %} START DIALECT - Add Bestseller label above the discount percentage label {% endcomment %}
+    {%- for label in product.metafields.theme.label.value -%}
+      {% comment %}DIALECT - START Add label name in badge class so we can style it easily{% endcomment %}
+      {%- assign label = label | replace: ' ', '-' -%}
+      {%- if label contains 'Bestseller' -%}
+        <span
+          class="{{- label | remove:" " | escape | append: " " -}} badge flex items-center gap-1d5 font-medium leading-none rounded-full"
+          {% if styles != blank %}
+            style="{{ styles }}"
+          {% endif %}
+        >
+          {{- label | escape -}}
+        </span>
+      {%- endif -%}
+      {% comment %}DIALECT - END Add label name in badge class so we can style it easily{% endcomment %}
+    {%- endfor -%}
+    {% comment %} END DIALECT - Add Bestseller label above the discount percentage label {% endcomment %}
+
+    <span class="flex items-center font-medium leading-none rounded-full badge badge--onsale gap-1d5">
       {%- liquid
         if save_type == 'label'
           echo 'products.general.sale' | t
@@ -34,5 +73,6 @@
         endif
       -%}
     </span>
-  {%- endif -%}
-</div>
+  </div>
+{%- endif -%}
+{% comment %} END DIALECT - Added Sale Badge in another badges container to place it in the up-right corner{% endcomment %}

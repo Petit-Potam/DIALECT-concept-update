@@ -1,0 +1,178 @@
+{% comment %}
+  Section: g-product-banner
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+{% endcomment %}
+
+{% liquid
+  assign image_dsk = section.settings.image_dsk
+  assign image_mob = section.settings.image_mob
+%}
+
+<style>
+  #shopify-section-{{ section.id }} {
+    --button-background-color: {{ section.settings.button_background_color }};
+    --button-text-color: {{ section.settings.button_text_color }};
+  }
+  .section-background-{{ section.id }} {
+    background-color: {{ section.settings.section_background_color }};
+  }
+  .banner-background-{{ section.id }} {
+    background-color: {{ section.settings.banner_background_color }};
+  }
+</style>
+
+{% # wrapper %}
+<div class="jc-container md:jc-px-10 section-background-{{ section.id }}">
+  {% # banner container %}
+  <div class="jc-flex jc-w-full jc-h-full md:jc-py-7 jc-p-6 jc-items-center jc-justify-items-stretch md:jc-pr-3 md:jc-pl-10 lg:jc-gap-x-31 md:jc-gap-x-6 banner-background-{{ section.id }} jc-rounded-lg">
+    {% # text and mobile image container %}
+    <div class="jc-w-fit jc-h-full jc-flex jc-flex-col jc-items-center md:jc-items-start jc-justify-center md:jc-gap-y-2">
+      {% # labels %}
+      {% if section.settings.heading != blank %}
+        <h3 class="jc-text-6.5xl jc-leading-none md:jc-text-7.5xl md:jc-leading-18 jc-m-0 jc-z-0 max-md:jc-mb-3 md:jc-min-w-[350px]">{{ section.settings.heading }}</h3>
+      {% endif %}
+      {% if section.settings.subheading != blank %}
+        <p class="jc-text-xl jc-leading-6 jc-m-0 jc-z-0 jc-hidden md:jc-block">{{ section.settings.subheading }}</p>
+      {% endif %}
+      {% # mobile image %}
+      <div class="jc-flex md:jc-hidden jc-items-center jc-justify-center jc-w-full">
+        {%
+          render "g-render-image"
+          class: "jc-w-full jc-h-full jc-object-cover",
+          img_src: image_mob.src,
+          img: image_mob,
+          size: "400 900 1200",
+          alt: {{ image_mob.alt }},
+          width: {{ image_mob.width }},
+          height: {{ image_mob.height }},
+          loading: "eager",
+          id: {{ image_mob.id }}
+        %}
+      </div>
+      {% # button %}
+      {% if section.settings.button_text != blank %}
+        <div class="lg:jc-pt-6 jc-pt-2 min-[550px]:jc-w-fit jc-w-full">
+          <a href="{{ section.settings.button_link }}">
+            <button
+              type="submit"
+              class="jc-w-full button button--primary jc-uppercase after:!jc-hidden jc-border jc-border-[var(--button-background-color)] jc-border-solid [&:not(:hover)]:!jc-text-[var(--button-text-color)] !jc-bg-[var(--button-background-color)] jc-rounded-md md:jc-mt-8"
+              is="hover-button"
+            >
+              <span
+                class="btn-fill"
+                data-fill=""
+                style="transform: translateY(var(--motion-translateY)); --motion-translateY: -76%;"
+              ></span>
+              <span class="btn-text">{{ section.settings.button_text }}</span>
+              <span class="btn-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </a>
+          {% comment %}
+            <a
+              href="{{ section.settings.button_link }}"
+              class="button button--secondary jc-flex jc-items-center !jc-whitespace-nowrap jc-justify-center !jc-px-16 !jc-py-4 jc-w-full md:jc-w-fit jc-h-13 !jc-text-xs !jc-leading-4 jc-font-medium jc-text-center"
+            >
+              {{- section.settings.button_text -}}
+            </a>
+          {% endcomment %}
+        </div>
+      {% endif %}
+    </div>
+    {% # desktop image %}
+    <div class="jc-hidden md:jc-flex jc-items-center jc-justify-center jc-rounded-xxs">
+      {%
+        render "g-render-image"
+        class: "jc-w-full jc-h-auto jc-object-cover",
+        img_src: image_dsk.src,
+        img: image_dsk,
+        size: "1280 1440 2160",
+        alt: {{ image_dsk.alt }},
+        width: {{ image_dsk.width }},
+        height: {{ image_dsk.height }},
+        loading: "eager",
+        id: {{ image_dsk.id }}
+      %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Image Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_dsk",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mob",
+      "label": "Mobile image"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button image"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "banner_background_color",
+      "label": "Banner color"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product banner"
+    }
+  ]
+}
+{% endschema %}

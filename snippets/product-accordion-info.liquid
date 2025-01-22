@@ -1,0 +1,20 @@
+{% assign info_items = product.metafields.jolly_meta.product_accordion.value %}
+
+<div
+  class="jc-w-full jc-grid jc-gap-3 jc-grid-cols-1 jc-pt-2 jc-mt-6"
+>
+  {% for info_item in info_items %}
+    {% assign item_id = 'info-item-' | append: forloop.index | append: '-' | append: section.id %}
+    {% render 'product-accordion-info-item',
+      item_id: item_id,
+      section_id: section.id,
+      dropdown_icon_type: block.settings.dropdown_icon,
+      input_type: block.settings.accordion_input_type,
+      item_title: info_item.title,
+      item_text: info_item.text,
+      item_note_list: info_item.list_of_notes.value
+      open_first: block.settings.open_first,
+      forloop_index: forloop.index
+    %}
+  {% endfor %}
+</div>

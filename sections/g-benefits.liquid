@@ -1,0 +1,81 @@
+{% comment %}
+  Section: g-benefits
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-benefit-block
+{% endcomment %}
+
+<div class="jc-container jc-px-6 sm:jc-px-10 jc-py-10 sm:jc-py-15">
+  <div class="jc-grid jc-grid-cols-1 sm:jc-grid-cols-3 jc-gap-x-6 xl:jc-gap-x-20 jc-gap-y-6 sm:jc-gap-y-0 xl:jc-px-20">
+    {% if section.blocks.size > 0 %}
+      {% for block in section.blocks %}
+        {% render 'g-benefit-block', block: block %}
+      {% endfor %}
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "benefit",
+      "settings": [
+        {
+          "type": "image_picker",
+          "label": "Image",
+          "id": "benefit_image"
+        },
+        {
+          "type": "text",
+          "label": "Heading",
+          "id": "benefit_heading"
+        },
+        {
+          "type": "richtext",
+          "label": "Description",
+          "id": "benefit_description",
+          "default": "<p></p>"
+        }
+      ],
+      "limit": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits",
+      "blocks": [
+        {
+          "type": "benefit",
+          "settings": {
+            "benefit_image": "shopify:\/\/shop_images\/perfume.svg",
+            "benefit_heading": "Smells Like the Original",
+            "benefit_description": "<p>Smells like your favorite designer fragrances. Our perfumes give you the same luxury experience at a price you'll love.<\/p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "benefit_image": "shopify:\/\/shop_images\/tag.svg",
+            "benefit_heading": "Luxury for Less",
+            "benefit_description": "<p>Feel chic and luxurious without overspending. Our perfumes are just as long-lasting and elegant as top brands, but much more affordable.<\/p>"
+          }
+        },
+        {
+          "type": "benefit",
+          "settings": {
+            "benefit_image": "shopify:\/\/shop_images\/clock.svg",
+            "benefit_heading": "Long Lasting",
+            "benefit_description": "<p>Our perfumes are made to last all day. With our high-quality, vegan formulas, you'll stay fresh and confident from morning till night, no matter what your day holds.<\/p>"
+          }
+        }
+      ],
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}

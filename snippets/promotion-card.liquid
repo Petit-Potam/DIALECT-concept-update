@@ -1,12 +1,16 @@
-<div class="card product-card product-card--promo block leading-none relative overflow-hidden" id="shopify-block-{{ block.id }}">
+{% liquid
+  assign class = class | default: ""
+%}
+
+<div class="relative block overflow-hidden leading-none card product-card product-card--promo {{ class }}" id="shopify-block-{{ block.id }}">
   <style>
     #shopify-block-{{ block.id }} {
       {%- render 'section-variables', section: block -%}
     }
   </style>
-  <div class="product-card__media relative h-full">
+  <div class="relative h-full product-card__media">
     {% if block.settings.image != blank %}
-      <media-element class="flex relative media aspect-square h-full overflow-hidden" data-parallax="0.3">
+      <media-element class="relative flex h-full overflow-hidden media aspect-square" data-parallax="0.3">
         {{- block.settings.image | image_url: width: block.settings.image.width | image_tag: loading: 'lazy', widths: '180,360,540,720,900,1080', is: 'lazy-image' -}}
       </media-element>
     {% endif %}
@@ -23,14 +27,14 @@
 
         {%- if block.settings.heading != blank -%}
           <div class="grid gap-3">
-            <p class="promo-title heading text-3xl font-bold leading-none tracking-tight">
+            <p class="text-3xl font-bold leading-none tracking-tight promo-title heading">
               <a class="reversed-link"{% if block.settings.button_link != blank %} href="{{ block.settings.button_link }}"{% else %} role="link" aria-disabled="true"{% endif %}>
                 {{- block.settings.heading -}}
               </a>
             </p>
 
             {%- if block.settings.content != blank -%}
-              <div class="promo-subtitle rte leading-tight">{{ block.settings.content }}</div>
+              <div class="leading-tight promo-subtitle rte">{{ block.settings.content }}</div>
             {%- endif -%}
           </div>
         {%- endif -%}

@@ -7,7 +7,7 @@
 </style>
 
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
-  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
+  <div class="jc-container{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- render 'section-heading', section: section -%}
 
     <carousel-element class="text-with-icons block lg:grid grid--{{ section.settings.columns }} relative z-1" watch-css>
@@ -31,7 +31,7 @@
           
           <div class="column__content">
             {%- if block.settings.heading != blank -%}
-              <p class="column__title heading font-medium leading-tight tracking-none">
+              <p class="font-medium leading-tight column__title heading tracking-none">
                 {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
               </p>
             {%- endif -%}

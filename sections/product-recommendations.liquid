@@ -6,12 +6,12 @@
   }
 </style>
 
-<product-recommendations class="related-products block" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.product_limit }}&intent=related">
+<product-recommendations class="block related-products" data-url="{{ routes.product_recommendations_url }}?section_id={{ section.id }}&product_id={{ product.id }}&limit={{ section.settings.product_limit }}&intent=related">
   <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
     {%- if recommendations.performed and recommendations.products_count > 0 -%}
-      <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative overflow-hidden md:overflow-visible">
+      <div class="jc-container{% if section.settings.full_width %} page-width--full{% endif %} relative overflow-hidden lg:overflow-visible">
         {%- capture indicators -%}
-          <div class="indicators hidden lg:flex gap-2d5">
+          <div class="hidden indicators lg:flex gap-2d5">
             <button class="button button--secondary" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
               <span class="btn-fill" data-fill></span>
               <span class="btn-text">
@@ -45,21 +45,22 @@
                 show_quick_view: settings.product_quick_view,
                 show_save_amount: settings.product_save_amount,
                 save_type: settings.product_save_type,
-                section_id: section.id
+                section_id: section.id,
+                is_vertical_on_mobile: true
               -%}
             {%- endfor -%}
           </motion-list>
 
           {%- if section.settings.heading == blank and section.settings.subheading == blank and section.settings.description == blank -%}
             {%- if section.settings.carousel_on_desktop -%}
-              <div class="indicators hidden lg:flex gap-2d5 items-center absolute top-0 left-0 w-full h-full pointer-events-none opacity-0 page-width">
-                <button class="button button--primary pointer-events-auto" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
+              <div class="absolute top-0 left-0 items-center hidden w-full h-full opacity-0 pointer-events-none indicators lg:flex gap-2d5 page-width">
+                <button class="pointer-events-auto button button--primary" type="button" is="previous-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
                   <span class="btn-fill" data-fill></span>
                   <span class="btn-text">
                     {%- render 'icon', icon: 'chevron-left', class: 'stroke-2 transform' -%}
                   </span>
                 </button>
-                <button class="button button--primary pointer-events-auto" type="button" is="next-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
+                <button class="pointer-events-auto button button--primary" type="button" is="next-button" aria-controls="Slider-{{ section.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
                   <span class="btn-fill" data-fill></span>
                   <span class="btn-text">
                     {%- render 'icon', icon: 'chevron-right', class: 'stroke-2 transform' -%}
@@ -172,19 +173,19 @@
       "label": "t:sections.global.settings.heading_alignment.label",
       "options": [
         {
-          "value": "text-left md:items-end md:flex-row",
+          "value": "text-left lg:items-end lg:flex-row",
           "label": "t:sections.global.settings.heading_alignment.options__1.label"
         },
         {
-          "value": "text-center md:items-center",
+          "value": "text-center lg:items-center",
           "label": "t:sections.global.settings.heading_alignment.options__2.label"
         },
         {
-          "value": "text-right md:items-end md:flex-row-reverse",
+          "value": "text-right lg:items-end lg:flex-row-reverse",
           "label": "t:sections.global.settings.heading_alignment.options__3.label"
         }
       ],
-      "default": "text-left md:items-end md:flex-row"
+      "default": "text-left lg:items-end lg:flex-row"
     },
     {
       "type": "select",

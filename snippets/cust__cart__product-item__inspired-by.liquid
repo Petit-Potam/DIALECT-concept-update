@@ -1,0 +1,16 @@
+{%- if product.metafields.custom.inspired_by_et_retail_price.value != blank -%}
+  <div class="product-card__inspired-by jc-pt-2 jc-text-xs jc-leading-3">
+    <p class="product-card__inspired-by__text jc-p-0">
+      Inspired by
+      <b>
+        {% case product.metafields.custom.inspiration_brand | split:'' | last %}
+          {% when 's' %}
+            {{ product.metafields.custom.inspiration_brand }}'
+          {% else %}
+            {{ product.metafields.custom.inspiration_brand }}'s
+        {% endcase %}
+      </b>
+      <span>{{ product.metafields.facebook.custom_label_0 }}</span>
+    </p>
+  </div>
+{%- endif -%}

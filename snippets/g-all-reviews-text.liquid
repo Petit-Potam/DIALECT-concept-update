@@ -1,0 +1,46 @@
+{% comment %}
+  Snippet: g-all-reviews-text
+  Created by: Volodymyr Korolchuk
+
+  Render example: {% render 'g-all-reviews-text' %}
+{% endcomment %}
+
+{% liquid
+  assign rating = shop.metafields.judgeme.all_reviews_rating
+  assign reviews_count = shop.metafields.judgeme.all_reviews_count
+%}
+
+<div class="jc-flex jc-w-full jc-justify-between">
+  <div class="jc-flex jc-flex-col md:jc-flex-row jc-items-baseline jc-justify-start jc-gap-2">
+    <div class="jc-flex jc-items-end jc-justify-center jc-gap-4 jc-font-['Sequel45']">
+      <span class="jc-text-sm jc-leading-5 md:jc-text-xl md:jc-leading-6"
+        ><span class="jc-text-md jc-leading-6 md:jc-text-5xl md:jc-leading-10 jc-font-['Sequel75'] jc-font-normal">{{ rating }}</span> / 5</span
+      >
+      {% render 'g-star-rating', rating: rating, color: '#e97a21', width: 32, height: 32, icon_class: "max-md:!jc-w-6 max-md:!jc-h-6", hide_empty_stars: false %}
+    </div>
+    <div class="jc-flex jc-items-center jc-justify-start md:jc-justify-center jc-gap-2 !jc-h-fit">
+      <span class="jc-text-sm jc-leading-5"
+        >based on
+        <a class="jc-underline" href="https://judge.me/reviews/dialectfragrances.myshopify.com">
+          {{- reviews_count }}+ reviews</a
+        >
+      </span>
+      {% render 'g-judgeme-icon' %}
+    </div>
+  </div>
+
+  <div class="indicators lg:flex jc-gap-4 max-md:jc-hidden">
+    <button class="button button--secondary reviews-prev-{{ section.id }}" type="button" is="previous-button" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
+      <span class="btn-fill" data-fill></span>
+      <span class="btn-text">
+        {%- render 'icon', icon: 'chevron-left', class: 'transform' -%}
+      </span>
+    </button>
+    <button class="button button--secondary reviews-next-{{ section.id }}" type="button" is="next-button" aria-label="{{ 'general.pagination.next' | t | escape }}">
+      <span class="btn-fill" data-fill></span>
+      <span class="btn-text">
+        {%- render 'icon', icon: 'chevron-right', class: 'transform' -%}
+      </span>
+    </button>
+  </div>
+</div>

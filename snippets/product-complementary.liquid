@@ -7,6 +7,7 @@
   - show_price: {Boolean} Show the product price. Default: false
   - product_id: {String} The ID of the current product.
   - section_id: {String} The ID of the section.
+  - intent: {String} recommendations intent - related or complementary.
 
   Usage:
   {% render 'product-complementary', limit: 5 %}
@@ -21,36 +22,53 @@
       assign products_count = recommendations.products_count
     endif
   endif
+
+  assign intent = intent | default: 'complementary'
 -%}
-<product-recommendations class="complementary-products grid gap-5" data-url="{{ routes.product_recommendations_url }}?section_id={{ section_id }}&product_id={{ product_id }}&limit={{ limit }}&intent=complementary">
-  <div class="flex justify-between gap-4 items-center">
-    <p class="recommend__title font-medium text-lg grow">{{ heading | escape }}</p>
-    {%- if products_count > 1 -%}
-      <div class="indicators indicators--small flex gap-2">
-        <button class="button button--secondary" type="button" is="hover-button" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled data-prev-button>
-          <span class="btn-fill" data-fill></span>
-          <span class="btn-text">
-            {%- render 'icon', icon: 'chevron-left', size: 'sm', class: 'transform' -%}
-          </span>
-        </button>
-        <button class="button button--secondary" type="button" is="hover-button" aria-label="{{ 'general.pagination.next' | t | escape }}" data-next-button>
-          <span class="btn-fill" data-fill></span>
-          <span class="btn-text">
-            {%- render 'icon', icon: 'chevron-right', size: 'sm', class: 'transform' -%}
-          </span>
-        </button>
+
+<div class="lg:!jc-absolute lg:jc-top-0 lg:jc-right-[36rem]">
+  <div class="jc-bg-cosmicLatte lg:jc-rounded-l-2xl jc-w-full lg:jc-w-60">
+    <product-recommendations
+      class="lg:jc-h-[100dvh] jc-flex jc-flex-col"
+      data-url="{{ routes.product_recommendations_url }}?section_id={{ section_id }}&product_id={{ cart.items.first.product_id }}&limit={{ limit }}&intent={{ intent }}"
+    >
+      <p class="jc-text-start lg:jc-text-center heading jc-text-base jc-leading-6 jc-font-bold jc-pt-6 jc-pb-4 lg:jc-py-9 max-lg:jc-px-6">
+        {{ heading | escape }}
+      </p>
+      <div class="flex items-center justify-between gap-4">
+        {%- if products_count > 1 -%}
+          <div class="flex gap-2 indicators indicators--small jc-hidden jc-absolute jc-top-full jc-left-full">
+            <button
+              class="button button--secondary"
+              type="button"
+              is="hover-button"
+              aria-label="{{ 'general.pagination.previous' | t | escape }}"
+              disabled
+              data-prev-button
+            ></button>
+            <button
+              class="button button--secondary"
+              type="button"
+              is="hover-button"
+              aria-label="{{ 'general.pagination.next' | t | escape }}"
+              data-next-button
+            ></button>
+          </div>
+        {%- endif -%}
       </div>
-    {%- endif -%}
+      {%- if recommendations.performed -%}
+        <div class="jc-overflow-auto jc-flex">
+          <product-complementary class="jc-flex-grow jc-w-full max-lg:[&_.product-item]:!jc-items-start jc-flex jc-flex-row lg:jc-flex-col jc-overflow-auto jc-auto-cols-auto jc-px-6 lg:jc-px-4 lg:jc-py-6 jc-transition-all">
+            {%- liquid
+              for recommendation in recommendations_products
+                render 'recommendations-product-item', product: recommendation, reduced_content: true, reduced_font_size: true, hide_secondary_image: true, sizes_attribute: '(max-width: 740px) 65px, 100px'
+              endfor
+            -%}
+          </product-complementary>
+        </div>
+      {%- else -%}
+        <div class="relative horizontal-products"></div>
+      {%- endif -%}
+    </product-recommendations>
   </div>
-  {%- if recommendations.performed -%}
-    <product-complementary class="horizontal-products block{% if products_count > 1 %} flickity{% endif %}">
-      {%- liquid
-        for recommendation in recommendations_products
-          render 'product-card-horizontal', product: recommendation, show_vendor: show_vendor, show_price: show_price, show_quick_add: true, show_quick_view: settings.product_quick_view
-        endfor
-      -%}
-    </product-complementary>
-  {%- else -%}
-    <div class="horizontal-products relative"></div>
-  {%- endif -%}
-</product-recommendations>
+</div>

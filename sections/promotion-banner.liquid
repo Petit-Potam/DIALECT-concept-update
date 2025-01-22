@@ -1,0 +1,293 @@
+{% style %}
+  .background-{{ section.id }} {
+    background: {{ section.settings.background }};
+  }
+
+  .paddings-{{ section.id }} {
+    padding-top: {{ section.settings.padding_mob_t }}px;
+    padding-bottom: {{ section.settings.padding_mob_b }}px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .paddings-{{ section.id }} {
+      padding-top: {{ section.settings.padding_dsk_t }}px;
+      padding-bottom: {{ section.settings.padding_dsk_b }}px;
+    }
+  }
+
+  #shopify-section-{{ section.id }} {
+    {%- if section.settings.button_background == 'rgba(0,0,0,0)' -%}
+      {%- assign button_background = settings.primary_button_background -%}
+    {%- else -%}
+      {%- assign button_background = section.settings.button_background -%}
+    {%- endif -%}
+
+    {%- if section.settings.button_text_color == 'rgba(0,0,0,0)' -%}
+      {%- assign button_text_color = settings.primary_button_text_color -%}
+    {%- else -%}
+      {%- assign button_text_color = section.settings.button_text_color -%}
+    {%- endif -%}
+
+    --button-background-color: {{ section.settings.button_background_color }};
+    --button-text-color: {{ section.settings.button_text_color }};
+  }
+
+  .underlined-dsk em::before {
+    content : "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='192' height='20' viewBox='0 0 192 20' fill='none'%3E%3Cpath d='M2.5 17.2002C31.568 8.27281 109.663 -6.0171 189.5 8.24234' stroke='%23E97A21' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+    height: 20px;
+    width: 188px;
+    background-repeat: no-repeat;
+  }
+
+  .underlined-mob em::before {
+    content : "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='103' height='11' viewBox='0 0 103 11' fill='none'%3E%3Cpath d='M2 9C17.3889 4.83389 58.7335 -1.83474 101 4.81967' stroke='%23E97A21' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+    height: 12px;
+    width: 104px;
+    background-repeat: no-repeat;
+  }
+{% endstyle %}
+
+<div class="jc-container paddings-{{ section.id }}">
+  <div class="background-{{ section.id }} jc-flex jc-flex-col lg:jc-flex-row jc-rounded-lg jc-overflow-hidden">
+    <div class="jc-basis-auto jc-flex jc-flex-col jc-gap-5 jc-px-5 jc-pt-5 jc-items-center lg:jc-items-start lg:jc-py-10 lg:jc-pr-0 lg:jc-pl-10 lg:jc-basis-1/2 lg:jc-gap-6">
+      <div class="jc-text-center lg:jc-text-start">
+        {%- if section.settings.title_mob != blank -%}
+          <div class="underlined-mob [&_*]:jc-not-italic [&_*]:jc-font-normal [&_em]:jc-w-fit [&_em]:jc-inline-block [&_em]:jc-relative lg:jc-hidden [&_*]:jc-m-0 [&_*]:jc-text-3xl [&_*]:jc-leading-8">
+            {{ section.settings.title_mob }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.title_dsk != blank -%}
+          <div class="underlined-dsk [&_*]:jc-not-italic [&_*]:jc-font-normal [&_em]:jc-w-fit [&_em]:jc-inline-block [&_em]:jc-relative jc-hidden lg:jc-block [&_*]:jc-m-0 [&_*]:jc-text-6.5xl [&_*]:jc-leading-12">
+            {{ section.settings.title_dsk }}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.subtitle != blank -%}
+          <p class="jc-font-['Sequel45'] jc-m-0 jc-mt-2.5 jc-text-base jc-leading-6 jc-text-black lg:jc-text-xl">
+            {{ section.settings.subtitle }}
+          </p>
+        {%- endif -%}
+      </div>
+      <div class="jc-flex jc-flex-col jc-gap-2 lg:jc-items-center lg:jc-flex-row lg:jc-gap-4">
+        {%- if section.settings.button_text != blank -%}
+          <a href="{{ section.settings.button_link }}">
+            <button
+              type="submit"
+              class="button button--primary !jc-px-16 !jc-text-xs !jc-py-0 !jc-leading-13 jc-whitespace-nowrap jc-uppercase after:!jc-hidden jc-border jc-border-[var(--button-background-color)] jc-border-solid [&:not(:hover)]:!jc-text-[var(--button-text-color)] !jc-bg-[var(--button-background-color)] jc-rounded-md"
+              is="hover-button"
+            >
+              <span
+                class="btn-fill"
+                data-fill=""
+                style="transform: translateY(var(--motion-translateY)); --motion-translateY: -76%;"
+              ></span>
+              <span class="btn-text">{{ section.settings.button_text }}</span>
+              <span class="btn-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          </a>
+        {%- endif -%}
+        <div class="jc-flex jc-justify-center lg:jc-justify-start jc-items-center jc-gap-2">
+          {%- if section.settings.label_icon != blank -%}
+            {%- render 'g-render-image',
+              class: 'jc-w-3.5 jc-h-3.5 lg:jc-w-5 lg:jc-h-5 jc-object-contain',
+              img_src: section.settings.label_icon.url,
+              img: section.settings.label_icon,
+              size: '48 96 200',
+              alt: section.settings.label_icon.alt,
+              width: 24,
+              height: 24,
+              loading: 'lazy',
+            -%}
+          {%- endif -%}
+          {%- if section.settings.label != blank -%}
+            <p class="jc-m-0 jc-text-sm jc-leading-4 jc-text-black lg:jc-text-xl lg:jc-leading-6">
+              {{ section.settings.label }}
+            </p>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+    <div class="jc-basis-auto jc-relative jc-mt-5 lg:jc-basis-1/2 lg:jc-m-0">
+      {%- if section.settings.bubble_img != blank -%}
+        {%- render 'g-render-image',
+          class: 'jc-absolute jc-top-1/4 -jc-translate-y-1/2 -jc-right-1.5 jc-left-auto jc-z-[1] jc-w-24 jc-h-24 lg:jc-left-[21%] lg:jc-top-1/2 md:jc-w-[136px] md:jc-h-[136px]',
+          img_src: section.settings.bubble_img.url,
+          img: section.settings.bubble_img,
+          size: '200 300 400',
+          alt: section.settings.bubble_img.alt,
+          width: 136,
+          height: 136,
+          loading: 'lazy',
+      -%}
+      {%- endif -%}
+      {%- if section.settings.image != blank -%}
+        {%- render 'g-render-image',
+          class: 'jc-static lg:jc-absolute lg:jc-right-0 jc-w-full lg:jc-max-w-[416px] jc-h-auto lg:jc-h-full',
+          img_src: section.settings.image.url,
+          img: section.settings.image,
+          size: '400 600 800',
+          alt: section.settings.image.alt,
+          width: 400,
+          height: 250,
+          loading: 'lazy',
+        -%}
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promotion banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (mobile)"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color_background",
+      "id": "background",
+      "label": "Background",
+      "default": "linear-gradient(#F0E9DA,#F0E9DA)"
+    },
+
+    {
+      "type": "header",
+      "content": "💬 Content"
+    },
+    {
+      "type": "richtext",
+      "id": "title_mob",
+      "label": "Title (mobile)",
+      "default": "<h2>Find your perfect <em>scent</em></h2>"
+    },
+    {
+      "type": "richtext",
+      "id": "title_dsk",
+      "label": "Title (desktop)",
+      "default": "<h2>Find your <em>perfect</em> scent</h2>"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "And get 10% off"
+    },
+    {
+      "type": "image_picker",
+      "id": "label_icon",
+      "label": "Icon near label"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "Label",
+      "default": "Only takes 2 minutes"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bubble_img",
+      "label": "Bubble image"
+    },
+    {
+      "type": "header",
+      "content": "🔘 Buttons settings"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Text of first button",
+      "default": "Let’s go"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Add button link"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "rgba(0,0,0,0)"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotion banner"
+    }
+  ]
+}
+{% endschema %}

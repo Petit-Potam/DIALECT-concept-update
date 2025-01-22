@@ -1,0 +1,86 @@
+{% comment %}
+  Snippet: g-featured-review
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - review: {Object} featured review object
+  - background_color: {String} carousel item background color
+  - featured_product_prelabel: {String} string that appears before featured product title
+
+  Render example:
+   {% render 'g-featured-review',
+      review: review,
+      background_color: background_color,
+      featured_product_prelabel: featured_product_prelabel
+    %}
+{% endcomment %}
+
+<div
+  style="--item-bg-color: {{ background_color }}"
+  class="jc-bg-[var(--item-bg-color)] jc-text-start jc-rounded-lg jc-p-6 jc-h-[inherit] jc-flex jc-flex-col jc-justify-between"
+>
+  <div>
+    {%- if review.rating != blank -%}
+      {%- assign rating = review.rating | default: 5.0 -%}
+      {% render 'g-star-rating',
+        rating: rating,
+        class: 'jc-flex jc-items-center jc-justify-center jc-pb-4',
+        color: '#E97A21',
+        width: 24,
+        height: 24
+      %}
+    {%- endif -%}
+
+    {%- if review.title != blank or review.content -%}
+      <div class="[&_h4]:!jc-font-['din_next'] jc-pb-4">
+        {%- if review.title != blank -%}
+          <p class="jc-text-base jc-leading-6 jc-font-bold jc-m-0 jc-pb-2">
+            {{ review.title }}
+          </p>
+        {%- endif -%}
+
+        {%- if review.content != blank -%}
+          <div class="jc-text-sm jc-leading-5 jc-max-w-[96%]">
+            {{ review.content | metafield_tag }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  <div>
+    {%- if review.reviewer_name != blank or review.badge_text != blank -%}
+      <div class="jc-flex jc-items-center">
+        {%- if best_review.highlighted_label != blank -%}
+          <span class="jc-inline-block jc-text-xs jc-leading-4">
+            {{ best_review.highlighted_label }}
+          </span>
+        {%- endif -%}
+
+        {%- if review.reviewer_name != blank -%}
+          <span class="jc-text-sm jc-font-bold jc-leading-5 jc-pr-2">{{ review.reviewer_name }}</span>
+        {%- endif -%}
+        {% render 'icon', icon: 'checkmark-badge', class: 'jc-h-4 jc-w-4' %}
+        {%- if review.badge_text != blank -%}
+          <p class="jc-inline-block jc-text-xs jc-leading-4 jc-ml-1">
+            {{ review.badge_text }}
+          </p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {% assign featured_product = review.featured_product.value %}
+    {% if featured_product != blank %}
+      <div class="jc-flex jc-items-center">
+        {% if featured_product_prelabel != blank %}
+          <span class="jc-text-sm jc-leading-5 jc-pr-2">
+            {{ featured_product_prelabel }}
+          </span>
+        {% endif %}
+        <a href="{{ featured_product.url }}" class="jc-text-sm md:jc-text-base jc-leading-5 md:jc-leading-6 jc-font-bold jc-text-vividTangelo jc-underline">
+          {{ featured_product.title }}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+</div>

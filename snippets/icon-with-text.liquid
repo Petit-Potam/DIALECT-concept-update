@@ -1,0 +1,26 @@
+{% comment %}
+  Snippet: icon-with-text
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - block: {Object} 'Icon with text' block
+{% endcomment %}
+
+<div class="jc-flex jc-w-fit">
+  {%- if block.settings.icon != blank -%}
+    {% render 'g-render-image',
+      class: 'jc-w-4 jc-h-4 jc-object-cover jc-mr-2 jc-my-auto',
+      img_src: block.settings.icon.src,
+      img: block.settings.icon,
+      size: '200',
+      alt: block.image.alt,
+      width: '100',
+      height: '50',
+      loading: 'lazy',
+      id: block.image.id
+    %}
+  {%- endif -%}
+  {%- if block.settings.text != blank -%}
+    <p class="jc-my-auto jc-text-sm jc-leading-5">{{ block.settings.text }}</p>
+  {%- endif -%}
+</div>

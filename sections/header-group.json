@@ -14,25 +14,37 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement-1": {
+        "announcement-2": {
+          "type": "announcement",
+          "settings": {
+            "icon": "bag",
+            "text": "<strong>WINTER SALE - 30% OFF</strong>",
+            "link": "shopify://collections/all-perfume",
+            "hide_icon_mobile": false,
+            "text_mobile": "",
+            "highlighted_text": "scribble",
+            "highlighted_scribble": "basic-underline"
+          }
+        },
+        "announcement_DinBAe": {
           "type": "announcement",
           "settings": {
             "icon": "truck",
-            "text": "Free shipping and returns",
+            "text": "Free 30-day returns, no questions asked",
             "link": "",
-            "hide_icon_mobile": true,
+            "hide_icon_mobile": false,
             "text_mobile": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
-        "announcement-2": {
+        "announcement-1": {
           "type": "announcement",
           "settings": {
-            "icon": "email",
-            "text": "A question? Visit our contact page",
+            "icon": "shield",
+            "text": "100% Satisfaction Garuantee",
             "link": "",
-            "hide_icon_mobile": true,
+            "hide_icon_mobile": false,
             "text_mobile": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
@@ -40,22 +52,23 @@
         }
       },
       "block_order": [
-        "announcement-1",
-        "announcement-2"
+        "announcement-2",
+        "announcement_DinBAe",
+        "announcement-1"
       ],
       "settings": {
         "show_social": true,
-        "enable_language_selector": true,
-        "enable_country_selector": true,
+        "enable_language_selector": false,
+        "enable_country_selector": false,
         "invert_icons_selectors": false,
-        "announcement_position": "center",
+        "announcement_position": "start",
         "autoplay": true,
-        "autoplay_speed": 5,
-        "show_navigation": true,
+        "autoplay_speed": 4,
+        "show_navigation": false,
         "color_text": "#fafafa",
-        "color_background": "#1f1f1f",
+        "color_background": "#000000",
         "gradient_background": "",
-        "color_highlight": "#ffddbf",
+        "color_highlight": "{{ shop.brand.colors.primary[0].background }}",
         "gradient_highlight": "",
         "full_width": true,
         "rounded": true
@@ -64,20 +77,24 @@
     "header": {
       "type": "header",
       "settings": {
-        "menu": "main-menu",
+        "menu": "desktop-menu",
+        "menu_mobile": "",
         "menu_active": "block",
         "hover_menu": true,
-        "header_layout": "left-center",
+        "header_layout": "left",
         "sticky_header_type": "always",
         "logo_position_mobile": "center",
         "show_social": true,
         "enable_language_selector": true,
         "enable_country_selector": true,
+        "custom_link_icon": "shopify://shop_images/ic.svg",
+        "custom_link_text": "Find your perfect scent",
+        "custom_link": "shopify://pages/find-your-perfect-scent",
         "transparent_color_text": "#ffffff",
         "color_text": "#171717",
         "color_background": "#ffffff",
-        "padding_top": 32,
-        "padding_bottom": 32,
+        "padding_top": 10,
+        "padding_bottom": 10,
         "full_width": true,
         "rounded": true
       }

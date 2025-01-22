@@ -2,21 +2,66 @@
   #shopify-section-{{ section.id }} {
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --icon-background: {{ section.settings.icon_background }};
     {%- render 'section-variables', section: section -%}
   }
 </style>
 
+{% liquid
+  assign column_blocks = section.blocks | where: 'type', 'column'
+%}
+
 <div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
-  <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
+  <div class="jc-container{% if section.settings.full_width %} page-width--full{% endif %} relative">
     {%- render 'section-heading', section: section -%}
 
+    {%- if column_blocks.size > 0 -%}
+      <div
+        class="relative block text-with-icons jc-flex jc-flex-wrap jc-gap-2 z-1 jc-items-center {{ section.settings.icons_alignment }}"
+        watch-css
+      >
+        {%- for block in column_blocks -%}
+          <div
+            class="jc-w-fit jc-inline-flex xl:text-{{ section.settings.text_alignment }} text-center"
+            {{ block.shopify_attributes }}
+          >
+            <div class="jc-flex jc-p-2 jc-px-4 !jc-w-fit jc-gap-1 jc-rounded-full jc-bg-[var(--icon-background)]">
+              {% render 'g-render-image',
+                class: 'jc-w-5 jc-h-5 jc-mr-1.5',
+                img: block.settings.custom_icon,
+                size: '300',
+                alt: block.settings.custom_icon.alt,
+                width: '300',
+                height: '300',
+                loading: 'eager',
+                id: block.settings.custom_icon.id
+              %}
+              <span class="jc-text-sm md:jc-text-base">{{ block.settings.heading }}</span>
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
     {%- if section.blocks.size > 0 -%}
-      <tabs-element class="tab-list flex gap-6 justify-between" role="tablist">
-        <div class="scroll-area grid">
+      <tabs-element class="flex justify-between gap-6 tab-list" role="tablist">
+        <div class="grid scroll-area">
           <div class="flex gap-4">
-            {%- for block in section.blocks -%}
+            {% assign collection_blocks = section.blocks | where: "type", "collection" %}
+            {%- for block in collection_blocks -%}
               {%- assign collection = block.settings.collection -%}
-              <button class="tab__item button{% if forloop.first %} button--primary{% else %} button--secondary{% endif %} whitespace-nowrap"{% if forloop.first %} disabled{% endif %} type="button" is="hover-button" role="tab" aria-controls="TabPanel-{{ block.id }}" data-index="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+              <button
+                class="tab__item button{% if forloop.first %} button--primary{% else %} button--secondary{% endif %} whitespace-nowrap"
+                {% if forloop.first %}
+                  disabled
+                {% endif %}
+                type="button"
+                is="hover-button"
+                role="tab"
+                aria-controls="TabPanel-{{ block.id }}"
+                data-index="{{ forloop.index0 }}"
+                {{ block.shopify_attributes }}
+              >
                 <span class="btn-fill" data-fill></span>
                 <span class="btn-text">
                   {%- liquid
@@ -31,17 +76,37 @@
             {%- endfor -%}
           </div>
         </div>
-        
+
         {%- if section.settings.carousel_on_desktop -%}
-          {%- for block in section.blocks -%}
-            <div class="indicators hidden lg:flex gap-2d5"{% unless forloop.first %} hidden{% endunless %} data-index="{{ forloop.index0 }}">
-              <button class="button button--secondary" type="button" is="previous-button" aria-controls="Slider-{{ block.id }}" aria-label="{{ 'general.pagination.previous' | t | escape }}" disabled>
+          {% assign collection_blocks = section.blocks | where: "type", "collection" %}
+          {%- for block in collection_blocks -%}
+            <div
+              class="hidden indicators lg:flex gap-2d5"
+              {% unless forloop.first %}
+                hidden
+              {% endunless %}
+              data-index="{{ forloop.index0 }}"
+            >
+              <button
+                class="button button--secondary"
+                type="button"
+                is="previous-button"
+                aria-controls="Slider-{{ block.id }}"
+                aria-label="{{ 'general.pagination.previous' | t | escape }}"
+                disabled
+              >
                 <span class="btn-fill" data-fill></span>
                 <span class="btn-text">
                   {%- render 'icon', icon: 'chevron-left', class: 'transform' -%}
                 </span>
               </button>
-              <button class="button button--secondary" type="button" is="next-button" aria-controls="Slider-{{ block.id }}" aria-label="{{ 'general.pagination.next' | t | escape }}">
+              <button
+                class="button button--secondary"
+                type="button"
+                is="next-button"
+                aria-controls="Slider-{{ block.id }}"
+                aria-label="{{ 'general.pagination.next' | t | escape }}"
+              >
                 <span class="btn-fill" data-fill></span>
                 <span class="btn-text">
                   {%- render 'icon', icon: 'chevron-right', class: 'transform' -%}
@@ -51,14 +116,25 @@
           {%- endfor -%}
         {%- endif -%}
       </tabs-element>
-      
-      {%- for block in section.blocks -%}
+
+      {% assign collection_blocks = section.blocks | where: "type", "collection" %}
+      {%- for block in collection_blocks -%}
         {%- liquid
           assign collection = block.settings.collection
           assign products = block.settings.products | default: collection.products
         -%}
-        <div id="TabPanel-{{ block.id }}" role="tabpanel"{% unless forloop.first %} hidden{% endunless %}>
-          <slider-element id="Slider-{{ block.id }}" class="grid slider{% if section.settings.carousel_on_desktop %} slider--desktop{% endif %}{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}" selector=".card-grid>.card">
+        <div
+          id="TabPanel-{{ block.id }}"
+          role="tabpanel"
+          {% unless forloop.first %}
+            hidden
+          {% endunless %}
+        >
+          <slider-element
+            id="Slider-{{ block.id }}"
+            class="grid slider{% if section.settings.carousel_on_desktop %} slider--desktop{% endif %}{% if section.settings.swipe_on_mobile %} slider--tablet{% endif %}"
+            selector=".card-grid>.card"
+          >
             <motion-list class="product-grid card-grid card-grid--{{ section.settings.columns }} mobile:card-grid--{{ section.settings.columns_mobile }} grid">
               {%- for product in products limit: section.settings.product_limit -%}
                 {%- render 'product-card',
@@ -75,7 +151,8 @@
                   show_quick_view: settings.product_quick_view,
                   show_save_amount: settings.product_save_amount,
                   save_type: settings.product_save_type,
-                  section_id: section.id
+                  section_id: section.id,
+                  is_vertical_on_mobile: true
                 -%}
               {%- else -%}
                 {%- for i in (1..section.settings.product_limit) -%}
@@ -100,10 +177,18 @@
               {%- endfor -%}
             </motion-list>
           </slider-element>
-      
-          {%- if section.settings.show_view_all and collection != blank and section.settings.product_limit < collection.all_products_count -%}
+
+          {%- if section.settings.show_view_all
+            and collection != blank
+            and section.settings.product_limit < collection.all_products_count
+          -%}
             <p class="text-center">
-              <a class="button button--secondary icon-with-text" href="{{ collection.url }}" is="hover-link" aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: collection.title }}">
+              <a
+                class="button button--secondary icon-with-text"
+                href="{{ collection.url }}"
+                is="hover-link"
+                aria-label="{{ 'sections.featured_collection.view_all_label' | t: collection_name: collection.title }}"
+              >
                 <span class="btn-fill" data-fill></span>
                 <span class="btn-text">
                   {%- liquid
@@ -140,7 +225,7 @@
       "id": "columns",
       "min": 1,
       "max": 5,
-      "step": 1,
+      "step": 0.1,
       "default": 4,
       "label": "t:sections.global.settings.columns.label"
     },
@@ -236,6 +321,26 @@
         }
       ],
       "default": "text-left md:items-end md:flex-row"
+    },
+    {
+      "type": "select",
+      "id": "icons_alignment",
+      "label": "Icons alignment",
+      "options": [
+        {
+          "value": "jc-text-left jc-justify-start",
+          "label": "t:sections.global.settings.heading_alignment.options__1.label"
+        },
+        {
+          "value": "jc-text-center jc-justify-center",
+          "label": "t:sections.global.settings.heading_alignment.options__2.label"
+        },
+        {
+          "value": "jc-text-right jc-justify-end",
+          "label": "t:sections.global.settings.heading_alignment.options__3.label"
+        }
+      ],
+      "default": "jc-text-left jc-justify-start"
     },
     {
       "type": "select",
@@ -408,6 +513,11 @@
       "label": "t:sections.global.settings.color_button_gradient.label"
     },
     {
+      "type": "color",
+      "id": "icon_background",
+      "label": "Icon background"
+    },
+    {
       "type": "header",
       "content": "t:sections.global.settings.header__section.content"
     },
@@ -472,6 +582,23 @@
           "label": "t:sections.global.settings.title.label"
         }
       ]
+    },
+    {
+      "type": "column",
+      "name": "t:sections.multicolumn.blocks.column.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "custom_icon",
+          "label": "t:sections.multicolumn.blocks.column.settings.custom_icon.label"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "t:sections.global.settings.heading.label",
+          "default": "Example title"
+        }
+      ]
     }
   ],
   "presets": [
@@ -488,9 +615,7 @@
     }
   ],
   "disabled_on": {
-    "templates": [
-      "password"
-    ]
+    "templates": ["password"]
   }
 }
 {% endschema %}

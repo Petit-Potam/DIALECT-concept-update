@@ -1,0 +1,13 @@
+
+<div class="jc-mt-2">
+  {% if product.metafields.custom.inspired_by_et_retail_price.value %}
+
+{% comment %}
+    <p class="!jc-leading-3 lg:!jc-leading-3.5 jc-mt-1">
+      <span class="jc-text-xs lg:jc-text-xs jc-leading-3 lg:jc-leading-3.5 jc-mt-1 jc-text-vividTangelo"
+        >(Retail Price: {{ product.metafields.pdp.retail_price.value | money_with_currency | split: "." | first }})</span
+      >
+    </p>
+{% endcomment %}
+  {% endif %}
+</div>

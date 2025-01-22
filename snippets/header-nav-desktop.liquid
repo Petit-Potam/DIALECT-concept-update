@@ -24,11 +24,15 @@
         endif
       endfor
     -%}
+    {% if link.object.metafields.jolly_meta.menu_badge.value != blank %}
+      {% capture badge %}<span class="jc-bg-vividTangelo jc-text-white jc-font-['din_next'] jc-font-medium jc-text-xs md:jc-text-sm jc-leading-3 md:jc-leading-5 jc-px-1.5 jc-pt-1 jc-pb-0.5 jc-rounded-xxs">{{ link.object.metafields.jolly_meta.menu_badge.value }}</span>{% endcapture %}
+    {% endif %}
+    
     {%- if enable_mega_menu -%}
       <li>
         <details is="details-mega" trigger="{% if section.settings.hover_menu %}hover{% else %}click{% endif %}" level="top" {{ mega_menu_block.shopify_attributes }}>
           <summary data-link="{{ link.url }}">
-            <magnet-element class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
+            <magnet-element class="relative flex items-center font-medium cursor-pointer menu__item text-sm-lg z-2"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
               <span class="btn-text" data-text>
                 {%- liquid
                   echo link.title
@@ -49,7 +53,7 @@
               {%- endif -%}
             </magnet-element>
           </summary>
-          <div class="mega-menu absolute top-0 left-0 w-full max-w-full overflow-hidden pointer-events-none">
+          <div class="absolute top-0 left-0 w-full max-w-full overflow-hidden pointer-events-none mega-menu">
             {%- render 'header-nav-mega', link: link, block: mega_menu_block, full_width: section.settings.full_width -%}
           </div>
         </details>
@@ -58,7 +62,7 @@
       <li>
         <details is="details-dropdown" trigger="{% if section.settings.hover_menu %}hover{% else %}click{% endif %}" level="top">
           <summary data-link="{{ link.url }}">
-            <magnet-element class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
+            <magnet-element class="relative flex items-center font-medium cursor-pointer menu__item text-sm-lg z-2"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
               <span class="btn-text" data-text>
                 {%- liquid
                   echo link.title
@@ -79,20 +83,20 @@
               {%- endif -%}
             </magnet-element>
           </summary>
-          <div class="dropdown opacity-0 invisible absolute top-0 max-w-full pointer-events-none">
-            <div class="dropdown__container relative">
+          <div class="absolute top-0 invisible max-w-full opacity-0 pointer-events-none dropdown">
+            <div class="relative dropdown__container">
               {%- render 'corner', dir: 'top', prefix: 'dropdown' -%}
-              <ul class="dropdown__nav grid gap-1d5 xl:gap-2" role="list">
+              <ul class="grid dropdown__nav gap-1d5 xl:gap-2" role="list">
                 {%- for childlink in link.links -%}
                   {%- if childlink.links != blank -%}
-                    <li class="opacity-0 relative">
+                    <li class="relative opacity-0">
                       <details is="details-dropdown" trigger="hover" level="child">
                         <summary data-link="{{ childlink.url }}">
                           <a href="{{ childlink.url }}" class="reversed-link text-sm-base" tabindex="-1">{{ childlink.title }}</a>
                         </summary>
-                        <div class="dropdown opacity-0 absolute top-0 left-100 max-w-full pointer-events-none">
+                        <div class="absolute top-0 max-w-full opacity-0 pointer-events-none dropdown left-100">
                           <div class="dropdown__container">
-                            <ul class="dropdown__nav grid gap-1d5 xl:gap-2" role="list">
+                            <ul class="grid dropdown__nav gap-1d5 xl:gap-2" role="list">
                               {%- for grandchildlink in childlink.links -%}
                                 <li class="opacity-0">
                                   <p>
@@ -120,10 +124,20 @@
       </li>
     {%- else -%}
       <li>
-        <a href="{{ link.url }}" class="menu__item text-sm-lg flex items-center font-medium z-2 relative cursor-pointer" is="magnet-link"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
-          <span class="btn-text" data-text>{{ link.title }}</span>
+        <a href="{{ link.url }}" class="relative flex items-center font-medium cursor-pointer menu__item text-sm-lg z-2" is="magnet-link"{% if menu_active == 'block' %} data-magnet="0"{% endif %}>
+          <span class="btn-text" data-text>
+            {{ link.title }}
+            {% if link.object.metafields.jolly_meta.menu_badge.value != blank %}
+              {{ badge }}
+            {% endif %}
+          </span>
           {%- if menu_active == 'block' -%}
-            <span class="btn-text btn-duplicate">{{ link.title }}</span>
+            <span class="btn-text btn-duplicate jc-w-fit">
+              {{ link.title }}
+              {% if link.object.metafields.jolly_meta.menu_badge.value != blank %}
+                {{ badge }}
+              {% endif %}
+            </span>
           {%- endif -%}
         </a>
       </li>

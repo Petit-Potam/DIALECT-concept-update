@@ -1,0 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main-page": {
+      "type": "main-page",
+      "settings": {
+        "heading_size": "title-xl tracking-heading",
+        "heading_tag": "h1",
+        "text_size": "text-base",
+        "padding_top": 72,
+        "padding_bottom": 120,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "custom_liquid_QBbbAD": {
+      "type": "custom-liquid",
+      "settings": {
+        "liquid": "<div class=\"octane-ai-quiz \" data-quiz-id=\"NKFT0XSf1rnFG71i\" data-embed-type=\"fullpage\" data-mobile-height=\"match_browser\" data-desktop-height=\"match_browser\">\n    \n</div>\n<script src=\"https://app.octaneai.com/7uuw28w0kpdddcx5/quiz.js\" async=\"\" defer></script>\n\n<script>   document.addEventListener(\n  \"octane.quiz.completed\",\n  function (e) {\n    const answers = e.detail.answers;\n    const productTitles = e.detail.product_blocks[0].map(\n      (product) => product.title\n    );\n    const productIds = e.detail.product_blocks[0].map((product) => product.id);\n    let urlString = `addproduct=`;\n    for (let i = 0; i < productIds.length; i++) {\n      urlString += `${productIds[i]}${i < productIds.length - 1 ? \"+\" : \"!\"}`;\n    }\n\n    urlString += `@quiz_results=`;\n\n    for (const key in answers) {\n      if (key.includes(\"Octane\") ||\n key.includes(\"klaviyo\") || key.toLowerCase().includes(\"url\")) {\n        continue;\n      }\nif (!answers[key]) {\nreturn;\n}\n      if (answers[key]?.includes(\",\")) {\n        const firstAnswer = answers[key].split(\",\")[0];\n        urlString += `${key.toLowerCase()}:${firstAnswer.toLowerCase()};`;\n      } else {\n        urlString += `${key.toLowerCase()}:${answers[key].toLowerCase()};`;\n      }\n    }\n\n    for (let i = 0; i < productTitles.length; i++) {\n      urlString += `product_handle_${i}:${productTitles[i]};`;\n    }\n\n    urlString += \"@\";\n    window.location.href = `custom-octane-results?view=custom-octane-results&${encodeURI(\n      urlString\n    )}`;\n    console.log(e.detail);\n  },\n  false\n);\n\n</script>",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "main-page",
+    "custom_liquid_QBbbAD"
+  ]
+}

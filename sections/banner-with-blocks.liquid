@@ -1,0 +1,98 @@
+{% liquid
+  assign value_blocks = section.blocks | where: 'type', 'value'
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image
+%}
+
+<div class="jc-relative jc-pt-10 jc-pb-35.5 md:jc-py-16 jc-px-10 md:jc-px-25">
+  {% # Desktop image %}
+  {% if desktop_image != blank %}
+    {% render 'g-render-image',
+      class: 'jc-absolute jc-inset-0 jc-w-full jc-h-full jc-object-cover max-md:jc-hidden',
+      img_src: desktop_image.src,
+      img: desktop_image,
+      size: '900 2000',
+      alt: desktop_image.alt,
+      width: desktop_image.width,
+      height: desktop_image.height,
+      loading: 'lazy',
+      id: desktop_image.id
+    %}
+  {% endif %}
+
+  {% # Mobile image %}
+  {% if mobile_image != blank %}
+    {% render 'g-render-image',
+      class: 'jc-absolute jc-inset-0 jc-w-full jc-h-full jc-object-cover md:jc-hidden',
+      img_src: mobile_image.src,
+      img: mobile_image,
+      size: '900 2000',
+      alt: mobile_image.alt,
+      width: mobile_image.width,
+      height: mobile_image.height,
+      loading: 'lazy',
+      id: mobile_image.id
+    %}
+  {% endif %}
+
+  {%- if value_blocks.size > 1 -%}
+    <div class="jc-container !jc-px-0 jc-relative jc-z-[1] jc-w-full jc-flex jc-flex-col md:jc-flex-row jc-gap-6 md:jc-gap-20">
+      {% for block in value_blocks %}
+        <div class="jc-text-center">
+          {% liquid
+            if block.settings.icon != blank
+              assign block_icon = block.settings.icon
+              render 'g-render-image', class: 'jc-w-14 jc-h-14 jc-mx-auto jc-object-cover', img_src: block_icon.src, img: block_icon, size: '400 800', alt: block_icon.alt, width: block_icon.width, height: block_icon.height, loading: 'lazy', id: block_icon.id
+            endif
+          %}
+
+          {% if block.settings.text != blank %}
+            <p class="jc-mt-4 jc-text-xl jc-leading-6 jc-text-white">{{ block.settings.text }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Image and Text Blocks",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "desktop_image",
+      "label": "Desktop Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "Mobile Image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Block icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Block text"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Image and Text Blocks",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

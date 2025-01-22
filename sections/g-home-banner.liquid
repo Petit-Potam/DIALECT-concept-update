@@ -1,0 +1,275 @@
+{% comment %}
+  Section: g-home-banner
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+  - g-star-rating
+  - g-home-banner-button
+  - icon-checkmark-badge
+{% endcomment %}
+
+{% liquid
+  assign image_dsk = section.settings.image_dsk
+  assign image_mob = image_dsk
+
+  if section.settings.image_mob != blank
+    assign image_mob = section.settings.image_mob
+  endif
+
+  assign rating = shop.metafields.judgeme.all_reviews_rating
+  assign reviews_count = shop.metafields.judgeme.all_reviews_count
+  assign heading_part_1 = section.settings.heading_part_1
+  assign heading_part_2 = section.settings.heading_part_2
+  assign button_1_text = section.settings.button_1_text
+  assign button_1_link = section.settings.button_1_link
+  assign button_2_text = section.settings.button_2_text
+  assign button_2_link = section.settings.button_2_link
+  assign footer_text = section.settings.footer_text
+%}
+
+{% style %}
+  .user-margins {
+    margin-top: {{ section.settings.margin_dsk_t }}px !important;
+  }
+
+  .heading_1_color {
+    color: {{ section.settings.heading_part_1_color }}
+  }
+
+  .heading_2_color {
+    color: {{ section.settings.heading_part_2_color }}
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-margins {
+      margin-top: {{ section.settings.margin_mob_t }}px !important;
+    }
+  }
+{% endstyle %}
+
+<section class="section section--flush jc-h-104.5 md:jc-h-97 user-margins">
+  {% # Background image container %}
+  <div class="jc-w-full jc-h-full jc-relative">
+    {% if image_dsk != blank %}
+      <div class="jc-hidden md:jc-block jc-h-full">
+        {% render 'g-render-image',
+          class: 'jc-w-full jc-h-full jc-object-cover',
+          img_src: image_dsk.url,
+          img: image_dsk,
+          size: '1440 2160',
+          width: image_dsk.width,
+          height: image_dsk.height,
+          loading: 'eager',
+          alt: image_dsk.alt
+        %}
+      </div>
+    {% endif %}
+
+    {% if image_mob != blank %}
+      <div class="jc-block md:jc-hidden jc-h-full">
+        {% render 'g-render-image',
+          class: 'jc-w-full jc-h-full jc-object-cover',
+          img_src: image_mob.url,
+          img: image_mob,
+          size: '800 1280',
+          width: image_mob.width,
+          height: image_mob.height,
+          loading: 'eager',
+          alt: image_mob.alt
+        %}
+      </div>
+    {% endif %}
+
+    {% # Overlay content %}
+    <div
+      class=" jc-absolute jc-inset-0 jc-flex jc-flex-col jc-items-center jc-justify-start md:jc-justify-center jc-gap-6 md:jc-gap-8 jc-text-center jc-p-6 jc-pt-16 md:jc-py-31 md:jc-px-10"
+    >
+      <div class="jc-flex jc-flex-col jc-items-center jc-justify-center jc-gap-2">
+        {% # Custom rating widget %}
+        <div class="jc-flex jc-items-center jc-justify-center jc-gap-2 jc-text-sm md:jc-left-6 jc-leading-5">
+          <span class="jc-font-bold">{{ rating | round: 1 | replace: '.', ',' }}</span>
+          {% render 'g-star-rating', rating: rating, class: 'jc-flex jc-items-center jc-justify-center jc-w-auto' %}
+          <span>based on {{ reviews_count }} reviews</span>
+        </div>
+
+        {% # Heading container %}
+        {% unless heading_part_1 == blank and heading_part_2 == blank %}
+          <div class="jc-flex md:jc-flex-col jc-items-center jc-justify-center jc-text-center [&_h2]:jc-m-0 md:jc-max-w-2xl jc-overflow-visible">
+            {% # Heading %}
+            {% if heading_part_1 != blank or heading_part_2 != blank %}
+              <h2 class="heading_1_color jc-text-3.5xl md:jc-text-7.5xl jc-leading-8 md:jc-leading-14 jc-break-words !jc-font-['Sequel75'] jc-font-normal">
+                {{ heading_part_1 }}
+                <span class="heading_2_color jc-relative">
+                  {{ heading_part_2 -}}
+                  {% comment %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="216" height="24" viewBox="0 0 216 24" fill="none" class="jc-absolute -jc-right-[18px] md:-jc-right-[5px] -jc-bottom-[14px] jc-w-[148px] md:jc-w-[216px]">
+                    <path d="M3 21C35.6432 10.2871 123.344 -6.86075 213 10.2506" stroke="#E97A21" stroke-width="6" stroke-linecap="round" stroke-dasharray="250" stroke-dashoffset="250">
+                      <animate 
+                        attributeName="stroke-dashoffset" 
+                        from="250" 
+                        to="0" 
+                        dur="0.8s" 
+                        fill="freeze" 
+                        repeatCount="1" />
+                    </path>
+                  </svg>    
+                  {% endcomment %}
+                </span>
+              </h2>
+            {% endif %}
+          </div>
+        {% endunless %}
+      </div>
+
+      <div class="jc-flex jc-flex-col jc-items-center jc-justify-center jc-gap-4">
+        {% # CTA %}
+        {% unless button_1_text == blank and button_2_text == blank %}
+          <div class="jc-grid jc-grid-cols-2 jc-gap-4 jc-w-fit">
+            {% render 'g-home-banner-button', text: button_1_text, link: button_1_link, background_color: section.settings.button_color %}
+            {% render 'g-home-banner-button', text: button_2_text, link: button_2_link, background_color: section.settings.button_color %}
+          </div>
+        {% endunless %}
+
+        {% # Footer %}
+        {% unless footer_text == blank %}
+          <div class="jc-flex jc-items-center jc-justify-center jc-font-normal jc-gap-2 [&_p]:!jc-m-0">
+            {% render 'icon-checkmark-badge' %}
+            <p class="jc-text-center jc-text-sm md:jc-text-base">{{ footer_text }}</p>
+          </div>
+        {% endunless %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Home Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Image Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_dsk",
+      "info": "2160 x 1080px .jpg recommended",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mob",
+      "label": "Mobile image",
+      "info": "1000 x 1400px .jpg recommended. If none is set, desktop image will be used."
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "margin_dsk_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_mob_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "heading_part_1",
+      "label": "Heading Part 1",
+      "default": "Heading part 1"
+    },
+    {
+      "type": "text",
+      "id": "heading_part_2",
+      "label": "Heading Part 2",
+      "default": "Heading part 2"
+    },
+    {
+      "type": "text",
+      "id": "button_1_text",
+      "label": "First button text"
+    },
+    {
+      "type": "url",
+      "id": "button_1_link",
+      "label": "Second button link"
+    },
+    {
+      "type": "text",
+      "id": "button_2_text",
+      "label": "Second button text"
+    },
+    {
+      "type": "url",
+      "id": "button_2_link",
+      "label": "Second button link"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text",
+      "default": "30-day money back guarantee"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "heading_part_1_color",
+      "label": "Heading part 1 color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "heading_part_2_color",
+      "label": "Heading part 2 color",
+      "default": "#E97A21"
+    },
+    {
+      "type": "color_background",
+      "id": "button_color",
+      "label": "Button color",
+      "default": "black"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Home Banner",
+      "settings": {
+        "image_dsk": "shopify:\/\/shop_images\/home_banner_cover.png",
+        "image_mob": "shopify:\/\/shop_images\/home_banner_cover_mob.png",
+        "margin_dsk_t": 0,
+        "margin_mob_t": 0,
+        "heading_part_1": "Heading part 1",
+        "heading_part_2": "Heading part 2",
+        "button_1_text": "Text 1",
+        "button_1_link": "",
+        "button_2_text": "Text 2",
+        "button_2_link": "",
+        "footer_text": "Footer text content",
+        "heading_part_1_color": "#000",
+        "heading_part_2_color": "#E97A21"
+      }
+    }
+  ]
+}
+{% endschema %}

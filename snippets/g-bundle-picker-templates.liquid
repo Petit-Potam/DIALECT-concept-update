@@ -1,0 +1,96 @@
+{% case template %}
+  {% when 'jc-product-picker' %}
+    <template id="jc-product-picker" class="jc-w-full">
+      <div class="picker jc-relative jc-flex jc-group">
+        <div class="picker-btn [&_span]:jc-text-base [&_span]:jc-font-normal [&_span]:jc-leading-6 jc-flex jc-items-center jc-justify-between jc-w-full jc-gap-2.5 jc-p-2 jc-pr-4 jc-border jc-border-solid jc-border-platinum jc-rounded-xs jc-cursor-pointer jc-bg-white">
+          <div class="picker-btn-content jc-flex jc-items-center jc-justify-between jc-flex-grow">
+            <div class="jc-flex jc-items-stretch jc-gap-2.5 jc-flex-grow">
+              <img src="" class="jc-w-15 jc-h-15 jc-object-cover jc-rounded-xs" width="60" height="60" alt="product image">
+              <span class="select_placeholder jc-my-auto">Choose perfume</span>
+              <div class="text [&_div]:!jc-m-0 jc-grid jc-flex-col jc-items-start max-md:jc-justify-between jc-gap-0.5 md:jc-gap-2 jc-overflow-hidden jc-pr-2.5">
+                <div class="title jc-uppercase jc-text-[11px] md:jc-text-sm jc-font-bold jc-leading-3.5 md:jc-leading-4 jc-self-start jc-whitespace-nowrap"></div>
+                <div class="subtitle jc-text-[11px] md:jc-text-xs jc-leading-3 [&_.brand-name]:jc-text-[11px] [&_.brand-name]:md:jc-text-xs [&_.brand-name]:jc-leading-3 [&_.brand-name]:jc-font-bold jc-whitespace-nowrap jc-overflow-hidden jc-overflow-ellipsis jc-w-full jc-self-center"></div>
+                <div class="price-container jc-flex jc-gap-1.5 jc-items-baseline !jc-m-0 [&_span]:!jc-text-sm [&_span]:!jc-font-bold [&_span]:!jc-leading-4 [&_.new-price]:jc-text-sm [&_.new-price]:jc-text-vividTangelo [&_.new-price]:jc-font-bold [&_.new-price]:jc-uppercase [&_.new-price]:jc-leading-4 [&_.new-price.hide]:jc-hidden [&_.price-strikethrough]:jc-text-xs [&_.price-strikethrough]:jc-font-bold [&_.price-strikethrough]:jc-leading-3 [&_.price-strikethrough]:jc-line-through jc-self-end">
+                  <span class="prev-price"></span>
+                  <span
+                    class="new-price hide"
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div class="badge jc-px-2.5 jc-py-1 jc-capitalize jc-text-white jc-text-xxs md:jc-text-xs jc-font-medium jc-leading-3 md:jc-leading-3 jc-rounded-full"></div>
+          </div>
+          <span class="dropdown-indicator jc-text-base jc-flex jc-items-center jc-justify-center group-[.is-opened]:jc-rotate-180 jc-transition-transform jc-duration-200 jc-ease-in-out">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9L12 15L18 9" stroke="black" stroke-width="2" stroke-linecap="square" stroke-linejoin="round"/>
+            </svg>
+          </span>
+        </div>
+
+        <div class="picker-dropdown jc-w-full jc-h-[100dvh] md:jc-h-fit max-md:jc-inset-0 jc-bg-neutral-700/70 jc-backdrop-blur-sm jc-fixed md:jc-absolute md:jc-top-[calc(100%+10px)] !jc-box-border md:jc-rounded-xs group-[.is-opened]:!jc-opacity-100 jc-opacity-0 -jc-z-[10] group-[.is-opened]:jc-z-[2] jc-pointer-events-none group-[.is-opened]:jc-pointer-events-auto jc-transition-all jc-duration-100 jc-overflow-hidden md:jc-shadow-[0px_5px_10px_0px_rgba(0,0,0,0.25)]">
+          <button class="popup-close-btn jc-fixed jc-w-8 jc-h-8 jc-p-1 jc-right-0 jc-top-[calc(25%-56px)] jc-rounded-full jc-bg-white md:jc-hidden">
+            {% render 'icon', icon: 'close', class: 'jc-h-6 jc-w-6' %}
+          </button>
+          <div
+            class="jc-bg-white max-md:jc-fixed max-md:!jc-bottom-0 jc-w-full jc-top-1/4 jc-max-h-[75%] md:jc-max-h-[360px] jc-overflow-y-auto jc-border jc-border-solid jc-border-lightGray jc-rounded-xs jc-shadow-md"
+          >
+            <div
+              class="filters-container jc-p-2 jc-pr-1 jc-sticky jc-top-0 jc-rounded-t-lg jc-bg-white jc-border-0 jc-border-b jc-border-solid jc-border-lightGray"
+            >
+              <div class="jc-relative jc-flex jc-items-center jc-justify-center jc-w-full jc-mb-3 jc-border jc-border-solid jc-border-platinum jc-rounded-xs jc-p-3 jc-pr-4 jc-transition-all">
+                <span
+                  class="jc-cursor-pointer jc-inline-flex"
+                  onclick="document.querySelector('.search-filter').focus()"
+                >
+                  {% render 'icon', icon: 'magnifying-glass', class: 'jc-h-full' %}
+                </span>
+                <input
+                  type="text"
+                  value=""
+                  class="search-filter jc-flex-grow jc-h-full jc-pl-2.5 jc-text-base jc-leading-5 focus:!jc-outline-none jc-border-none !jc-shadow-none jc-bg-transparent jc-py-0 jc-font-[inherit]"
+                  placeholder="Search..."
+                >
+                <span class="clear-button jc-cursor-pointer visually-hidden jc-ml-2 jc-inline-flex">
+                  {% render 'icon', icon: 'search-close', class: 'jc-h-full' %}
+                </span>
+              </div>
+              <div
+                class="gender-filters jc-grid jc-grid-cols-4 jc-gap-2 md:jc-gap-3 [&_button]:jc-text-center [&_button]:jc-bg-white [&_button.selected-category]:jc-border-none [&_button.selected-category]:jc-text-white [&_button.selected-category]:jc-bg-vividTangelo [&_button]:jc-border [&_button]:jc-border-solid [&_button]:jc-border-black [&_button]:jc-rounded-xs [&_button]:jc-px-1 [&_button]:jc-py-1.5 [&_button]:jc-text-xs md:[&_button]:jc-text-sm [&_button]:!jc-leading-4 [&_button]:jc-tracking-[4%] md:[&_button]:!jc-leading-5 [&_button]:jc-box-border [&_button]:jc-font-medium"
+              >
+                <button class="selected-category">All <span class="quantity-container"></span></button>
+                <button data-category="women">Women <span class="quantity-container"></span></button>
+                <button data-category="men">Men <span class="quantity-container"></span></button>
+                <button data-category="unisex">Unisex <span class="quantity-container"></span></button>
+              </div>
+            </div>
+            <div class="message-container visually-hidden jc-w-full jc-px-4 jc-pl-2 jc-py-4 jc-border-0 max-md:jc-border-b jc-border-solid jc-border-platinum jc-text-base jc-leading-5 jc-tracking-[0px]">
+              There are no results for this query :(
+            </div>
+            <div
+              class="dropdown-content [&_jc-product-option_.option]:jc-border-0 max-md:[&_jc-product-option_.option]:!jc-border-b md:[&_:not(:last-child)_.option]:!jc-border-b [&_jc-product-option_.option]:!jc-border-solid [&_jc-product-option_.option]:!jc-border-platinum"
+            ></div>
+          </div>
+        </div>
+      </div>
+    </template>
+  {% when 'jc-product-option' %}
+    <template id="jc-product-option">
+      <div class="option hover:jc-bg-cosmicLatte jc-flex jc-items-center jc-justify-between jc-cursor-pointer jc-p-2 jc-pr-4">
+        <div class="content jc-flex jc-items-center jc-gap-2.5">
+          <img src="" class="jc-w-15 jc-h-15 jc-object-cover jc-rounded-none" alt="" width="60" height="60">
+          <div class="text [&_div]:!jc-m-0 jc-flex jc-flex-col max-md:jc-justify-between jc-gap-2 jc-overflow-ellipsis jc-items-baseline jc-overflow-hidden">
+            <div class="title jc-uppercase jc-text-[11px] md:jc-text-sm jc-font-bold jc-leading-3.5 md:jc-leading-4"></div>
+            <div class="subtitle jc-text-[11px] md:jc-text-xs jc-leading-3 [&_.brand-name]:jc-text-[11px] [&_.brand-name]:md:jc-text-xs [&_.brand-name]:jc-leading-3 [&_.brand-name]:jc-font-bold jc-whitespace-nowrap jc-overflow-hidden jc-overflow-ellipsis jc-w-full"></div>
+            <div class="price-container jc-flex jc-gap-1.5 jc-items-baseline [&_span]:jc-text-sm [&_span]:jc-font-bold [&_span]:jc-leading-4 [&_.price-strikethrough]:jc-line-through">
+              <span class="prev-price jc-text-sm jc-font-bold jc-uppercase jc-leading-4"></span>
+              <span class="new-price hide jc-text-vividTangelo [&.hide]:jc-hidden jc-uppercase"></span>
+            </div>
+          </div>
+        </div>
+        <div
+          class="badge jc-px-2.5 jc-py-1 jc-capitalize jc-text-white jc-text-xxs md:jc-text-xs jc-font-medium jc-leading-3 md:jc-leading-3 jc-rounded-full"
+        ></div>
+      </div>
+    </template>
+  {% else %}
+{% endcase %}

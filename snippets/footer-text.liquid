@@ -26,8 +26,8 @@
     </div>
   {%- else -%}
     <details class="footer__item--{{ block.id }} details active" is="footer-details" {{ block.shopify_attributes }}>
-      <summary class="details__summary flex items-center justify-between gap-2 cursor-pointer">
-        <span class="text-base-2xl font-medium">{{ block.settings.heading | escape }}</span>
+      <summary class="flex items-center justify-between gap-2 cursor-pointer details__summary">
+        <span class="font-medium text-base-2xl">{{ block.settings.heading | escape }}</span>
         {%- render 'icon', icon: 'chevron-up' -%}
       </summary>
       {{- block_content -}}

@@ -1,0 +1,17 @@
+<!-- Start of Judge.me code -->
+
+<div class="product-card__reviews dgm-widget jdgm-preview-badge max-[639px]:jc-flex-grow">
+  <a href="{{ product.url }}"> {{ product.metafields.judgeme.badge }}</a>
+
+  <span class="product-card__reviews--count">({{ product.metafields.reviews.rating_count }})</span>
+  <p class="product-card__title grow !jc-pt-1 lg:!jc-pt-2">
+    <a
+      class="font-medium leading-tight cust__product-card__title--desktop reversed-link text-base-xl lg:!jc-bg-none"
+      href="{{ product.url }}"
+    >
+      {{ product.title | escape }}
+    </a>
+  </p>
+</div>
+
+<!-- End of Judge.me code -->

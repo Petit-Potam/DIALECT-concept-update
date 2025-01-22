@@ -1,0 +1,65 @@
+{% liquid
+  assign root = root | default: block
+  assign rating = root.settings.review_star_rating
+  assign title = root.settings.review_title
+  assign content = root.settings.review_content
+  assign reviewer_name = root.settings.reviewer_name
+  assign badge_text = root.settings.badge_text | default: 'Verified'
+%}
+
+{% unless title == blank and content == blank %}
+  <div
+    class="jc-relative jc-bg-cosmicLatte jc-text-center jc-rounded-xs jc-p-4 lg:jc-p-6 jc-h-[inherit] jc-flex jc-flex-col jc-justify-between"
+  >
+    <div class="jc-mx-auto">
+      {%- if rating != blank -%}
+        {%- assign rating = rating | default: 5.0 -%}
+        {% render 'g-star-rating',
+          rating: rating,
+          class: 'jc-hidden lg:jc-flex jc-items-center jc-justify-center jc-pb-2',
+          color: '#E97A21',
+          width: 24,
+          height: 24
+        %}
+        {% render 'g-star-rating',
+          rating: rating,
+          class: 'jc-flex lg:jc-hidden jc-items-center jc-justify-center jc-pb-2',
+          color: '#E97A21',
+          width: 16,
+          height: 16
+        %}
+      {%- endif -%}
+
+      {%- if title != blank or content -%}
+        <div class="jc-pb-2 lg:jc-pb-4 [&_p]:jc-m-0 lg:[&_p]:jc-text-md">
+          {%- if title != blank -%}
+            <p class="jc-text-sm lg:jc-text-3xl jc-leading-3.5 lg:jc-leading-6 jc-font-bold jc-uppercase jc-font-['Sequel45'] jc-pb-1">
+              {{ title }}
+            </p>
+          {%- endif -%}
+
+          {%- if content != blank -%}
+            {{ content }}
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="jc-mx-auto">
+      {%- if reviewer_name != blank or badge_text != blank -%}
+        <div class="jc-flex jc-items-center">
+          {%- if reviewer_name != blank -%}
+            <span class="jc-text-sm lg:jc-text-md jc-font-bold jc-leading-3.5 lg:jc-leading-5 jc-pr-1">
+              {{- reviewer_name -}}
+            </span>
+          {%- endif -%}
+          {%- if badge_text != blank -%}
+            <p class="jc-inline-block jc-text-xs lg:jc-text-base jc-leading-3 lg:jc-leading-4 jc-px-1.5 jc-py-0.5 jc-bg-vividTangelo jc-text-white jc-rounded-xxs !jc-m-0">
+              {{ badge_text }}
+            </p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+{% endunless %}

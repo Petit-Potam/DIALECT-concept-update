@@ -1,0 +1,26 @@
+{% comment %}
+  Snippet: main-collection-icon-with-text
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - block: {Object} 'Icon with text' block
+{% endcomment %}
+
+<div class="jc-flex jc-w-fit">
+  {%- if block.settings.icon != blank -%}
+    {% render 'g-render-image',
+      class: 'jc-w-6 jc-h-6 jc-object-cover jc-mr-2 jc-my-auto',
+      img_src: block.settings.icon.src,
+      img: block.settings.icon,
+      size: '200',
+      alt: block.image.alt,
+      width: '200',
+      height: '200',
+      loading: 'lazy',
+      id: block.image.id
+    %}
+  {%- endif -%}
+  {%- if block.settings.text != blank -%}
+    <p class="jc-my-auto jc-text-xl jc-leading-6 jc-font-medium">{{ block.settings.text }}</p>
+  {%- endif -%}
+</div>

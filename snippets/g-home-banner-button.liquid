@@ -1,0 +1,29 @@
+{% comment %}
+  Snippet: 'g-home-banner-button'
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - text: {String} button text
+  - link: {String} link to a resource
+  - background_color: {String} button background color
+  - scroll_to_element: {String} valid selector to an HTML element on the page 
+
+  Render example:
+  {% render 'g-home-banner-button', 
+    text: "text", 
+    link: "link", 
+    background_color: "color", 
+    scroll_to_element: "element_selector" 
+  %}
+{% endcomment %}
+
+{% assign class = class | default: '' %}
+
+{% if text != blank %}
+  <a {% if scroll_to_element != blank %} hero-scroll-btn data-scroll-to-element="{{ scroll_to_element }}" {% else %} href="{{ link }}" {% endif %}
+    style="background: {{ background_color }} !important; border: 2px solid {{ background_color }};"
+    class="button button--primary jc-cursor-pointer !jc-px-[33px] !jc-py-4.5 jc-h-14 md:jc-h-15 jc-flex jc-flex-grow jc-items-center jc-justify-center !jc-text-base jc-leading-5 md:jc-leading-6 jc-font-medium {{ class }} [&:after]:jc-hidden jc-rounded-xs jc-whitespace-nowrap"
+  >
+    {{- text -}}
+  </a>
+{% endif %}

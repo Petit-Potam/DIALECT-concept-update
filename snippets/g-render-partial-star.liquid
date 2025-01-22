@@ -1,0 +1,32 @@
+{%- comment -%}
+  Snippet: g-render-partial-star
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - gradient_index: {Number} index used to form IDs and star gradient
+  - floating_part: {Number} floating part of the rating value
+
+  Render example:
+    {% render "g-render-partial-star",
+      gradient_index: index,
+      floating_part: floating_part
+    %}
+{%- endcomment -%}
+
+{% if gradient_index != blank and floating_part != blank %}
+  <svg
+    class="{{ class }}"
+    width="{% if width != blank %}{{ width }}{% else %}16{% endif %}"
+    height="{% if height != blank %}{{ height }}{% else %}15{% endif %}"
+    viewBox="0 0 15 15"
+  >
+    <defs>
+      <linearGradient id="grad{{ gradient_index }}-{{ section.id }}">
+        <stop offset="{{ floating_part | times: 100 }}%" stop-color="{{ color | default: 'currentColor' }}" />
+        <stop offset="{{ floating_part | times: 100 }}%" stop-color="transparent" />
+      </linearGradient>
+    </defs>
+    <path d="M9.56004 4.50668L7.50004 0.333344L5.44004 4.50668L0.833374 5.18001L4.16671 8.42668L3.38004 13.0133L7.50004 10.8467L11.62 13.0133L10.8334 8.42668L14.1667 5.18001L9.56004 4.50668ZM12.0183 5.87661L9.41541 5.49616C9.09006 5.44861 8.80887 5.24415 8.66333 4.9493L7.50004 2.5926L6.33675 4.9493C6.19121 5.24415 5.91002 5.44861 5.58467 5.49616L2.98179 5.87661L4.86444 7.71032C5.10031 7.94006 5.20798 8.27119 5.15232 8.59572L4.70822 11.185L7.03459 9.9616C7.32597 9.80837 7.67411 9.80837 7.96549 9.9616L10.2919 11.185L9.84777 8.59572C9.7921 8.27119 9.89977 7.94006 10.1356 7.71032L12.0183 5.87661Z" fill="url(#grad{{ gradient_index }}-{{ section.id }})"/>
+    <path id="star_empty" fill-rule="evenodd" clip-rule="evenodd" d="M9.56004 4.50668L7.50004 0.333344L5.44004 4.50668L0.833374 5.18001L4.16671 8.42668L3.38004 13.0133L7.50004 10.8467L11.62 13.0133L10.8334 8.42668L14.1667 5.18001L9.56004 4.50668ZM12.0183 5.87661L9.41541 5.49616C9.09006 5.44861 8.80887 5.24415 8.66333 4.9493L7.50004 2.5926L6.33675 4.9493C6.19121 5.24415 5.91002 5.44861 5.58467 5.49616L2.98179 5.87661L4.86444 7.71032C5.10031 7.94006 5.20798 8.27119 5.15232 8.59572L4.70822 11.185L7.03459 9.9616C7.32597 9.80837 7.67411 9.80837 7.96549 9.9616L10.2919 11.185L9.84777 8.59572C9.7921 8.27119 9.89977 7.94006 10.1356 7.71032L12.0183 5.87661Z" fill="{{ color | default: 'currentColor' }}"/>
+  </svg>
+{% endif %}

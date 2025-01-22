@@ -145,6 +145,8 @@ class CartItems extends HTMLElement {
 
     this.addEventListener('change', theme.utils.debounce(this.onChange.bind(this), 300));
     this.cartUpdateUnsubscriber = theme.pubsub.subscribe(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, this.onCartUpdate.bind(this));
+    this.editLinkActivationUnsubscriber = theme.pubsub.subscribe(theme.pubsub.PUB_SUB_EVENTS.cartUpdate, this.editLinkActivation.bind(this));
+    this.editLinkActivation();
   }
 
   cartUpdateUnsubscriber = undefined;
@@ -153,6 +155,9 @@ class CartItems extends HTMLElement {
     if (this.cartUpdateUnsubscriber) {
       this.cartUpdateUnsubscriber();
     }
+    if (this.editLinkActivationUnsubscriber) {
+      this.editLinkActivationUnsubscriber();
+    }    
   }
 
   onChange(event) {
@@ -247,6 +252,14 @@ class CartItems extends HTMLElement {
     const sectionId = theme.utils.sectionId(this);
     const loader = document.getElementById(`Loader-${sectionId}-${line}`);
     if (loader) loader.hidden = false;
+  }
+
+  editLinkActivation() {
+    this.querySelectorAll("[data-bundle-id-to-remove]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        window.sessionStorage.setItem("bundleIdToRemove", e.target.closest("[data-bundle-id-to-remove]").getAttribute("data-bundle-id-to-remove"));
+      })
+    })
   }
 }
 customElements.define('cart-items', CartItems);

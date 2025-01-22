@@ -1,0 +1,102 @@
+{% liquid
+  assign class = class | default: ''
+  assign loading_mode = 'eager'
+  if index > 8
+    assign loading_mode = 'lazy'
+  endif
+%}
+
+{% liquid
+  assign is_full_width_image = false
+  if block.settings.button_text == blank and block.settings.heading == blank and block.settings.subheading == blank
+    assign is_full_width_image = true
+  endif
+%}
+
+{% capture offer_block_element %}
+  <div class="jc-rounded-[var(--card-radius)] jc-flex jc-flex-col jc-justify-between jc-px-2 jc-pb-2 xl:jc-px-4 xl:jc-pt-5 xl:jc-pb-3 2xl:jc-px-3 2xl:jc-pt-4 2xl:jc-pb-2 {% if block.settings.mobile_layout == "compact" %} jc-pt-3 {% else %} jc-pt-5 {% endif %} {{ class }} {% if is_full_width_image %}!jc-p-0 jc-overflow-hidden{% endif %}" style="background: {{ block.settings.background_color }};">
+    <div class="{% if block.settings.mobile_layout == "compact" %} jc-grid jc-grid-cols-2 jc-gap-x-[11px] sm:jc-gap-y-4 md:jc-gap-y-2 jc-justify-between max-sm:jc-px-2.5 {% else %} jc-flex jc-gap-y-6 jc-flex-col min-[639px]:jc-flex min-[639px]:jc-flex-col lg:jc-gap-y-4 xl:jc-gap-y-4 2xl:jc-gap-y-3.5 {% endif %} min-[639px]:jc-flex min-[639px]:jc-flex-col xl:jc-gap-y-4 2xl:jc-gap-y-3.5 {% if is_full_width_image %}!jc-h-full{% endif %}">
+      <div style="--text-color: {{ block.settings.color_text }};" class="{% if block.settings.mobile_layout == "compact" %} jc-text-left {% else %} jc-text-center {% endif %} jc-relative min-[639px]:jc-text-center">
+        {%- if block.settings.heading != blank -%}
+          <div class="{% if block.settings.mobile_layout == "compact" %} jc-h-10 {% else %} jc-h-12 {% endif %} xl:jc-h-14 2xl:jc-h-12">
+            <h4 class="{% if block.settings.mobile_layout == "compact" %} jc-text-5xl jc-leading-10 {% else %} jc-text-6.5xl jc-leading-12 {% endif %} xl:jc-text-7.5xl xl:jc-leading-14 2xl:jc-text-6.5xl 2xl:jc-leading-12 jc-font-normal !jc-font-[Sequel75] jc-text-[var(--text-color)]">{{ block.settings.heading }}</h4>
+          </div>
+        {%- endif -%}
+        {%- if block.settings.subheading != blank -%}
+          <div class="jc-relative {% if block.settings.mobile_layout == "compact" %} [&_p]:jc-text-base {% else %} [&_p]:jc-text-md {% endif %} xl:[&_p]:jc-text-xl 2xl:[&_p]:jc-text-md [&_p]:jc-leading-6 [&_p]:jc-font-medium [&_p]:jc-text-[var(--text-color)] jc-w-fit sm:jc-mx-auto">
+            {{ block.settings.subheading }}
+            <svg width="102" height="13" viewBox="0 0 102 13" fill="none" xmlns="http://www.w3.org/2000/svg" class="jc-absolute -jc-bottom-2 jc-right-0 min-[639px]:-jc-right-3 xl:-jc-right-2 xl:-jc-bottom-2 2xl:-jc-bottom-3 2xl:-jc-right-4.5 jc-w-18 md:jc-w-25">
+              <path d="M2 11C17.2335 5.64357 58.1604 -2.93038 100 5.62529" 
+                    stroke="#E97A21" 
+                    stroke-width="3" 
+                    stroke-linecap="round"
+                    stroke-dasharray="102" 
+                    stroke-dashoffset="102">
+                <animate attributeName="stroke-dashoffset" from="102" to="0" dur="0.5s" fill="freeze" />
+              </path>
+            </svg>
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- unless block.settings.image_dsk == blank and block.settings.image_mob == blank -%}
+        {%- if is_full_width_image and block.settings.image_link != blank -%}
+          <a href="{{ block.settings.image_link }}" class="jc-h-full jc-w-full">
+        {%- endif -%}
+          <div class="jc-w-full sm:jc-px-8 md:jc-px-7.5 lg:jc-px-6 xl:jc-px-8 2xl:jc-px-3 {% if is_full_width_image %}!jc-p-0 jc-h-full{% endif %}">
+            {% liquid
+              assign image_class = "max-sm:jc-hidden jc-h-auto jc-w-auto jc-object-cover "
+              if is_full_width_image
+                assign image_class = image_class | append: "!jc-h-full"
+              endif 
+  
+            %}
+            {% render "g-render-image"
+              class: image_class,
+              img_src: block.settings.image_dsk.src,
+              img: block.settings.image_dsk,
+              size: "400 500 800",
+              alt: block.settings.image_dsk.alt,
+              width: "100",
+              height: "100"
+              loading: loading_mode
+              id: block.settings.image_dsk.id
+            %}
+      
+            {% assign image_class = "sm:jc-hidden jc-object-cover " %}
+            {% liquid
+              assign image_mob = block.settings.image_mob 
+              if image_mob == blank
+                assign image_mob = block.settings.image_dsk
+              endif
+              
+              if block.settings.mobile_layout == "compact" 
+                assign image_class = image_class | append: "jc-w-full jc-h-auto"
+              else  
+                assign image_class = image_class | append: "jc-w-full jc-h-full "
+              endif 
+            %}
+            {% render "g-render-image"
+              class: image_class,
+              img: image_mob,
+              size: "400 500 800",
+              alt: block.settings.image_mob.alt,
+              width: "100",
+              height: "100"
+              loading: loading_mode
+              id: block.settings.image_mob.id
+            %}
+          </div>
+        {%- if is_full_width_image and block.settings.image_link != blank -%}
+          </a>
+        {%- endif -%}
+      {%- endunless -%}
+    </div>
+    
+    {%- unless block.settings.button_label == blank and block.settings.button_link == blank -%}
+      <a href="{{ block.settings.button_link }}" style="background: {{ block.settings.color_button_background }}; color: {{ block.settings.color_button_text }}" class="{% if block.settings.mobile_layout == "compact" %}jc-mt-3{% else %}jc-mt-4.5{% endif %} ;md:jc-mt-[11px] 2xl:jc-mt-[15px] jc-h-13 jc-text-base jc-leading-6 jc-flex jc-items-center jc-font-medium jc-justify-center jc-rounded-xs">{{ block.settings.button_label }}</a>
+    {%- endunless -%}
+  </div>
+{% endcapture %}
+
+{{ offer_block_element }}

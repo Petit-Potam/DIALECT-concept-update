@@ -1,0 +1,45 @@
+{% comment %}
+  Snippet: 'g-star-rating'
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - rating: {Number} number of stars to render
+  - class: {String} wrapper class
+
+  Render example:
+  {% render "g-star-rating",
+    rating: rating,
+    class: "wrapper_class",
+    icon_class: "custom"
+  %}
+{% endcomment %}
+
+{% liquid
+  assign rating = rating | minus: 0
+  assign int_part = rating | floor
+  assign floating_part = rating | minus: int_part
+  assign incremented_int_part = int_part | plus: 1
+%}
+
+{% if rating != blank %}
+  <span class="{{ class }} jc-inline-flex jc-h-fit">
+    {% for i in (1..5) %}
+      {% if i <= int_part %}
+        {% render 'icon-star', color: color, width: width, height: height, class: icon_class %}
+      {% elsif i == incremented_int_part %}
+        {% render 'g-render-partial-star',
+          color: color,
+          width: width,
+          height: height,
+          class: icon_class,
+          gradient_index: i,
+          floating_part: floating_part
+        %}
+      {% else %}
+        {% unless hide_empty_stars %}
+          {% render 'icon-star-empty', color: color, width: width, height: height, class: icon_class %}
+        {% endunless %}
+      {% endif %}
+    {% endfor %}
+  </span>
+{% endif %}

@@ -1,0 +1,231 @@
+{% comment %}
+  Section: g-hero-banner
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+  - g-home-banner-button
+{% endcomment %}
+
+{% liquid
+  assign image_dsk = section.settings.image_dsk
+  assign image_mob = image_dsk
+
+  if section.settings.image_mob != blank
+    assign image_mob = section.settings.image_mob
+  endif
+
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign button_text = section.settings.button_text
+  assign button_link = section.settings.button_link
+  assign button_color = section.settings.button_color
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --button-background-color: {{ section.settings.button_background_color }};
+    --button-text-color: {{ section.settings.button_text_color }};
+  }
+
+  .user-margins {
+    margin-top: {{ section.settings.margin_dsk_t }}px !important;
+  }
+
+  .heading_color {
+    color: {{ section.settings.heading_color }}
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-margins {
+      margin-top: {{ section.settings.margin_mob_t }}px !important;
+    }
+  }
+{% endstyle %}
+
+<section class="section section--flush user-margins jc-h-fit jc-relative">
+  {% # Background image container %}
+  {% if image_dsk != blank %}
+    <div class="jc-absolute jc-hidden md:jc-block jc-w-full jc-h-full">
+      {% render 'g-render-image',
+        class: 'jc-w-full jc-h-full jc-object-cover',
+        img_src: image_dsk.url,
+        img: image_dsk,
+        size: '1440 2160',
+        width: image_dsk.width,
+        height: image_dsk.height,
+        loading: 'eager',
+        alt: image_dsk.alt
+      %}
+    </div>
+  {% endif %}
+
+  {% if image_mob != blank %}
+    <div class="jc-absolute jc-block md:jc-hidden jc-w-full jc-h-full">
+      {% render 'g-render-image',
+        class: 'jc-w-full jc-h-full jc-object-cover',
+        img_src: image_mob.url,
+        img: image_mob,
+        size: '800 1280',
+        width: image_mob.width,
+        height: image_mob.height,
+        loading: 'eager',
+        alt: image_mob.alt
+      %}
+    </div>
+  {% endif %}
+
+  <div class="jc-p-6 jc-pt-16 jc-pb-60 md:jc-py-31 md:jc-px-10">
+    {% # Overlay content %}
+    <div class="jc-flex jc-flex-col jc-items-center jc-justify-start md:jc-justify-center jc-gap-6 jc-relative jc-text-center md:jc-max-w-[800px] jc-mx-auto">
+      {% # Heading %}
+      {% unless heading == blank %}
+        <div class="[&_p]:jc-text-center [&_p]:jc-text-3xl md:[&_p]:jc-text-6.5xl [&_p]:jc-leading-8 md:[&_p]:jc-leading-12 [&_p]:jc-font-normal [&_p]:jc-break-words [&_p]:jc-m-0 [&_p]:jc-overflow-hidden [&_p]:jc-font-['Sequel45'] [&_p_em]:!jc-not-italic [&_p_em]:jc-text-vividTangelo">
+          {{ heading }}
+        </div>
+      {% endunless %}
+
+      {% unless subheading == blank %}
+        <div class="[&_p]:jc-text-base [&_p]:jc-leading-6 md:jc-px-12.5">
+          {{ subheading }}
+        </div>
+      {% endunless %}
+
+      {% # CTA %}
+      {% unless button_text == blank %}
+        <a
+          {% if section.settings.scroll_to_element_selector != blank %}
+            hero-scroll-btn data-scroll-to-element="{{ section.settings.scroll_to_element_selector }}"
+          {% else %}
+            href="{{ button_link }}"
+          {% endif %}
+        >
+          <button
+            type="submit"
+            class="button button--primary jc-uppercase after:!jc-hidden jc-border jc-border-[var(--button-background-color)] jc-border-solid [&:not(:hover)]:!jc-text-[var(--button-text-color)] !jc-bg-[var(--button-background-color)] jc-rounded-md"
+            is="hover-button"
+          >
+            <span
+              class="btn-fill"
+              data-fill=""
+              style="transform: translateY(var(--motion-translateY)); --motion-translateY: -76%;"
+            ></span>
+            <span class="btn-text">{{ button_text }}</span>
+            <span class="btn-loader">
+              <span></span>
+              <span></span>
+              <span></span>
+            </span>
+          </button>
+        </a>
+      {% endunless %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hero Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Image Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_dsk",
+      "info": "2160 x 1080px .jpg recommended",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mob",
+      "label": "Mobile image",
+      "info": "1000 x 1400px .jpg recommended. If none is set, desktop image will be used."
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "margin_dsk_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_mob_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Heading</p>",
+      "info": "Italic text will appear highlighted"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Subheading</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "scroll_to_element_selector",
+      "label": "Scroll-to element selector",
+      "info": "Specify a valid CSS selector for the element of the page. This selector takes precedence over the button link if both are present"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_background_color",
+      "label": "Button background",
+      "default": "#000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#FFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero Banner"
+    }
+  ]
+}
+{% endschema %}

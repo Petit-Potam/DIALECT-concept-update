@@ -1,0 +1,210 @@
+{% comment %}
+  Section: g-mission-banner
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+{% endcomment %}
+
+{% liquid
+  assign image_dsk = section.settings.image_dsk
+  assign image_mob = image_dsk
+
+  if section.settings.image_mob != blank
+    assign image_mob = section.settings.image_mob
+  endif
+
+  assign heading = section.settings.heading
+  assign subheading = section.settings.subheading
+  assign description = section.settings.description
+%}
+
+{% style %}
+  #shopify-section-{{ section.id }} {
+    --button-background-color: {{ section.settings.button_background_color }};
+    --button-text-color: {{ section.settings.button_text_color }};
+  }
+
+  .user-margins {
+    margin-top: {{ section.settings.margin_dsk_t }}px !important;
+  }
+
+  .heading_color {
+    color: {{ section.settings.heading_color }}
+  }
+
+  @media screen and (max-width: 768px) {
+    .user-margins {
+      margin-top: {{ section.settings.margin_mob_t }}px !important;
+    }
+  }
+
+  .underlined-dsk em::before {
+    content : "";
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='210' height='18' viewBox='0 0 210 20' fill='none'%3E%3Cpath d='M2.5 17.2002C31.568 8.27281 109.663 -6.0171 202.5 8.24234' stroke='%23E97A21' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
+    height: 20px;
+    width: 188px;
+    background-repeat: no-repeat;
+  }
+
+  @media screen and (max-width:767px) {
+    .underlined-dsk em::before {
+      content : "";
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='12' viewBox='0 0 140 12' fill='none'%3E%3Cpath d='M2 9C17.3889 4.83389 58.7335 -1.83474 139 4.81967' stroke='%23E97A21' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+      height: 12px;
+      width: 140px;
+      background-repeat: no-repeat;
+    }
+  }
+{% endstyle %}
+
+<section class="user-margins jc-h-fit jc-relative max-md:jc-h-[600px]">
+  {% # Background image container %}
+  {% if image_dsk != blank %}
+    <div class="jc-absolute jc-hidden md:jc-block jc-w-full jc-h-full">
+      {% render 'g-render-image',
+        class: 'jc-w-full jc-h-full jc-object-cover',
+        img_src: image_dsk.url,
+        img: image_dsk,
+        size: '1440 2160',
+        width: image_dsk.width,
+        height: image_dsk.height,
+        loading: 'eager',
+        alt: image_dsk.alt
+      %}
+    </div>
+  {% endif %}
+
+  {% if image_mob != blank %}
+    <div class="jc-absolute jc-block md:jc-hidden jc-w-full jc-h-full">
+      {% render 'g-render-image',
+        class: 'jc-w-full jc-h-full jc-object-cover',
+        img_src: image_mob.url,
+        img: image_mob,
+        size: '800 1280',
+        width: image_mob.width,
+        height: image_mob.height,
+        loading: 'eager',
+        alt: image_mob.alt
+      %}
+    </div>
+  {% endif %}
+
+  <div class="jc-container !jc-px-5 md:!jc-px-10 !jc-py-12 md:!jc-pt-12 md:!jc-pb-16">
+    {% # Overlay content %}
+    <div class="jc-w-full jc-flex jc-flex-col jc-items-start jc-justify-start md:jc-justify-center jc-gap-2 jc-relative jc-text-center jc-mx-auto">
+      {% # Subheading %}
+      {% unless subheading == blank %}
+        <div class="[&_p]:jc-text-xl [&_p]:jc-leading-6 [&_p]:jc-font-bold">
+          {{ subheading }}
+        </div>
+      {% endunless %}
+
+      {% # Heading %}
+      {% unless heading == blank %}
+        <div class="underlined-dsk [&_p_em]:jc-relative [&_p]:jc-text-center [&_p]:jc-text-5xl md:[&_p]:jc-text-7.5xl [&_p]:jc-leading-10 md:[&_p]:jc-leading-14 [&_p]:jc-font-normal [&_p]:jc-break-words [&_p]:jc-m-0 [&_p]:jc-font-['Sequel75'] [&_p_em]:!jc-not-italic">
+          {{ heading }}
+        </div>
+      {% endunless %}
+
+      {% unless description == blank %}
+        <div class="[&_p]:jc-text-base [&_p]:jc-text-start [&_p]:jc-leading-6 [&_p]:jc-font-normal [&_p]:jc-break-words [&_p]:jc-m-0 [&_p]:jc-overflow-hidden [&_p_em]:!jc-not-italic [&_p_em]:jc-text-vividTangelo md:jc-max-w-[700px] jc-mt-4 md:jc-mt-6">
+          {{ description }}
+        </div>
+      {% endunless %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Mission Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Image Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_dsk",
+      "info": "2160 x 1080px .jpg recommended",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mob",
+      "label": "Mobile image",
+      "info": "1000 x 1400px .jpg recommended. If none is set, desktop image will be used."
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "margin_dsk_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "margin_mob_t",
+      "min": 0,
+      "max": 80,
+      "unit": "px",
+      "label": "Top margin",
+      "default": 0
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Subheading</p>"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Heading</p>",
+      "info": "Italic text will appear highlighted"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Description</p>"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#000"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mission Banner"
+    }
+  ]
+}
+{% endschema %}

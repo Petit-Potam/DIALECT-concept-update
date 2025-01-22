@@ -39,8 +39,11 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Welcome to our FAQ, we are so happy to have you here and as a client. <br\/>We have tried to answer the most common questions.<\/p>",
+            "text": "<p>Can't find what you're looking for? Contact us at <a href=\"mailto:hello@dialectfragrances.com?subject=Contact%20Us%20Form%20From%20FAQ\" target=\"_blank\" title=\"Contact Us\">hello@dialectfragrances.com<\/a><\/p>",
             "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": false,
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -93,8 +96,8 @@
         "rich-text-1": {
           "type": "rich-text",
           "settings": {
-            "heading": "Shipping & Returns",
-            "text": "<p>Below are some common questions about shipping, returns, and exchanges<\/p>",
+            "heading": "Products & General info",
+            "text": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -102,8 +105,8 @@
         "question-1": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "Are these perfumes real designer ones?",
+            "text": "<p>We make our own alternatives for brand name and niche perfumes, upholding the same high standards of quality and production. We’re not affiliated in any way with these brands.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -111,8 +114,8 @@
         "question-2": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "What concentration are these fragrances?",
+            "text": "<p>We only produce EDP (eau de parfum), with a minimum fragrance concentration <strong>of 10–30%<\/strong><\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -120,8 +123,8 @@
         "question-4": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "Why are these a lot more affordable than brand fragrances?",
+            "text": "<p>Industry markups can be 90% more than the production costs of the fragrance. We eliminate those markups by keeping our packaging simple, avoiding brand taxes, avoiding celebrity endorsements, and avoiding expensive advertising. We just focus on creating a quality product without all the fuss.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -129,8 +132,17 @@
         "question-5": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "Are your fragrances long-lasting?",
+            "text": "<p>Each fragrance goes through extensive testing. We have specialised frameworks in place and use industry experts to ensure their longevity. We also have a perfumer that extensively vets our products.<\/p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_C6dArp": {
+          "type": "question",
+          "settings": {
+            "title": "Do you test on animals?",
+            "text": "<p>We do not test on animals. We make sure that all our perfumes are vegan and cruelty-free! We also certify our products with PETA.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -138,8 +150,8 @@
         "rich-text-2": {
           "type": "rich-text",
           "settings": {
-            "heading": "Orders",
-            "text": "<p>Below are some of are common questions about orders<\/p>",
+            "heading": "Shipping",
+            "text": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -147,8 +159,8 @@
         "question-6": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "What countries do you ship to?",
+            "text": "<p>Currently, we only ship within the United Kingdom.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -156,8 +168,8 @@
         "question-7": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "How much does shipping cost?",
+            "text": "<p>We offer free shipping on orders of 3 fragrances or more.<br\/><br\/>If you order fragrance, shipping costs £3.95<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -165,8 +177,8 @@
         "question-8": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "How long does it take for my order to arrive?",
+            "text": "<p>Orders are typically dispatched within 1–2 business days. After they have been dispatched, they generally take 2-3 business days to arrive.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -174,8 +186,8 @@
         "question-9": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "Where is my order?",
+            "text": "<p>We always send you a dispatch confirmation with a tracking number via email. Make sure to check your spam\/junk folders.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -183,8 +195,8 @@
         "rich-text-3": {
           "type": "rich-text",
           "settings": {
-            "heading": "Products",
-            "text": "<p>Below are some common questions about our products<\/p>",
+            "heading": "Returns & Exchanges",
+            "text": "",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -192,8 +204,8 @@
         "question-10": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "How do I cancel my order?",
+            "text": "<p>You can cancel your order, if your order has not been fulfilled yet, within one hour of placing the order. Please contact us during business hours (9 AM–5 PM). We cannot process cancellation requests outside of business hours. Please contact us at <a><span style=\"text-decoration:underline\">hello@dialectfragrances.com <\/span><\/a>as soon as possible.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -201,8 +213,8 @@
         "question-11": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "I haven’t received my order, can you help?",
+            "text": "<p>Please check the tracking link for details regarding your delivery. As most couriers offer a non-contact service, they are likely to leave your parcel in a safe place or with your neighbour when you are not at home at the time of delivery.<\/p><p>It is unlikely that the courier will use a calling card as most deliveries offer phone or email confirmation of delivery. Please check the tracking link we sent before contacting us. Our couriers will complete a detailed investigation for claims of non-delivery.<\/p><p>If delivery is found to be non-compliant, we will resend your order. All cases of non-delivery must be reported within 7 days of the delivery date.<\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -210,8 +222,26 @@
         "question-12": {
           "type": "question",
           "settings": {
-            "title": "Frequently asked question",
-            "text": "<p>Use this text to answer questions in as much detail as possible for your customers.<\/p>",
+            "title": "What is your return policy?",
+            "text": "<p>Dialect Fragrances offer free returns! You can return or exchange any fragrance that you don’t like within 30 days of receiving your order.<\/p><p><\/p><p>If you choose to return a fragrance, we will refund the full price. We offer a free return label, however, we cannot refund the shipping costs when you send less than 3 fragrances back.<\/p><p><\/p><p>We cannot accept returns on bottles that have been used extensively. We accept the return of bottles that have been sprayed once or twice only. If we find that a bottle has been used more than this, we will have to send it back to you.<\/p><p>Please contact our Customer Service team at <a><span style=\"text-decoration:underline\">hello@dialectfragrances.com<\/span><\/a> to return or exchange a fragrance.<\/p><p>Please note that a photo of the fragrance is required for a return to be authorised. (This step is explained in the return request process.)<\/p><p>We love discovering new fragrances, so we are happy to help you exchange a fragrance for another one that is better suited unless you prefer a return of course!<\/p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_P7eUez": {
+          "type": "question",
+          "settings": {
+            "title": "How do I return an order?",
+            "text": "<p>If you want to return a fragrance, please contact our Customer Services team at <a><span style=\"text-decoration:underline\">hello@dialectfragrances.com<\/span><\/a> so that we can provide you with a free return label.<\/p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_mthTDC": {
+          "type": "question",
+          "settings": {
+            "title": "Can I exchange a fragrance?",
+            "text": "<p>Yes. If you want to exchange a fragrance, please contact our Customer Services team at <a><span style=\"text-decoration:underline\">hello@directfragrances.com<\/span><\/a><\/p>",
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
@@ -234,6 +264,7 @@
         "question-2",
         "question-4",
         "question-5",
+        "question_C6dArp",
         "rich-text-2",
         "question-6",
         "question-7",
@@ -243,6 +274,8 @@
         "question-10",
         "question-11",
         "question-12",
+        "question_P7eUez",
+        "question_mthTDC",
         "contact"
       ],
       "settings": {

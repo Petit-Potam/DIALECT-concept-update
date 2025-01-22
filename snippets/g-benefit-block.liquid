@@ -1,0 +1,72 @@
+{% comment %}
+  Snippet: g-benefit-block
+  Created by: Volodymyr Korolchuk
+
+  Passed variables:
+  - block: {Object} benefit block object
+  - class: {String} custom classes
+  - content_alignment_mob: {String} block mobile content alignment
+  - content_alignment_dsk: {String} block desktop content alignment
+
+  Render example:
+  {% render 'g-benefit-block',
+    block: block,
+    class: 'custom_class',
+    content_alignment_mob: "mob_alignment",
+    content_alignment_dsk: "dsk_alignment"
+  %}
+{% endcomment %}
+
+{% liquid
+  assign content_alignment_dsk = content_alignment_dsk | default: 'center'
+  assign content_alignment_mob = content_alignment_mob | default: 'center'
+
+  assign alignment_class = ''
+
+  case content_alignment_mob
+    when 'left'
+      assign alignment_class = 'jc-items-start [&_.jc-text-container]:jc-text-start'
+    when 'center'
+      assign alignment_class = 'jc-items-center [&_.jc-text-container]:jc-text-center'
+    when 'right'
+      assign alignment_class = 'jc-items-end [&_.jc-text-container]:jc-text-end'
+  endcase
+
+  case content_alignment_dsk
+    when 'left'
+      assign alignment_class = alignment_class | append: ' lg:jc-items-start lg:[&_.jc-text-container]:jc-text-start'
+    when 'center'
+      assign alignment_class = alignment_class | append: ' lg:jc-items-center lg:[&_.jc-text-container]:jc-text-center'
+    when 'right'
+      assign alignment_class = alignment_class | append: ' lg:jc-items-end lg:[&_.jc-text-container]:jc-text-end'
+  endcase
+%}
+
+{% unless block == blank %}
+  <div class="jc-flex jc-flex-col jc-gap-4 !jc-h-[inherit] {{ alignment_class }} {{ class }}">
+    <div class="!jc-w-12 !jc-h-12 jc-relative">
+      {% if block.settings.benefit_image != blank %}
+        {%
+          render "g-render-image",
+          class: "jc-absolute jc-inset-0 jc-object-cover",
+          img_src: block.settings.benefit_image.src,
+          img: block.settings.benefit_image,
+          size: "220 300",
+          alt: {{ block.settings.benefit_image.alt }},
+          width: {{ block.settings.benefit_image.width }},
+          height: {{ block.settings.benefit_image.height }},
+          loading: "eager",
+          id: {{ block.id }}
+        %}
+      {% endif %}
+    </div>
+    {% unless block.settings.benefit_heading == blank and block.settings.benefit_description == blank %}
+      <div class="jc-text-container jc-flex jc-flex-col jc-gap-2 [&_p]:jc-m-0 [&_p]:jc-text-sm [&_p]:jc-leading-5">
+        <h3 class="jc-text-4 md:jc-text-xl jc-leading-5 md:jc-leading-6 jc-m-0">
+          {{ block.settings.benefit_heading }}
+        </h3>
+        {{ block.settings.benefit_description }}
+      </div>
+    {% endunless %}
+  </div>
+{% endunless %}

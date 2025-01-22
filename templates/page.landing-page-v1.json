@@ -1,0 +1,976 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main-page": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "heading_size": "title-xl tracking-heading",
+        "heading_tag": "h1",
+        "text_size": "text-base",
+        "padding_top": 72,
+        "padding_bottom": 120,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "g_hero_banner_Hbj3Fx": {
+      "type": "g-hero-banner",
+      "settings": {
+        "image_dsk": "shopify://shop_images/hero_593d9d1c-f8d9-4602-912c-702a60aa77c9.png",
+        "margin_dsk_t": 0,
+        "margin_mob_t": 0,
+        "heading": "<p>4 Reasons Over <em>10,000 People Love DIALECT Fragrances</em></p>",
+        "subheading": "<p>Discover the allure of DIALECT Fragrances, the brand that's revolutionising the perfume industry with luxurious, high-quality scents that won't break the bank. Here’s why everyone is talking about us.</p>",
+        "button_text": "Save up to 87%",
+        "button_link": "",
+        "scroll_to_element_selector": "[data-section-featured-bundle]",
+        "heading_color": "#000000",
+        "button_background_color": "#e97a21",
+        "button_text_color": "#ffffff"
+      }
+    },
+    "image_with_text_and_review_qxdGYL": {
+      "type": "image-with-text-and-review",
+      "blocks": {
+        "review_with_text_V6fUFQ": {
+          "type": "review_with_text",
+          "settings": {
+            "image_content_spacing": "start",
+            "enable_star_rating": false,
+            "image_star_rating": 5,
+            "image_label": "+470 reviews on Judge.me",
+            "image_text_color": "#171717",
+            "review_star_rating": 5,
+            "review_title": "Amazing",
+            "review_content": "<p>My second bottle of this. Such a beautiful, long-lasting fragrance and have had many great compliments including a waiter that said ‘Someone is wearing Baccarat Rouge on this table!’ Clearly a fantastic dupe!</p>",
+            "reviewer_name": "Donna S.",
+            "badge_text": "Verified",
+            "subheading": "Subheading",
+            "title": "Image with text",
+            "content": "<p>Use image with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+          }
+        },
+        "text_eQ8A7q": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>FAMILIAR YET UNIQUIE</strong></p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "heading_B9rdGk": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Smells Just Like Your Favourite Perfume</strong>",
+            "heading_size": "title-sm",
+            "heading_tag": "h4",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_ExNtAr": {
+          "type": "text",
+          "settings": {
+            "text": "<p>DIALECT Fragrances are inspired by some of the world’s most beloved perfumes. Customers love the familiar scents, which are meticulously crafted to capture the essence of their favourite fragrances. Enjoy the luxury you love with a unique twist.</p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "review_with_text_V6fUFQ",
+        "text_eQ8A7q",
+        "heading_B9rdGk",
+        "text_ExNtAr"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/home_banner_cover_mob_2.png",
+        "image_width": "medium",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_secondary_text": "#e97a21",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 64,
+        "padding_bottom": 64,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": false,
+        "enable_heading_counters": false,
+        "parallax_direction": "vertical"
+      }
+    },
+    "image_with_text_and_review_4FcF4g": {
+      "type": "image-with-text-and-review",
+      "blocks": {
+        "review_with_text_i99wBw": {
+          "type": "review_with_text",
+          "settings": {
+            "image_content_spacing": "start",
+            "enable_star_rating": true,
+            "image_star_rating": 5,
+            "image_label": "Lasts forever",
+            "image_text_color": "#ffffff",
+            "review_star_rating": 5,
+            "review_title": "My new obsession!!!!",
+            "review_content": "<p>This perfume has surprised me so much, it smells gorgeous and genuinely lasts ALL DAY and so much longer than many of my designer perfumes. 10000% recommend❤️</p>",
+            "reviewer_name": "Alison S.",
+            "badge_text": "Verified",
+            "subheading": "Subheading",
+            "title": "Image with text",
+            "content": "<p>Use image with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+          }
+        },
+        "text_9yNXD8": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>ENDURING ELEGANCE</strong></p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "heading_yKxFzH": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Lasts All day</strong>",
+            "heading_size": "title-sm",
+            "heading_tag": "h4",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_k4YaNF": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Our fragrances are designed to last all day, ensuring you stay wrapped up in your favourite scent from morning till night. Customers rave about how our perfumes maintain their intensity and complexity, making every spray a statement.</p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "review_with_text_i99wBw",
+        "text_9yNXD8",
+        "heading_yKxFzH",
+        "text_k4YaNF"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/DIALECT01935-2.jpg",
+        "image_width": "medium",
+        "layout": "text_first",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_secondary_text": "#e97a21",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": false,
+        "enable_heading_counters": false,
+        "parallax_direction": "vertical"
+      }
+    },
+    "image_with_text_and_review_Dh3DDi": {
+      "type": "image-with-text-and-review",
+      "blocks": {
+        "review_with_text_DGWGfG": {
+          "type": "review_with_text",
+          "settings": {
+            "image_content_spacing": "start",
+            "enable_star_rating": false,
+            "image_star_rating": 5,
+            "image_label": "",
+            "image_text_color": "#171717",
+            "review_star_rating": 5,
+            "review_title": "So pleased with this I have had so many compliments",
+            "review_content": "<p>I love this fragrance, so many people have mentioned how nice it smells and how much is smells like the original!</p>",
+            "reviewer_name": "Alison S.",
+            "badge_text": "Verified",
+            "subheading": "Subheading",
+            "title": "Image with text",
+            "content": "<p>Use image with text to give your customers insight into your brand. Select imagery and text that relates to your style and story.</p>"
+          }
+        },
+        "text_TUeW9c": {
+          "type": "text",
+          "settings": {
+            "text": "<p><strong>AFFORDABLE LUXURY</strong></p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": true,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "heading_Q8ChBM": {
+          "type": "heading",
+          "settings": {
+            "heading": "<strong>Without the Hefty PriceTag</strong>",
+            "heading_size": "title-sm",
+            "heading_tag": "h4",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_wadHae": {
+          "type": "text",
+          "settings": {
+            "text": "<p>One of the biggest draws of DIALECT Fragrances is our affordable pricing. We believe everyone deserves to enjoy high-quality, luxurious scents without paying exorbitant prices. Our customers appreciate the value, often stating that our perfumes smell just as good, if not better, than their high-end counterparts.</p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "review_with_text_DGWGfG",
+        "text_TUeW9c",
+        "heading_Q8ChBM",
+        "text_wadHae"
+      ],
+      "settings": {
+        "image": "shopify://shop_images/image_with_text_2_d22c458c-af4f-471d-bcd0-b9eec6a41838.png",
+        "image_width": "medium",
+        "layout": "image_first",
+        "text_alignment": "left",
+        "text_alignment_mobile": "left",
+        "color_text": "",
+        "color_secondary_text": "#e97a21",
+        "color_background": "",
+        "gradient_background": "",
+        "color_background_2": "",
+        "gradient_background_2": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 64,
+        "divider": false,
+        "full_width": true,
+        "rounded": false,
+        "enable_parallax": false,
+        "enable_heading_counters": false,
+        "parallax_direction": "vertical"
+      }
+    },
+    "rich_text_CfKUBR": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_dqVz6d": {
+          "type": "heading",
+          "settings": {
+            "heading": "Buy 2 Get 3!",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "text_xbzKpK": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Now is the perfect time to experience DIALECT Fragrances. For a limited time, buy two fragrances and get a third one free! This offer makes it easy to find your signature scent or share the gift of luxury with friends and family</p>",
+            "text_size": "subtext-md",
+            "text_max_size": 32,
+            "text_font": "body",
+            "secondary_color": false,
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_dqVz6d",
+        "text_xbzKpK"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 32,
+        "padding_bottom": 32,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "featured_bundle_9eMRGR": {
+      "type": "featured-bundle",
+      "blocks": {
+        "title_jtamD4": {
+          "type": "title",
+          "settings": {
+            "title_size": "product-title-md",
+            "title_size_mobile": "product-title-md",
+            "show_price": false,
+            "show_rating": false
+          }
+        },
+        "liquid_gz6qaJ": {
+          "type": "liquid",
+          "disabled": true,
+          "settings": {
+            "liquid": "<div class=\"product-info__volume\" style=\"display: infline; float left;\">\n<p>{{ product.metafields.custom.volume }}</p>\n</div>\n\n<div class=\"product-info__review\">\n{{ product.metafields.judgeme.badge }}\n<span class=\"product-card__reviews--count\">({{ product.metafields.reviews.rating_count }})</span>\n</div>\n\n<div class=\"product-info__inspired-by-text\">\n<p>Inspired by {% case product.metafields.custom.inspiration_brand %}\n        {% when 'Chanel' %}\n            \n        {% else %}\n        <b>\n            {% case product.metafields.custom.inspiration_brand | split:'' | last %}\n                {% when 's' %}\n                    {{ product.metafields.custom.inspiration_brand }}'\n                {% else %}\n                    {{ product.metafields.custom.inspiration_brand }}'s\n            {% endcase %}\n        </b>\n    {% endcase %}\n    <span>{{ product.metafields.custom.inspired_by_et_retail_price.value | split: '(' | first }}</span>\n    <span class=\"dialect__color-primary\">(Retail Price: {{ product.metafields.pdp.retail_price | metafield_tag | split:' GBP'}})</span></p>\n</div>\n\n<div class=\"product-info__description\" style=\"display: infline; float left;\">\n<p>{{ product.metafields.custom.product_dialect_description | metafield_tag }}</p>\n</div>"
+          }
+        },
+        "liquid_RcALQk": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<style>\n.jdgm-widget.jdgm-preview-badge.jdgm-preview-badge--with-link .jdgm-prev-badge .jdgm-prev-badge__stars .jdgm-star::before {\ncolor: rgba(233, 122, 33, 1) !important;\n}\n</style>\n\n<div style=\"margin-top: 16px !important;\" class=\"jdgm-widget jdgm-preview-badge jdgm-preview-badge--with-link jdgm--done-setup\" data-id=\"7514051346591\" data-template=\"product\" data-auto-install=\"false\">\n  <div style=\"display:none\" class=\"jdgm-prev-badge\" data-average-rating=\"4.33\" data-number-of-reviews=\"6\" data-number-of-questions=\"0\"> <span class=\"jdgm-prev-badge__stars\" data-score=\"4.33\" tabindex=\"0\" aria-label=\"4.33 stars\" role=\"button\"> <span class=\"jdgm-star jdgm--on\"></span><span class=\"jdgm-star jdgm--on\"></span><span class=\"jdgm-star jdgm--on\"></span><span class=\"jdgm-star jdgm--on\"></span><span class=\"jdgm-star jdgm--on\"></span> </span> <span class=\"jdgm-prev-badge__text\" style=\"margin-left: 8px;\">(+460) <span class=\"\"><a href=\"#shopify-block-judge_me_reviews_all_reviews_page_i3cyQc\">See all</a></span></span> </div>\n</div>\n\n<p style=\"margin-top: 24px !important; margin-bottom: 0 !important; line-height: 24px;\">\nEau de Parfum. Size 50ml\n<br/>\n<strong>Inspired by your favorite brands</strong><br/>\n<div style=\"margin-top: 10px !important;\">Save up to <span style=\"color: #ea7b21; font-weight: 700;\">93%</span> compared to the original fragrances\n</p>\n</div>"
+          }
+        },
+        "bundle_product_pickers_gVabCN": {
+          "type": "bundle_product_pickers",
+          "settings": {
+            "hide_sold_out_variants": false,
+            "gift_product_label": "Gift",
+            "dropdown_placeholder_image": "shopify://shop_images/bottle_placeholder.png",
+            "unisex_badge_color": "#bdb76b",
+            "women_badge_color": "#e9967a",
+            "men_badge_color": "#8fbc8f"
+          }
+        },
+        "buy_buttons_hfAAUB": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_quantity_selector": true,
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "best_reviews_R9YkkC": {
+          "type": "best-reviews",
+          "settings": {}
+        },
+        "sale_point_container_UFWrD8": {
+          "type": "sale-point-container",
+          "settings": {}
+        },
+        "sale_point_icons_EhFgjk": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/money_3_1.svg",
+            "text": "Free 30 days returns policy",
+            "button_label": "",
+            "heading": "Free 30 days returns policy",
+            "content": ""
+          }
+        },
+        "sale_point_icons_nGM3Tf": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/nose_2_1.svg",
+            "text": "Smells just like your favourite perfume",
+            "button_label": "",
+            "heading": "Smells just like your favourite perfume",
+            "content": ""
+          }
+        },
+        "sale_point_icons_epmEPb": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/chemical.svg",
+            "text": "Same High Quality ingredients",
+            "button_label": "",
+            "heading": "Same High Quality ingredients",
+            "content": ""
+          }
+        },
+        "sale_point_icons_CHLqnb": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/price-tag_1.svg",
+            "text": "Without the hefty price tag",
+            "button_label": "",
+            "heading": "Without the hefty price tag",
+            "content": ""
+          }
+        },
+        "sale_point_icons_96GDeW": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/clock.svg",
+            "text": "Long lasting scents",
+            "button_label": "",
+            "heading": "Long lasting scents",
+            "content": ""
+          }
+        },
+        "sale_point_icons_Khqbz4": {
+          "type": "sale-point-icons",
+          "settings": {
+            "icon": "shopify://shop_images/easter-bunny_1.svg",
+            "text": "Vegan, Cruelty Free and Carbon Neutral",
+            "button_label": "",
+            "heading": "Vegan, Cruelty Free and Carbon Neutral",
+            "content": ""
+          }
+        },
+        "accordion_info_wW8cYL": {
+          "type": "accordion_info",
+          "settings": {
+            "open_first": false,
+            "accordion_input_type": "checkbox",
+            "dropdown_icon": "plus_minus"
+          }
+        }
+      },
+      "block_order": [
+        "title_jtamD4",
+        "liquid_gz6qaJ",
+        "liquid_RcALQk",
+        "bundle_product_pickers_gVabCN",
+        "buy_buttons_hfAAUB",
+        "best_reviews_R9YkkC",
+        "sale_point_container_UFWrD8",
+        "sale_point_icons_EhFgjk",
+        "sale_point_icons_nGM3Tf",
+        "sale_point_icons_epmEPb",
+        "sale_point_icons_CHLqnb",
+        "sale_point_icons_96GDeW",
+        "sale_point_icons_Khqbz4",
+        "accordion_info_wW8cYL"
+      ],
+      "settings": {
+        "bundle_product": "buy-2-get-3-add-on",
+        "enable_sticky_info": true,
+        "bundle_starting_price_label": "Starting from:",
+        "media_size": 50,
+        "gallery_layout": "thumbnail",
+        "thumbnail_position": "beside",
+        "image_ratio": "square",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_autoplay": false,
+        "enable_video_looping": false,
+        "mobile_layout": "full_width",
+        "image_ratio_mobile": "adapt_first",
+        "mobile_thumbnail": false,
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": true,
+        "rounded": false
+      }
+    },
+    "featured_collections_FPw9VH": {
+      "type": "featured-collections",
+      "blocks": {
+        "column_arcH3E": {
+          "type": "column",
+          "settings": {
+            "custom_icon": "shopify://shop_images/diamond-svgrepo-com.svg",
+            "heading": "Premium quality ingredients"
+          }
+        },
+        "column_pPer9D": {
+          "type": "column",
+          "settings": {
+            "custom_icon": "shopify://shop_images/time-forward-svgrepo-com.svg",
+            "heading": "Long lasting"
+          }
+        },
+        "column_NyiYjq": {
+          "type": "column",
+          "settings": {
+            "custom_icon": "shopify://shop_images/rabbit-part-2-svgrepo-com.svg",
+            "heading": "Vegan and Cruelty-Free"
+          }
+        },
+        "collection_UkaKEM": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfume-for-women",
+            "products": [],
+            "title": "Women"
+          }
+        },
+        "collection_fYPGkA": {
+          "type": "collection",
+          "settings": {
+            "collection": "perfume-for-men",
+            "products": [],
+            "title": "Men"
+          }
+        },
+        "collection_MeGdJn": {
+          "type": "collection",
+          "settings": {
+            "collection": "unisexe-perfume",
+            "products": [],
+            "title": "Unisex"
+          }
+        }
+      },
+      "block_order": [
+        "column_arcH3E",
+        "column_pPer9D",
+        "column_NyiYjq",
+        "collection_UkaKEM",
+        "collection_fYPGkA",
+        "collection_MeGdJn"
+      ],
+      "settings": {
+        "product_limit": 12,
+        "columns": 4,
+        "carousel_on_desktop": true,
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "heading": "Our <em>Best Sellers</em>",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "icons_alignment": "jc-text-center jc-justify-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "highlighted_text": "scribble",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "rgba(0,0,0,0)",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "#171717",
+        "color_button_gradient": "",
+        "icon_background": "#fff8eb",
+        "padding_top": 72,
+        "padding_bottom": 32,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "rich_text_9K7mkH": {
+      "type": "rich-text",
+      "blocks": {
+        "button_8iPkWU": {
+          "type": "button",
+          "settings": {
+            "button_label": "SHOP ALL PERFUMES",
+            "button_link": "shopify://collections",
+            "button_size": "lg",
+            "button_secondary_style": false,
+            "show_icon": false
+          }
+        }
+      },
+      "block_order": [
+        "button_8iPkWU"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "#171717",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 32,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "g_features_comparison_WQBkGX": {
+      "type": "g-features-comparison",
+      "blocks": {
+        "feature_md38BW": {
+          "type": "feature",
+          "settings": {
+            "text": "Budget-Friendly",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_qtYxn3": {
+          "type": "feature",
+          "settings": {
+            "text": "Inspired by Luxury Scents",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_gUwwXE": {
+          "type": "feature",
+          "settings": {
+            "text": "Dermatologically Tested",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_74qUC6": {
+          "type": "feature",
+          "settings": {
+            "text": "Layerable Scents",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_MbatjR": {
+          "type": "feature",
+          "settings": {
+            "text": "Free 30-Days Returns",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_f8VtFV": {
+          "type": "feature",
+          "settings": {
+            "text": "Fast & Tracked Shipping",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_qpaGyF": {
+          "type": "feature",
+          "settings": {
+            "text": "100% Vegan",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        },
+        "feature_cDVykb": {
+          "type": "feature",
+          "settings": {
+            "text": "Cruelty-Free",
+            "left_icon": "shopify://shop_images/checkmark_green.svg",
+            "right_icon": "shopify://shop_images/x-circle.svg"
+          }
+        }
+      },
+      "block_order": [
+        "feature_md38BW",
+        "feature_qtYxn3",
+        "feature_gUwwXE",
+        "feature_74qUC6",
+        "feature_MbatjR",
+        "feature_f8VtFV",
+        "feature_qpaGyF",
+        "feature_cDVykb"
+      ],
+      "settings": {
+        "heading": "<p><strong>DIALECT</strong><br/>vs<br/>Others brands</p>",
+        "first_image": "shopify://shop_images/dialect_bottle.png",
+        "second_image": "shopify://shop_images/others_bottle.png"
+      }
+    },
+    "rich_text_bM7mjc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_CcpiQX": {
+          "type": "heading",
+          "settings": {
+            "heading": "Already 10,000+ customers",
+            "heading_size": "title-md",
+            "heading_tag": "h2",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "heading_CcpiQX"
+      ],
+      "settings": {
+        "text_alignment": "center",
+        "text_alignment_mobile": "center",
+        "heading": "",
+        "heading_size": "title-md",
+        "heading_alignment": "text-center md:items-center",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 48,
+        "padding_bottom": 0,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "17297823848bfd6b56": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_all_reviews_text_t8LWTH": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_text_t8LWTH"
+      ],
+      "settings": {
+        "enable_reviews_integration": true,
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 16,
+        "padding_bottom": 32,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "17296164266421a88a": {
+      "type": "apps",
+      "blocks": {
+        "videowise_video_platform_ugc_videowise_page_widgets_yAT3YY": {
+          "type": "shopify://apps/videowise-video-platform-ugc/blocks/videowise-page-widgets/b48d6c0c-3e3f-4791-a9ab-a5ab7ec82f4d",
+          "settings": {
+            "videowise_embed": "<div class=\"reeview-app-widget\" id=\"reeview-app-widget_6632cd91e456b2002887b7cd\"></div>"
+          }
+        }
+      },
+      "block_order": [
+        "videowise_video_platform_ugc_videowise_page_widgets_yAT3YY"
+      ],
+      "settings": {
+        "enable_reviews_integration": true,
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 0,
+        "padding_bottom": 56,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    },
+    "g_featured_reviews_8p4LHL": {
+      "type": "g-featured-reviews",
+      "settings": {
+        "heading": "<h5>What Our Customers Are Saying</h5>",
+        "featured_product_prelabel": "",
+        "background_color": "#fff8eb",
+        "carousel_item_background_color": "#ffffff"
+      }
+    },
+    "faq_HnMUzk": {
+      "type": "faq",
+      "blocks": {
+        "question_kVKH8k": {
+          "type": "question",
+          "settings": {
+            "title": "Are these fragrances long lasting?",
+            "text": "<p>Each fragrance goes through extensive testing. We have specialised frameworks in place and use industry experts to ensure their longevity. We also have a perfumer that extensively vets our products.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_jMimym": {
+          "type": "question",
+          "settings": {
+            "title": "What is your return policy?",
+            "text": "<p>Dialect Fragrances offer free returns! You can return or exchange any fragrance that you don’t like within 30 days of receiving your order. To know more about the process, check out our <a href=\"https://dialectfragrances.com/policies/refund-policy\" title=\"https://dialectfragrances.com/policies/refund-policy\">Refund Policy</a> dedicated page.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_Ffq4tF": {
+          "type": "question",
+          "settings": {
+            "title": "How long will it take to get my order?",
+            "text": "<p>Our orders are typically dispatched within 1 business and take 1 to 2 days to arrive with Royal Mail.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        },
+        "question_JWc9eb": {
+          "type": "question",
+          "settings": {
+            "title": "Can I exchange a fragrance?",
+            "text": "<p>Yes. If you want to exchange a fragrance, please contact our Customer Services team on our <a href=\"/pages/contact\" title=\"Contact\">contact page</a> or use our chatbot on the bottom right of your screen.</p>",
+            "highlighted_text": "none",
+            "highlighted_scribble": "circle"
+          }
+        }
+      },
+      "block_order": [
+        "question_kVKH8k",
+        "question_jMimym",
+        "question_Ffq4tF",
+        "question_JWc9eb"
+      ],
+      "settings": {
+        "style": "with-border",
+        "heading": "FAQs",
+        "heading_size": "title-md",
+        "heading_alignment": "text-left md:items-end md:flex-row",
+        "heading_tag": "h2",
+        "subheading": "",
+        "description": "",
+        "button_label": "",
+        "button_link": "",
+        "highlighted_text": "none",
+        "highlighted_scribble": "circle",
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "narrow": true,
+        "rounded": false
+      }
+    },
+    "1729782436bfa7caf0": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_all_reviews_page_RmdprL": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_page/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_page_RmdprL"
+      ],
+      "settings": {
+        "enable_reviews_integration": true,
+        "color_text": "",
+        "color_background": "",
+        "gradient_background": "",
+        "color_highlight": "",
+        "gradient_highlight": "",
+        "color_button_text": "",
+        "color_button_background": "",
+        "color_button_gradient": "",
+        "padding_top": 72,
+        "padding_bottom": 72,
+        "divider": false,
+        "full_width": false,
+        "rounded": false
+      }
+    }
+  },
+  "order": [
+    "main-page",
+    "g_hero_banner_Hbj3Fx",
+    "image_with_text_and_review_qxdGYL",
+    "image_with_text_and_review_4FcF4g",
+    "image_with_text_and_review_Dh3DDi",
+    "rich_text_CfKUBR",
+    "featured_bundle_9eMRGR",
+    "featured_collections_FPw9VH",
+    "rich_text_9K7mkH",
+    "g_features_comparison_WQBkGX",
+    "rich_text_bM7mjc",
+    "17297823848bfd6b56",
+    "17296164266421a88a",
+    "g_featured_reviews_8p4LHL",
+    "faq_HnMUzk",
+    "1729782436bfa7caf0"
+  ]
+}

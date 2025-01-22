@@ -54,9 +54,9 @@
   />
 {%- endif -%}
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
-  <div class="page-width{% if media_count > 0 %}{% if section.settings.full_width %} page-width--full{% endif %}{% else %} page-width--narrow{% endif %} relative">
-    <div class="featured-product product product--{{ section.settings.gallery_layout }}{% if media_count == 0 %} no-media{% endif %} flex flex-col items-start lg:grid gap-5 w-full relative">
+<div class="jc-container section jc-pt-0 md:jc-pt-4 jc-pb-10 md:jc-pb-15 !jc-px-0 md:!jc-px-12 {% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}">
+  <div class="page-width{% if media_count > 0 %}{% if section.settings.full_width %} page-width--full{% endif %}{% else %} page-width--narrow{% endif %} relative !jc-px-0">
+    <div class="featured-product product product--{{ section.settings.gallery_layout }}{% if media_count == 0 %} no-media{% endif %} flex flex-col items-start lg:grid md:!jc-gap-17 w-full relative !jc-px-0">
       {%- if media_count > 0 -%}
         {%- render 'product-media-gallery',
           product: product,
@@ -75,7 +75,7 @@
         -%}
       {%- endif -%}
 
-      <animate-element class="product__info block{% if section.settings.enable_sticky_info %} sticky{% endif %} w-full" data-animate="fade-up" data-immediate>
+      <animate-element class="product__info block{% if section.settings.enable_sticky_info %} sticky{% endif %} w-full max-md:!jc-px-5 [&_.breadcrumb]:!jc-mt-0" data-animate="fade-up" data-immediate>
         {%- liquid
           assign title_block = section.blocks | where: "type", "title" | first
           assign title_block_show_price = false
@@ -93,7 +93,7 @@
               {%- render block -%}
 
             {%- when 'breadcrumb' -%}
-              {%- render 'product-breadcrumb', block: block -%}
+              {%- render 'custom-breadcrumb', block: block -%}
 
             {%- when 'text' -%}
               {%- if block.settings.text != blank -%}
@@ -120,37 +120,72 @@
               </div>
             
             {%- when 'title' -%}
-              <div class="product__title{% if block.settings.show_price %} with-price{% endif %}" {{ block.shopify_attributes }}>
-                <h1 class="leading-none font-bold {{ block.settings.title_size }} mobile:{{ block.settings.title_size_mobile }} col-span-full">
-                  <split-words class="split-words flex flex-wrap" data-animate="fade-up">{{ product.title }}</split-words>
+              <div
+                class="product__title{% if block.settings.show_price %} with-price{% endif %} product-card__media jc-flex jc-items-center jc-justify-between !jc-mt-2.5 md:!jc-mt-2"
+                {{ block.shopify_attributes }}
+              >
+                {% comment %} Store each title word in title_parts array {% endcomment %}
+                {% assign cust_title_parts = product.title | escape | split: ' ' %}
+                {% comment %} START DIALECT - Display product name in its packaging color 'custom.product_dialect_packaging_color' {% endcomment %}
+                <h1 class="cust_title-words-count-{{ cust_title_parts.size }} jc-w-fit !jc-font-['Sequel45'] md:!jc-font-['Sequel75'] !jc-font-normal jc-text-3xl jc-leading-8 md:jc-text-6.5xl md:jc-leading-12 ">
+                  {{- product.title -}}
                 </h1>
 
-                {%- if block.settings.show_price -%}
-                  <div id="Price-{{ section.id }}" class="product__price">
-                    {%- render 'product-price', product: product, use_variant: true, class: 'flex flex-wrap items-baseline gap-2 lg:flex-col xl:items-end lg:gap-1d5' -%}
-                  </div>
-                {%- endif -%}
-
-                {%- liquid
-                  if block.settings.show_rating
-                    render 'product-rating', product: product
-                  endif
-                -%}
+                <div class="pointer-events-none badges !jc-w-fit">
+                  {%- if product.metafields.theme.label.value != blank -%}
+                    {%- capture styles -%}
+                      {%- if product.metafields.theme.label_color.value != blank -%}
+                        --badge-background: {{ product.metafields.theme.label_color.value }}; --badge-foreground: #ffffff;
+                      {%- endif -%}
+                    {%- endcapture -%}
+                    {%- for label in product.metafields.theme.label.value -%}
+                      {%- assign label = label | replace: ' ', '-' -%}
+                      {%- unless label contains "Bestseller" -%}
+                        <span style="{{ styles }}" class="{{- label | remove:" " | escape | append: " " -}} !jc-text-sm !jc-leading-4 jc-font-medium jc-block badge rounded-full !jc-py-1 !jc-px-2.5">
+                          {{- label | escape -}}
+                        </span>
+                      {%- endunless -%}
+                    {%- endfor -%}
+                  {%- endif -%}
+                </div>
               </div>
 
               {%- if block.settings.show_price -%}
                 {%- assign product_form_installment_id = 'ProductFormInstallment-' | append: section.id -%}
-                {%- form 'product', product, id: product_form_installment_id, class: 'installment text-sm leading-tight' -%}
-                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+                {%- form 'product',
+                  product,
+                  id: product_form_installment_id,
+                  class: 'installment text-sm leading-tight !jc-m-0'
+                -%}
+                  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
                   {{ form | payment_terms }}
                 {%- endform -%}
               {%- endif -%}
-
+                
+            {%- when 'rating' -%}
+              <div class="!jc-mt-4">
+                <style>
+                  .jdgm-widget.jdgm-preview-badge.jdgm-preview-badge--with-link .jdgm-prev-badge .jdgm-prev-badge__stars .jdgm-star::before {
+                    color: rgba(233, 122, 33, 1) !important;
+                  }
+                  .jdgm-widget.jdgm-preview-badge.jdgm-preview-badge--with-link .jdgm-prev-badge .jdgm-prev-badge__text span.jc-hidden {
+                    display: inline-block !important;
+                    text-decoration: underline;
+                    font-size: 16px;
+                    line-height: 20px;
+                  }
+                </style>
+                {%- liquid
+                  render "judgeme_widgets", widget_type: "judgeme_preview_badge" 
+                  # render 'product-rating', product: product
+                -%}
+              </div>
+              
             {%- when 'price' -%}
-              <div class="product__price grid gap-3" {{ block.shopify_attributes }}>
+              <div class="grid product__price" {{ block.shopify_attributes }}>
                 {%- unless title_block_show_price -%}
                   <div class="no-js-hidden" id="Price-{{ section.id }}">
-                    {%- render 'product-price', product: product, use_variant: true, class: 'flex flex-wrap items-baseline gap-2 lg:gap-1d5' -%}
+                    {%- render 'product-price', product: product, use_variant: true, class: 'flex flex-wrap items-baseline jc-gap-2 lg:jc-gap-1.5' -%}
                   </div>
 
                   {%- assign product_form_installment_id = 'ProductFormInstallment-' | append: section.id -%}
@@ -162,7 +197,7 @@
 
                 {%- if block.settings.show_taxes_notice -%}
                   {%- if cart.taxes_included or shop.shipping_policy.body != blank -%}
-                    <div class="product__tax rte text-sm">
+                    <div class="text-sm product__tax rte">
                       {%- liquid
                         if cart.taxes_included
                           echo 'products.product.include_taxes' | t
@@ -180,13 +215,13 @@
               {%- if product.available -%}
                 <div class="field" {{ block.shopify_attributes }}>
                   <label for="Quantity-{{ section.id }}" class="label">{{ 'products.quantity.label' | t }}</label>
-                  <quantity-selector class="quantity-selector inline-flex">
+                  <quantity-selector class="inline-flex quantity-selector">
                     <button type="button" name="minus" class="quantity-button" aria-label="{{ 'products.quantity.decrease' | t: product: product.title | escape }}">
                       {%- render 'icon', icon: 'chevron-left', size: 'sm', class: 'stroke-2 transform' -%}
                     </button>
                     <input
                       id="Quantity-{{ section.id }}"
-                      class="quantity-input text-sm sm:text-base font-medium text-center"
+                      class="text-sm font-medium text-center quantity-input sm:text-base"
                       type="text"
                       value="1"
                       min="1"
@@ -245,7 +280,7 @@
               -%}
 
             {%- when 'share' -%}
-              <div class="flex justify-between items-center" {{ block.shopify_attributes }}>
+              <div class="flex items-center justify-between" {{ block.shopify_attributes }}>
                 {%- liquid
                   assign share_url = product.selected_variant.url | default: product.url | prepend: request.origin
                   assign share_image = product.selected_variant.featured_image | default: product.featured_image
@@ -261,7 +296,7 @@
                 {%- if block.settings.show_help_desk -%}
                   <div class="flex items-center gap-2">
                     {%- render 'icon', icon: 'question' -%}
-                    <a class="link text-sm leading-tight cursor-pointer"
+                    <a class="text-sm leading-tight cursor-pointer link"
                       {%- if block.settings.help_page != blank %} href="{{ block.settings.help_page.url }}"{% else %} role="link" aria-disabled="true"{% endif -%}
                       {%- if block.settings.help_type == 'drawer' %} aria-controls="HelpDrawer"{% endif -%}
                     >
@@ -274,7 +309,7 @@
             {%- when 'help_desk' -%}
               <div class="flex items-center gap-2" {{ block.shopify_attributes }}>
                 {%- render 'icon', icon: 'question' -%}
-                <a class="link text-sm leading-tight cursor-pointer"
+                <a class="text-sm leading-tight cursor-pointer link"
                   {%- if block.settings.help_page != blank %} href="{{ block.settings.help_page.url }}"{% else %} role="link" aria-disabled="true"{% endif -%}
                   {%- if block.settings.help_type == 'drawer' %} aria-controls="HelpDrawer"{% endif -%}
                 >
@@ -282,12 +317,26 @@
                 </a>
               </div>
 
-            {%- when 'rating' -%}
+            {% when 'saving-label' %}
+              {% if product.metafields.pdp.retail_price != blank %}
+                {% assign retail_price = product.metafields.pdp.retail_price.value %}
+                {% assign product_price = product.price %}
+      
+                {% assign price_differences = retail_price | minus: product_price %}
+                {% assign savings_amount = price_differences | times: 100 | divided_by: retail_price %}
+                {% capture savings_label %}<span class="savings__label">{{ savings_amount | append: '%'}}</span>{% endcapture %}
+      
+                <div class="jc-text-base jc-leading-6 [&_span.savings\_\_label]:jc-text-vividTangelo [&_span.savings\_\_label]:jc-font-bold !jc-mt-4">
+                  {{ block.settings.text | replace: '[SAVINGS_LABEL]', savings_label }}
+                </div>
+              {% endif %}
+
+            {% comment %} {%- when 'rating' -%}
               {%- liquid
                 unless title_block_show_rating
                   render 'product-rating', product: product, block: block
                 endunless
-              -%}
+              -%} {% endcomment %}
 
             {%- when 'complementary' -%}
               {%- render 'product-complementary',
@@ -308,14 +357,14 @@
 
             {%- when 'collapsible_tab' -%}
               <details class="product__accordion details" is="accordion-details" {{ block.shopify_attributes }}>
-                <summary class="details__summary flex items-center justify-between gap-2 cursor-pointer">
+                <summary class="flex items-center justify-between gap-2 cursor-pointer details__summary">
                   <div class="flex items-center gap-2d5">
                     {%- render 'icon-accordion', icon: block.settings.icon -%}
-                    <span class="text-sm-base font-medium leading-none">{{ block.settings.heading | default: block.settings.page.title | escape }}</span>
+                    <span class="font-medium leading-none text-sm-base">{{ block.settings.heading | default: block.settings.page.title | escape }}</span>
                   </div>
                   {%- render 'icon', icon: 'plus-alt', size: 'xs', class: 'flex-auto' -%}
                 </summary>
-                <div class="details__content rte text-sm text-opacity">
+                <div class="text-sm details__content rte text-opacity">
                   {{ block.settings.content }}
                   {{ block.settings.page.content }}
                   {{ block.settings.liquid }}
@@ -329,20 +378,20 @@
                   assign countdown_time = product.metafields.theme.countdown.value | date: '%s' | times: 1
                 -%}
                 {%- if countdown_time > now_time -%}
-                  <div id="shopify-block-{{ block.id }}" class="product-countdown grid sm:flex items-center justify-between gap-2d5" {{ block.shopify_attributes }}>
+                  <div id="shopify-block-{{ block.id }}" class="grid items-center justify-between product-countdown sm:flex gap-2d5" {{ block.shopify_attributes }}>
                     <div class="flex items-center gap-3">
                       {%- render 'icon', icon: 'countdown', size: 'xl', class: 'flex-auto block lg:hidden xl:block' -%}
                       <div class="grid">
                         {%- if block.settings.heading != blank -%}
-                          <p class="text-base lg:text-lg xl:text-xl font-bold leading-tight">{{ block.settings.heading | escape }}</p>
+                          <p class="text-base font-bold leading-tight lg:text-lg xl:text-xl">{{ block.settings.heading | escape }}</p>
                         {%- endif -%}
                         {%- if block.settings.subheading != blank -%}
-                          <p class="uppercase text-3xs font-medium leading-none tracking-widest">{{ block.settings.subheading | escape }}</p>
+                          <p class="font-medium leading-none tracking-widest uppercase text-3xs">{{ block.settings.subheading | escape }}</p>
                         {%- endif -%}
                       </div>
                     </div>
                     <countdown-timer
-                      class="countdown__timer flex text-center"
+                      class="flex text-center countdown__timer"
                       data-year="{{ product.metafields.theme.countdown.value | date: "%Y" }}"
                       data-month="{{ product.metafields.theme.countdown.value | date: "%m" }}"
                       data-day="{{ product.metafields.theme.countdown.value | date: "%d" }}"
@@ -467,19 +516,211 @@
                   {%- endcase -%}
                 {%- endif -%}
               </div>
-          {%- endcase -%}
+            
+            {%- when 'bundle-proposal' -%}
+              {% liquid
+                assign image = block.settings.image
+                assign title = block.settings.title
+                assign subtitle = block.settings.subtitle
+                assign item_price = product.selected_or_first_available_variant.price
+                
+                for variant in product.variants
+                  if variant.price > item_price
+                    assign item_price = variant.price
+                  endif
+                endfor
+                assign item_price = item_price | times: 2 | divided_by: 3.0 | round | money
+      
+                if block.settings.price_suffix
+                  assign item_price = item_price | append: ' ' | append: block.settings.price_suffix
+                endif
+      
+                assign button_text = block.settings.button_text
+      
+                assign query = '?addproduct='
+                for i in (1..3)
+                  unless forloop.last
+                    assign query = query | append: product.id | append: '+'
+                  else
+                    assign query = query | append: product.id | append: '!'
+                  endunless
+                endfor
+                
+                assign preselect_url = block.settings.product.url | append: query
+              %}
+      
+              {%- if image != blank or title != blank or subtitle != blank or button_text != blank -%}
+                <div class="jc-flex jc-gap-3 jc-flex-col md:jc-flex-row jc-justify-between jc-mt-6 jc-p-3 md:jc-pr-4 jc-border jc-rounded-xs jc-border-solid jc-bg-cultured jc-border-platinum">
+                  {%- if image != blank or title != blank or subtitle != blank -%}
+                    <div class="jc-flex jc-gap-3">
+                      {%- if image != blank -%}
+                        {% render 'g-render-image',
+                          class: 'jc-h-full jc-object-contain',
+                          img_src: image.url,
+                          img: image,
+                          size: '300 600',
+                          alt: image.alt,
+                          width: '54',
+                          height: '64',
+                          loading: 'eager'
+                        %}
+                      {%- endif -%}
+      
+                      {%- if title != blank or subtitle != blank -%}
+                        <div class="[&_p]:jc-m-0 [&_p]:jc-pb-1 jc-flex-grow">
+                          {%- if title != blank -%}
+                            <p class="jc-text-sm md:jc-text-base jc-leading-5 jc-font-bold">{{- title -}}</p>
+                          {%- endif -%}
+      
+                          {%- if subtitle != blank -%}
+                            <p class="jc-text-xs !jc-leading-4">{{- subtitle -}}</p>
+                          {%- endif -%}
+      
+                          {%- if item_price != blank -%}
+                            <p class="jc-text-sm md:jc-text-base jc-leading-5 jc-font-bold">{{- item_price -}}</p>
+                          {%- endif -%}
+                        </div>
+                      {%- endif -%}
+                    </div>
+                  {% endif %}
+      
+                  {%- if button_text != blank -%}
+                    <a
+                      href="{{ preselect_url }}"
+                      class="jc-px-4 jc-py-3 jc-min-w-fit jc-text-center jc-bg-white jc-my-auto jc-border jc-border-black jc-border-solid jc-rounded-xs jc-text-base jc-leading-6 jc-font-medium hover:jc-bg-neutral-100"
+                    >
+                      {{- button_text -}}
+                    </a>
+                  {%- endif -%}
+                </div>
+              {% endif %}
+              
+            {%- when 'accordion_info' -%}
+              {% render "product-accordion-info", product: product, block: block %}
+            
+            {%- when 'sale-point-container' -%}
+              <div class="jc-grid jc-grid-cols-2 md:jc-grid-cols-3 jc-gap-y-4 jc-gap-x-2 jc-items-center jc-mt-6">
+                {% assign sale_point_blocks = section.blocks | where: 'type', 'sale-point-icons' %}
+                {% for sale_point_block in sale_point_blocks %}
+                  <div class="jc-flex jc-gap-2 jc-items-center">
+                    {% if sale_point_block.settings.icon != blank %}
+                      {% render 'g-render-image',
+                        class: 'jc-w-8 jc-h-8',
+                        img_src: sale_point_block.settings.icon.url,
+                        img: sale_point_block.settings.icon,
+                        size: '32 64',
+                        alt: sale_point_block.settings.icon.alt,
+                        width: '32',
+                        height: '32',
+                        loading: 'lazy'
+                      %}
+                    {% endif %}
+                    {% if sale_point_block.settings.text %}
+                      <p class="jc-m-0 jc-text-xs jc-leading-4">
+                        {{ sale_point_block.settings.text }}
+                        {% if sale_point_block.settings.button_label != blank %}
+                          <button
+                            aria-controls="{{ sale_point_block.id }}--popup"
+                            aria-expanded="false"
+                            class="sale-point__button"
+                          >
+                            {{ sale_point_block.settings.button_label }}
+                          </button>
+                        {% endif %}
+                      </p>
+                    {% endif %}
+                  </div>
+
+                  {% if sale_point_block.settings.button_label != blank %}
+                    <modal-content
+                      section="{{ section.id }}"
+                      id="{{ sale_point_block.id }}--popup"
+                      class="modal modal--sales-point"
+                    >
+                      <div class="modal__overlay"></div>
+
+                      <div class="modal__content">
+                        <button
+                          type="button"
+                          class="modal__close-button tap-area"
+                          data-action="close"
+                          title="{{ 'general.accessibility.close' | t | escape }}"
+                        >
+                          {%- render 'icon' with 'close' -%}
+                        </button>
+
+                        <div class="modal__inner">
+                          <h3 class="modal__heading">{{ sale_point_block.settings.heading }}</h3>
+                          <div class="modal__text">{{ sale_point_block.settings.content }}</div>
+                        </div>
+                      </div>
+                    </modal-content>
+                  {% endif %}
+                {% endfor %}
+              </div>
+
+            {%- when 'best-reviews' -%}
+              {% assign best_reviews = product.metafields.jolly_meta.best_reviews.value %}
+              {%- if best_reviews != blank -%}
+                <reviews-swiper class="jc-block jc-relative jc-mt-6">
+                  <div
+                    best-reviews-swiper
+                    id="{{ block.id }}"
+                    class="swiper !jc-pt-3 jc-w-full jc-grid jc-gap-3 jc-grid-cols-1"
+                  >
+                    <div class="swiper-wrapper">
+                      {% for best_review in best_reviews %}
+                        <div class="swiper-slide">
+                          {% render 'product-best-review', best_review: best_review %}
+                        </div>
+                      {% endfor %}
+                    </div>
+                    
+                    <div class="swiper-pagination max-md:!jc-max-w-[120px] max-md:!jc-left-1/2 max-md:!-jc-translate-x-[50%] !jc-bottom-8 md:!jc-bottom-4 !jc-leading-2"></div>
+                  </div>
+
+                  <div class="indicators jc-absolute jc-bottom-4 md:jc-bottom-1/2 jc-left-17 md:!jc-left-0 jc-z-[1] md:-jc-translate-x-1/2 md:jc-translate-y-6">
+                    <button
+                      class="!jc-w-10 !jc-h-10 button button--secondary jc-bg-white reviews-prev-{{ block.id }}"
+                      type="button"
+                      is="previous-button"
+                      aria-label="{{ 'general.pagination.previous' | t | escape }}"
+                    >
+                      <span class="btn-fill" data-fill></span>
+                      <span class="btn-text">
+                        {%- render 'icon', icon: 'chevron-left', class: 'transform' -%}
+                      </span>
+                    </button>
+                  </div>
+
+                  <div class="indicators jc-absolute jc-bottom-4 md:jc-bottom-1/2 jc-right-17 md:!jc-right-0 jc-z-[1] md:jc-translate-x-1/2 md:jc-translate-y-6">
+                    <button
+                      class="!jc-w-10 !jc-h-10 button button--secondary jc-bg-white reviews-next-{{ block.id }}"
+                      type="button"
+                      is="next-button"
+                      aria-label="{{ 'general.pagination.next' | t | escape }}"
+                    >
+                      <span class="btn-fill" data-fill></span>
+                      <span class="btn-text">
+                        {%- render 'icon', icon: 'chevron-right', class: 'transform' -%}
+                      </span>
+                    </button>
+                  </div>
+                </reviews-swiper>
+              {%- endif -%}
+            {%- endcase -%}
         {%- endfor -%}
       </animate-element>
     </div>
 
     {%- assign sticky_buy_button = section.blocks | where: "type", "sticky_buy_button" | first -%}
     {%- if product.available and sticky_buy_button -%}
-      <sticky-buy-button class="sticky-buy-button fixed z-20 bottom-0 right-0 opacity-0 invisible" form="{{ product_form_id }}">
-        <div class="product-form grid gap-4" id="StickyProductForm-{{ section.id }}">
+      <sticky-buy-button class="fixed bottom-0 right-0 z-20 invisible opacity-0 sticky-buy-button" form="{{ product_form_id }}">
+        <div class="grid gap-4 product-form" id="StickyProductForm-{{ section.id }}">
           {%- assign featured_media = product.selected_or_first_available_variant.featured_media | default: product.featured_media -%}
           <div class="sticky-buy-button__variant{% if featured_media == blank %} no-image{% endif %} grid items-center gap-4">
             {%- if featured_media != blank -%}
-              <sticky-variant-media class="hidden md:block media media--adapt relative overflow-hidden" widths="80,160" form="{{ product_form_id }}">
+              <sticky-variant-media class="relative hidden overflow-hidden md:block media media--adapt" widths="80,160" form="{{ product_form_id }}">
                 {{- featured_media | image_url: width: featured_media.width | image_tag: loading: 'lazy', sizes: '80px', widths: '80,160', is: 'lazy-image' -}}
               </sticky-variant-media>
             {%- endif -%}
@@ -488,7 +729,7 @@
               <div class="grid gap-1">
                 <p class="text-base font-medium leading-tight">{{ product.title }}</p>
                 {%- unless product.has_only_default_variant -%}
-                  <sticky-variant-title class="block text-xs text-opacity leading-tight" form="{{ product_form_id }}">
+                  <sticky-variant-title class="block text-xs leading-tight text-opacity" form="{{ product_form_id }}">
                     {{- product.selected_or_first_available_variant.title -}}
                   </sticky-variant-title>
                 {%- endunless -%}
@@ -533,7 +774,7 @@
               </span>
             </button>
           </div>
-          <div class="product-form__error-message alert alert--error text-sm font-medium leading-tight" role="alert" hidden></div>
+          <div class="text-sm font-medium leading-tight product-form__error-message alert alert--error" role="alert" hidden></div>
         </div>
       </sticky-buy-button>
     {%- endif -%}
@@ -945,14 +1186,12 @@
           "default": true,
           "label": "t:sections.main-product.blocks.title.settings.show_price.label"
         },
-        {
-          "type": "checkbox",
-          "id": "show_rating",
-          "default": true,
-          "label": "t:sections.main-product.blocks.title.settings.show_rating.label",
-          "info": "t:sections.main-product.blocks.title.settings.show_rating.info"
-        }
       ]
+    },
+    {
+      "type": "rating",
+      "name": "t:sections.main-product.blocks.rating.name",
+      "limit": 1,    
     },
     {
       "type": "price",
@@ -1342,17 +1581,6 @@
           "id": "liquid",
           "label": "t:sections.custom-liquid.settings.liquid.label",
           "info": "t:sections.custom-liquid.settings.liquid.info"
-        }
-      ]
-    },
-    {
-      "type": "rating",
-      "name": "t:sections.main-product.blocks.rating.name",
-      "limit": 1,
-      "settings": [
-        {
-          "type": "paragraph",
-          "content": "t:sections.main-product.blocks.rating.settings.paragraph.content"
         }
       ]
     },
@@ -1805,7 +2033,156 @@
           "content": "t:sections.main-product.blocks.sticky_buy_button.settings.paragraph.content"
         }
       ]
-    }
+    },
+    {
+      "type": "bundle-proposal",
+      "name": "Bundle proposal",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Product title"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subtitle",
+          "default": "Block subtitle text"
+        },
+        {
+          "type": "text",
+          "id": "price_suffix",
+          "label": "Price suffix",
+          "default": "each"
+        },
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Button text"
+        }
+      ]
+    },
+    {
+      "type": "accordion_info",
+      "name": "Accordion info",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Accordion settings 🪗"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_first",
+          "label": "Open first accordion by default"
+        },
+        {
+          "type": "select",
+          "id": "accordion_input_type",
+          "label": "Opening type",
+          "options": [
+            {
+              "value": "radio",
+              "label": "One"
+            },
+            {
+              "value": "checkbox",
+              "label": "Multiple"
+            }
+          ],
+          "info": "Opened accordions at the same time",
+          "default": "checkbox"
+        },
+        {
+          "type": "select",
+          "id": "dropdown_icon",
+          "label": "Dropdown icon",
+          "options": [
+            {
+              "value": "arrow",
+              "label": "Arrow"
+            },
+            {
+              "value": "plus_minus",
+              "label": "Plus"
+            }
+          ],
+          "default": "plus_minus"
+        }
+      ]
+    },
+    {
+      "type": "sale-point-container",
+      "name": "Sale point container",
+      "limit": 1
+    },
+    {
+      "type": "saving-label",
+      "name": "Savings Label",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Savings text",
+          "default": "Save [SAVINGS_LABEL] compared to the original",
+          "info": "The [SAVINGS_LABEL] tag will be replaced by the saving percentage based on the retail metafield value."
+        }
+      ]
+    },
+    {
+      "type": "sale-point-icons",
+      "name": "Sale Point",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button Label",
+          "info": "The popover will not be available if the button label isn't set."
+        },
+        {
+          "type": "header",
+          "content": "Popover"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Try before you buy"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content"
+        }
+      ]
+    },
+    {
+      "type": "best-reviews",
+      "name": "Best reviews",
+      "limit": 1
+    },
   ]
 }
 {% endschema %}

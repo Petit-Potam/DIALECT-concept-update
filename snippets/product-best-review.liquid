@@ -1,0 +1,39 @@
+<div class="jc-rounded-xs jc-text-center jc-bg-cosmicLatte jc-px-4 jc-pb-10 max-md:jc-pb-18 jc-pt-5 jc-gap-4 jc-flex jc-flex-col jc-h-[inherit]">
+  {%- if best_review.rating != blank or best_review.title != blank or best_review.content  -%}
+    <div>
+      {%- assign rating = best_review.rating | default: 5.0 -%}
+
+        {% render "g-star-rating",
+          rating: rating,
+          class: "jc-flex jc-items-center jc-justify-center jc-absolute jc-left-1/2 jc-top-0 -jc-translate-x-1/2 -jc-translate-y-1/2",
+          icon_class: "jc-w-6 jc-h-6 jc-text-vividTangelo"
+        %}
+
+      {%- if best_review.title != blank -%}
+        <span class="jc-text-base jc-leading-6 jc-font-bold jc-m-0">
+          {{ best_review.title }}
+        </span>
+      {%- endif -%}
+
+      {%- if best_review.content != blank -%}
+        <div class="jc-text-sm jc-leading-5 jc-mt-1 jc-mx-auto jc-max-w-[96%]">
+          {{ best_review.content | metafield_tag }}
+        </div>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+
+  {%- if best_review.author_name != blank or best_review.highlighted_label != blank -%}
+    <div class="jc-flex jc-gap-1 jc-items-center jc-justify-center jc-mt-auto">
+      {%- if best_review.author_name != blank -%}
+        <span>{{ best_review.author_name }}</span>
+      {%- endif -%}
+      {% render 'icon', icon: "checkmark-badge", class: "jc-h-4 jc-w-4" %}
+      {%- if best_review.highlighted_label != blank -%}
+        <span class="jc-inline-block jc-text-xs jc-leading-4">
+          {{ best_review.highlighted_label }}
+        </span>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</div>

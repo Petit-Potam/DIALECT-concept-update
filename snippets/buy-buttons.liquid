@@ -10,7 +10,7 @@
   {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id %}
 {% endcomment %}
 
-<div class="product-form-wrapper" {{ block.shopify_attributes }}>
+<div class="product-form-wrapper !jc-mt-6" {{ block.shopify_attributes }}>
   {%- liquid
     assign gift_card_recipient_feature_active = false
     if block.settings.show_gift_card_recipient and product.gift_card?
@@ -47,18 +47,19 @@
       endif
     -%}
 
-    <div class="product-form__buttons grid gap-4">
-      <div class="product-form__error-message alert alert--error text-sm font-medium leading-tight" role="alert" hidden></div>
+    <div class="grid jc-gap-2.5 product-form__buttons">
+      <div class="text-sm font-medium leading-tight product-form__error-message alert alert--error" role="alert" hidden></div>
       <div class="flex gap-4">
-        {%- if block.settings.show_quantity_selector -%}
-          <label for="Quantity2-{{ section_id }}" class="label sr-only">{{ 'products.quantity.label' | t }}</label>
-          <quantity-selector class="quantity-selector inline-flex flex-auto">
+        {%- if foxsell_bundle_type contains "foxsell-add-on" -%}
+        {%- elsif block.settings.show_quantity_selector -%}
+          <label for="Quantity2-{{ section_id }}" class="sr-only label">{{ 'products.quantity.label' | t }}</label>
+          <quantity-selector class="inline-flex flex-auto quantity-selector">
             <button type="button" name="minus" class="quantity-button" aria-label="{{ 'products.quantity.decrease' | t: product: product.title | escape }}">
               {%- render 'icon', icon: 'chevron-left', size: 'sm', class: 'stroke-2 transform' -%}
             </button>
             <input
               id="Quantity2-{{ section_id }}"
-              class="quantity-input text-sm sm:text-base font-medium text-center"
+              class="text-sm font-medium text-center quantity-input sm:text-base"
               type="text"
               value="1"
               min="1"
@@ -74,35 +75,75 @@
           </quantity-selector>
         {%- endif -%}
         
-        <button
-          type="submit"
-          name="add"
-          form="{{ product_form_id }}"
-          class="product-form__submit button button--primary button--fixed w-full"
-          is="hover-button"
-          {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %} disabled{% endif -%}
-          {%- if product.template_suffix == 'pre-order' %} data-pre-order="true"{% endif -%}
-        >
-          <span class="btn-fill" data-fill></span>
-          <span class="btn-text">
-            {%- liquid
-              if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
-                echo 'products.product.sold_out' | t
-              elsif product.template_suffix != 'pre-order'
-                echo 'products.product.add_to_cart' | t
-              else
-                echo 'products.product.pre_order' | t
-              endif
-            -%}
-          </span>
-        </button>
+        {%- if foxsell_bundle_type contains "foxsell-add-on" -%}
+          <div id="dynamic_properties" class="visually-hidden"></div>
+          <div
+            {% if update_url %}
+              id="MainPaymentContainer"
+            {% endif %}
+            class="product-form__payment-container jc-pointer-events-none jc-opacity-40 jc-flex-grow"
+            {{ block.shopify_attributes }}
+          >
+            <button
+              id="AddToCart"
+              type="submit"
+              form="{{ product_form_id }}"
+              name="add"
+              class="w-full product-form__submit button button--primary button--fixed"
+              is="hover-button"
+              data-product-add-to-cart-button
+              {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %} disabled{% endif -%}
+              {%- if product.template_suffix == 'pre-order' %} data-pre-order="true"{% endif %}
+              data-bundle-type="{{ foxsell_bundle_type }}"
+            >
+              <span class="btn-fill" data-fill></span>
+              <span class="btn-text">
+                {%- liquid
+                  if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+                    echo 'products.product.sold_out' | t
+                  elsif product.template_suffix != 'pre-order'
+                    echo 'products.product.add_to_cart' | t
+                  else
+                    echo 'products.product.pre_order' | t
+                  endif
+                -%}
+              </span>
+            </button>
+          </div>
+        {%- else -%}
+          <button
+            type="submit"
+            name="add"
+            form="{{ product_form_id }}"
+            class="w-full product-form__submit button button--primary button--fixed"
+            is="hover-button"
+            {%- if product.selected_or_first_available_variant.available == false or quantity_rule_soldout %} disabled{% endif -%}
+            {%- if product.template_suffix == 'pre-order' %} data-pre-order="true"{% endif -%}
+          >
+            <span class="btn-fill" data-fill></span>
+            <span class="btn-text">
+              {%- liquid
+                if product.selected_or_first_available_variant.available == false or quantity_rule_soldout
+                  echo 'products.product.sold_out' | t
+                elsif product.template_suffix != 'pre-order'
+                  echo 'products.product.add_to_cart' | t
+                else
+                  echo 'products.product.pre_order' | t
+                endif
+              -%}
+            </span>
+          </button>
+        {%- endif -%}
       </div>
 
-      {%- liquid
-        if show_dynamic_checkout
-          echo form | payment_button
-        endif
-      -%}
+      {%- if foxsell_bundle_type contains "foxsell-add-on" -%}
+      {%- else -%}          
+        {%- liquid
+          if show_dynamic_checkout
+            echo form | payment_button
+          endif
+        -%}
+      {%- endif -%}
     </div>
   {%- endform -%}
 </div>

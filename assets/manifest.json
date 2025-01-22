@@ -1,0 +1,24 @@
+{
+  "css/main.css": {
+    "file": "main2.css",
+    "isEntry": true,
+    "src": "css/main.css"
+  },
+  "templates/main.css": {
+    "file": "main.css",
+    "src": "templates/main.css"
+  },
+  "templates/main.js": {
+    "css": [
+      "main.css"
+    ],
+    "file": "jc-bundle-main.js",
+    "isEntry": true,
+    "src": "templates/main.js"
+  },
+  "templates/product.js": {
+    "file": "jc-bundle-product.js",
+    "isEntry": true,
+    "src": "templates/product.js"
+  }
+}

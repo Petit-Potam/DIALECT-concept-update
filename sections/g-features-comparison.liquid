@@ -1,0 +1,210 @@
+{% comment %}
+  Section: g-features-comparison
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-feature-block
+{% endcomment %}
+
+{% liquid
+  assign first_image = section.settings.first_image
+  assign second_image = section.settings.second_image
+%}
+
+<div class="jc-container jc-flex jc-flex-col lg:jc-flex-row jc-gap-6 md:jc-gap-17 jc-items-start jc-justify-between jc-px-5 md:jc-px-12 jc-py-10 md:jc-py-15">
+  {% if section.settings.heading != blank %}
+    <div class="jc-relative [&_p]:jc-m-0 [&_p]:jc-text-5xl md:[&_p]:jc-text-7.5xl [&_p]:jc-leading-10 md:[&_p]:jc-leading-14 [&_p]:jc-font-['Sequel45'] [&_p_strong]:jc-font-['Sequel75'] [&_p]:jc-font-normal max-md:[&_p_br]:jc-hidden [&_p]:jc-break-words">
+      {{ section.settings.heading }}
+      <svg xmlns="http://www.w3.org/2000/svg" width="335" height="92" viewBox="0 0 335 92" fill="none" class="jc-absolute -jc-left-3 md:-jc-left-4.5 -jc-top-6.5 md:-jc-top-4.5 jc-w-[215px] md:jc-w-[330px]">
+        <path 
+          d="M276.378 4.04189C276.378 4.04189 46.0052 -7.16367 6.93321 42.8154C-32.9051 93.775 196.968 96.8796 277.663 82.1429C409.6 58.0479 275.448 9.38904 176.185 16.2456"
+          stroke="#E97A21" 
+          class="jc-stroke-[6px] md:jc-stroke-[4px]" 
+          stroke-linecap="round"
+          stroke-linejoin="miter"
+          stroke-miterlimit="4"
+          pathLength="1"
+          stroke-dasharray="1"
+          stroke-dashoffset="1">
+          <animate 
+            attributeName="stroke-dashoffset" 
+            from="1" 
+            to="0" 
+            dur="2s" 
+            fill="freeze" 
+            keySplines="0.4 0 0.2 1" 
+            keyTimes="0;1" 
+            calcMode="spline"/>
+        </path>
+      </svg>      
+    </div>
+  {% endif %}
+  
+  <div class="jc-flex jc-flex-col jc-gap-6">
+    <div class="jc-flex jc-justify-between">
+      <div class="jc-w-38 jc-h-full">
+        {% if first_image != blank %}
+          {% render 'g-render-image',
+            class: 'jc-w-full jc-h-full jc-object-cover',
+            img_src: first_image.src,
+            img: first_image,
+            size: '300 400 900',
+            alt: first_image.alt,
+            width: first_image.width,
+            height: first_image.height,
+            loading: 'lazy',
+            id: first_image.id
+          %}
+        {% endif %}
+      </div>
+      <div class="jc-w-38 jc-h-full">
+        {% if second_image != blank %}
+          {% render 'g-render-image',
+            class: 'jc-w-full jc-h-full jc-object-cover',
+            img_src: second_image.src,
+            img: second_image,
+            size: '300 400 900',
+            alt: second_image.alt,
+            width: second_image.width,
+            height: second_image.height,
+            loading: 'lazy',
+            id: second_image.id
+          %}
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="jc-flex jc-flex-col jc-gap-2 jc-w-fit">
+      {% assign feature_blocks = section.blocks | where: 'type', 'feature' %}
+      {% for feature in feature_blocks %}
+        {% render 'g-feature-block', block: feature %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Features comparison",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Heading</p>"
+    },
+    {
+      "type": "image_picker",
+      "id": "first_image",
+      "label": "First image"
+    },
+    {
+      "type": "image_picker",
+      "id": "second_image",
+      "label": "Second image"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Feature text"
+        },
+        {
+          "type": "image_picker",
+          "id": "left_icon",
+          "label": "Left icon"
+        },
+        {
+          "type": "image_picker",
+          "id": "right_icon",
+          "label": "Right icon"
+        }
+      ],
+      "limit": 10
+    }
+  ],
+  "presets": [
+    {
+      "name": "Features comparison",
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Budget-Friendly",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Inspired by Luxury Scents",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Dermatologically Tested",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Layerable Scents",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Free 30-Days Returns",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Fast & Tracked Shipping",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "100% Vegan",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "text": "Cruelty-Free",
+            "left_icon": "shopify:\/\/shop_images\/checkmark_green.svg",
+            "right_icon": "shopify:\/\/shop_images\/x-circle.svg"
+          }
+        }
+      ],
+      "settings": {
+        "heading": "<p><strong>DIALECT</strong><br/>vs<br/>Others brands</p>",
+        "first_image": "shopify:\/\/shop_images\/dialect_bottle.png",
+        "second_image": "shopify:\/\/shop_images\/others_bottle.png"
+      }
+    }
+  ]
+}
+{% endschema %}

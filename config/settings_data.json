@@ -9,34 +9,36 @@
  */
 {
   "current": {
-    "logo": "",
-    "white_logo": "",
-    "logo_width": 70,
-    "logo_width_mobile": 70,
-    "favicon": "",
+    "logo": "shopify://shop_images/di_logo_black_ab45f531-9686-44d4-beb4-dd214ed6b9ca.png",
+    "white_logo": "shopify://shop_images/di_logo_white.png",
+    "logo_width": 135,
+    "logo_width_mobile": 160,
+    "favicon": "shopify://shop_images/Dialect-fragrances-icon.png",
+    "color_text": "#000000",
     "color_keyboard_focus": "#0b61cd",
-    "color_image_background": "#fafafa",
+    "color_image_background": "{{ shop.brand.colors.primary[0].foreground }}",
     "color_price": "#171717",
-    "color_sale_price": "#e11d48",
-    "color_sale_tag": "#e11d48",
+    "color_sale_price": "#e97a21",
+    "color_sale_tag": "#e97a21",
     "color_sale_tag_text": "#ffffff",
     "color_button_text": "#ffffff",
-    "color_button_background": "#171717",
+    "color_button_background": "{{ shop.brand.colors.primary[0].background }}",
     "color_button_gradient": "",
-    "color_drawer_text": "#171717",
+    "color_drawer_text": "#000000",
     "color_drawer_background": "#ffffff",
     "color_drawer_button_text": "#ffffff",
-    "color_drawer_button_background": "#171717",
+    "color_drawer_button_background": "#e97a21",
     "color_drawer_button_gradient": "",
+    "color_drawer_overlay": "#000000",
     "color_success_text": "#4d7c0f",
     "color_error_text": "#be123c",
     "color_error_background": "#fff1f2",
     "color_info_text": "#b45309",
-    "type_header_font": "inter_n7",
+    "type_header_font": "din_next_n7",
     "type_header_line_height": 1,
     "type_header_spacing": -30,
     "type_header_capitalize": false,
-    "type_body_font": "inter_n4",
+    "type_body_font": "din_next_n4",
     "type_body_size": 16,
     "type_body_line_height": 1.2,
     "type_body_spacing": 0,
@@ -46,14 +48,15 @@
     "type_button_capitalize": false,
     "type_product_size": 16,
     "type_product_capitalize": false,
-    "page_width": 1900,
-    "rounded_button": "round",
+    "icon_weight": 2,
+    "page_width": 1440,
+    "rounded_button": "round-slight",
     "rounded_input": "round-slight",
     "rounded_swatch": "round",
     "rounded_card": "round",
     "rounded_block": "round",
     "enable_page_transition": true,
-    "enable_lazy_image": true,
+    "enable_lazy_image": false,
     "buttons_hover": "standard",
     "buttons_border_thickness": 2,
     "buttons_border_opacity": 100,
@@ -73,21 +76,23 @@
     "swatch_config": "",
     "product_image_ratio": "square",
     "product_image_fill": true,
-    "product_vendor": true,
+    "product_vendor": false,
     "product_secondary_image": true,
-    "product_rating": true,
+    "product_rating": false,
     "product_countdown": true,
+    "product_quick_view": false,
     "product_save_type": "percent",
+    "product_disable_collection_portion": true,
     "cart_type": "drawer",
-    "cart_icon": "cart",
-    "predictive_search_recommendation": "",
+    "cart_icon": "bag",
+    "predictive_search_recommendation": "main-menu",
     "typewriter_effect_enabled": false,
     "typewriter_starter_text": "",
     "social_facebook_link": "",
     "social_twitter_link": "",
-    "social_instagram_link": "",
+    "social_instagram_link": "http://instagram.com/dialect.fragrances",
     "social_youtube_link": "",
-    "social_tiktok_link": "",
+    "social_tiktok_link": "https://tiktok.com/@dialect.fragrances",
     "social_snapchat_link": "",
     "social_pinterest_link": "",
     "social_tumblr_link": "",
@@ -98,6 +103,7 @@
     "share_telegram": false,
     "share_whatsapp": false,
     "share_email": true,
+    "bundle_addon_page": "/products/buy-2-get-3-add-on",
     "checkout_logo_position": "left",
     "checkout_logo_size": "small",
     "checkout_body_background_color": "#ffffff",
@@ -133,9 +139,59 @@
         }
       }
     },
-    "content_for_index": [
-
-    ]
+    "content_for_index": [],
+    "blocks": {
+      "14060646107696862457": {
+        "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": false,
+        "settings": {}
+      },
+      "7885500093077574326": {
+        "type": "shopify://apps/videowise-video-platform-ugc/blocks/script_embed/b48d6c0c-3e3f-4791-a9ab-a5ab7ec82f4d",
+        "disabled": false,
+        "settings": {}
+      },
+      "6174324309569838175": {
+        "type": "shopify://apps/smile-io/blocks/smile-shopify-app/2fae4e25-1841-4ea2-bc02-bd548478c4f6",
+        "disabled": false,
+        "settings": {}
+      },
+      "15685250022964305326": {
+        "type": "shopify://apps/elevar-conversion-tracking/blocks/dataLayerEmbed/bc30ab68-b15c-4311-811f-8ef485877ad6",
+        "disabled": false,
+        "settings": {}
+      },
+      "17676059084223943535": {
+        "type": "shopify://apps/triplewhale/blocks/triple_pixel_snippet/483d496b-3f1a-4609-aea7-8eee3b6b7a2a",
+        "disabled": false,
+        "settings": {}
+      },
+      "10312807297210203588": {
+        "type": "shopify://apps/aftersell/blocks/utm-triggers/509ec35d-0632-4dfc-a105-fa799cd9d149",
+        "disabled": false,
+        "settings": {}
+      },
+      "6610233760104865948": {
+        "type": "shopify://apps/pushowl-brevo/blocks/pushowl-app-embed-3d2ff2b5/fa20c3ba-38bf-43e0-ba5c-431f6ae07d95",
+        "disabled": false,
+        "settings": {}
+      },
+      "14694295852195246148": {
+        "type": "shopify://apps/rep-ai-concierge/blocks/rep/732ae1ba-1247-4e6b-87c9-e0cacafee2a5",
+        "disabled": false,
+        "settings": {}
+      },
+      "855628211100114053": {
+        "type": "shopify://apps/klaviyo-email-marketing-sms/blocks/klaviyo-onsite-embed/2632fe16-c075-4321-a88b-50b567f42507",
+        "disabled": false,
+        "settings": {}
+      },
+      "1877152918344802950": {
+        "type": "shopify://apps/intelligems-a-b-testing/blocks/intelligems-script/fa83b64c-0c77-4c0c-b4b2-b94b42f5ef19",
+        "disabled": true,
+        "settings": {}
+      }
+    }
   },
   "presets": {
     "Harmony": {
@@ -263,5 +319,15 @@
         }
       }
     }
+  },
+  "platform_customizations": {
+    "custom_css": [
+      ".product-card__inspiredby--label {font-size: 0.8em;}",
+      ".product-card__inspiredby--content {font-size: 1em;}",
+      "@media screen and (max-width: 767px) {.product-card__media .media--square {height: 100%; } .media--square img {height: 100%; } .product-card__inspiredby--label {font-size: 0.8em; } .product-card__inspiredby--content {font-size: 1em; } .cust__drawer__panel-main {max-height: calc(100% - 60px); }}",
+      ".quick-add a,.quick-add button {text-transform: uppercase !important; font-size: 0.8em !important;}",
+      ".header-transparent:not(.header-scrolled) .header__buttons a span {color: #ffffff;}",
+      "@media screen and (max-width: 767px) {.header-sticky.header-hidden ~ .mobile-dock-section .mobile-dock {transform: translateY(0); width: calc(100% - 40px); left: 20px; transform: translateY(-20px); border: solid 1px #efefef; border-radius: 15px; }}"
+    ]
   }
 }

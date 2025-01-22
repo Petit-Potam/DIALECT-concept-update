@@ -1,0 +1,118 @@
+{% liquid
+  assign image = section.settings.image
+  assign title = section.settings.title
+  assign subtitle = section.settings.subtitle
+  assign product = section.settings.product
+  assign item_price = product.selected_or_first_available_variant.price
+
+  for variant in product.variants
+    if variant.price > item_price
+      assign item_price = variant.price
+    endif
+  endfor
+  assign item_price = item_price | times: 2 | divided_by: 3.0 | round | money
+
+  if section.settings.price_suffix
+    assign item_price = item_price | append: ' ' | append: section.settings.price_suffix
+  endif
+
+  assign button_text = section.settings.button_text
+%}
+
+{%- if image != blank or title != blank or subtitle != blank or button_text != blank -%}
+  <div class="jc-mx-auto jc-w-fit jc-flex jc-gap-3 md:jc-gap-16 jc-flex-col md:jc-flex-row jc-justify-between jc-my-3.5 jc-p-3 jc-border jc-rounded-xs jc-border-solid jc-bg-cultured jc-border-platinum">
+    {%- if image != blank or title != blank or subtitle != blank -%}
+      <div class="jc-flex jc-gap-3">
+        {%- if image != blank -%}
+          {% render 'g-render-image',
+            class: 'jc-h-full jc-object-contain',
+            img_src: image.url,
+            img: image,
+            size: '300 600',
+            alt: image.alt,
+            width: '54',
+            height: '64',
+            loading: 'eager'
+          %}
+        {%- endif -%}
+
+        {%- if title != blank or subtitle != blank -%}
+          <div class="[&_p]:jc-m-0 [&_p]:jc-pb-1 jc-flex-grow">
+            {%- if title != blank -%}
+              <p class="jc-text-sm md:jc-text-base jc-leading-5 jc-font-bold">{{- title -}}</p>
+            {%- endif -%}
+
+            {%- if subtitle != blank -%}
+              <p class="jc-text-xs !jc-leading-4">{{- subtitle -}}</p>
+            {%- endif -%}
+
+            {%- if item_price != blank -%}
+              <p class="jc-text-sm md:jc-text-base jc-leading-5 jc-font-bold">{{- item_price -}}</p>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      </div>
+    {% endif %}
+
+    {%- if button_text != blank -%}
+      <a
+        href="{{ section.settings.button_link }}"
+        class="jc-px-4 jc-py-3 jc-min-w-fit jc-text-center jc-bg-vividTangelo jc-transition-all jc-duration-100 jc-my-auto jc-uppercase jc-rounded-xs jc-tracking-[2px] jc-text-xs jc-leading-4 jc-font-medium jc-text-white hover:jc-text-black hover:jc-bg-neutral-100"
+      >
+        {{- button_text -}}
+      </a>
+    {%- endif -%}
+  </div>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Mini bundle banner",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Product image"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Product title"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Subtitle"
+    },
+    {
+      "type": "text",
+      "id": "price_suffix",
+      "label": "Price suffix",
+      "default": "each"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Button text"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Mini bundle banner"
+    }
+  ]
+}
+{% endschema %}

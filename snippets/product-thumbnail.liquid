@@ -42,8 +42,8 @@
 -%}
 
 <button type="button"
-  class="product__thumbnail media media--square relative overflow-hidden
-  {%- if hide_variants and variant_images contains media.src %} product__media--variant{% endif -%}"
+  class="product__thumbnail media media--square relative overflow-hidden max-lg:before:jc-hidden !jc-h-fit
+  {%- if hide_variants and variant_images contains media.src %} product__media--variant{% endif -%} [&>img]:jc-rounded-[12px]"
   data-media-id="{{ media.id }}"
   aria-label="{{ 'general.accessibility.go_to_item' | t: index: forloop.index | escape }}"
   aria-current="{% if media.id != featured_media.id %}false{% else %}true{% endif %}"
@@ -52,7 +52,7 @@
   {{- media.preview_image | image_url: width: 416 | image_tag: loading: 'lazy', sizes: '(max-width: 1280px) 90px, 98px', widths: '54,74,104,162,208,324,416', alt: media_alt, is: 'lazy-image' -}}
 
   {%- unless media.media_type == 'image' -%}
-    <span class="play-button absolute flex items-center justify-center rounded-full">
+    <span class="absolute flex items-center justify-center rounded-full play-button">
       {%- liquid
         if media.media_type == 'model'
           render 'icon', icon: '3d-model'

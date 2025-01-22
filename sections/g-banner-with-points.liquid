@@ -1,0 +1,183 @@
+{% comment %}
+  Section: g-product-banner-with-icons
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+  - icon-with-text
+{% endcomment %}
+
+{% liquid
+  assign image_dsk = section.settings.image_dsk
+  assign image_mob = image_dsk
+
+  if section.settings.image_mob != blank
+    assign image_mob = section.settings.image_mob
+  endif
+
+  assign icon_with_text_blocks = section.blocks | where: 'type', 'icon_with_text'
+  assign scroll_section_selector = section.settings.scroll_section_selector
+%}
+
+<style>
+  .section-background-{{ section.id }} {
+    background-color: {{ section.settings.section_background_color }};
+  }
+  .banner-background-{{ section.id }} {
+    background-color: {{ section.settings.banner_background_color }};
+  }
+
+  #shopify-section-{{ section.id }} {
+    --button-text-color: white;
+    --button-background-color: black;
+  }
+</style>
+
+{% # wrapper %}
+<div class="jc-container section-background-{{ section.id }} !jc-px-6 md:!jc-px-28">
+  {% # banner container %}
+  <div class="jc-flex jc-w-full jc-h-full jc-px-3.5 md:jc-px-10 jc-py-6 md:jc-py-7.5 jc-items-start jc-justify-items-stretch lg:jc-gap-x-36 md:jc-gap-x-6 banner-background-{{ section.id }} jc-rounded-lg">
+    {% # text and mobile image container %}
+    <div class="jc-w-full md:jc-w-auto jc-h-full jc-flex jc-flex-col jc-items-center md:jc-items-start jc-justify-center jc-gap-2 md:jc-gap-y-4">
+      {% if section.settings.text != blank %}
+        <div class="[&_p]:!jc-text-center md:[&_p]:!jc-text-left [&_p]:!jc-text-xl md:[&_p]:!jc-text-5xl [&_p]:!jc-leading-6 md:[&_p]:!jc-leading-10 [&_p]:!jc-m-0 [&_p]:jc-z-0 [&_p]:!jc-font-['Sequel45'] [&_p_em]:!jc-not-italic [&_p_em]:!jc-text-vividTangelo  [&_p]:!jc-whitespace-nowrap">
+          {{ section.settings.text }}
+        </div>
+      {% endif %}
+      {% # mobile image %}
+      <div class="jc-flex md:jc-hidden jc-items-center jc-justify-center jc-w-full">
+        {% render 'g-render-image',
+          class: 'jc-w-full jc-h-full jc-object-cover',
+          img_src: image_mob.src,
+          img: image_mob,
+          size: '400 900 1200',
+          alt: image_mob.alt,
+          width: image_mob.width,
+          height: image_mob.height,
+          loading: 'eager',
+          id: image_mob.id
+        %}
+      </div>
+      {% # button %}
+      {% if section.settings.button_text != blank %}
+        <div class="jc-w-fit">
+          {%- if section.settings.button_text != blank -%}
+            <button
+              class="button button--primary jc-uppercase after:!jc-hidden jc-border jc-border-[var(--button-background-color)] jc-border-solid [&:not(:hover)]:!jc-text-[var(--button-text-color)] !jc-bg-[var(--button-background-color)] jc-rounded-md jc-mt-4 md:jc-mt-8 jc-px-10"
+              is="hover-button"
+              banner-scroll-btn
+              data-scroll-to-element="{{ scroll_section_selector }}"
+            >
+              <span
+                class="btn-fill"
+                data-fill=""
+                style="transform: translateY(var(--motion-translateY)); --motion-translateY: -76%;"
+              ></span>
+              <span class="btn-text">{{ section.settings.button_text }}</span>
+              <span class="btn-loader">
+                <span></span>
+                <span></span>
+                <span></span>
+              </span>
+            </button>
+          {%- endif -%}
+        </div>
+      {% endif %}
+      {%- unless icon_with_text_blocks == blank -%}
+        <div class="jc-w-full md:jc-w-auto jc-grid jc-grid-cols-1 md:jc-grid-cols-2 jc-gap-x-4 jc-gap-y-4 max-md:jc-mt-2">
+          {%- for block in icon_with_text_blocks -%}
+            {%- render 'icon-with-text', block: block -%}
+          {%- endfor -%}
+        </div>
+      {%- endunless -%}
+    </div>
+    {% # desktop image %}
+    <div class="jc-hidden md:jc-flex jc-items-center jc-justify-center jc-rounded-xxs">
+      {% render 'g-render-image',
+        class: 'jc-w-full jc-h-auto jc-object-cover',
+        img_src: image_dsk.src,
+        img: image_dsk,
+        size: '1280 1440 2160',
+        alt: image_dsk.alt,
+        width: image_dsk.width,
+        height: image_dsk.height,
+        loading: 'eager',
+        id: image_dsk.id
+      %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Banner with points",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "🖼️ Image Layout"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_dsk",
+      "label": "Desktop image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image_mob",
+      "label": "Mobile image"
+    },
+    {
+      "type": "richtext",
+      "id": "text",
+      "label": "Text",
+      "default": "<p>Section text</p>"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text"
+    },
+    {
+      "type": "text",
+      "id": "scroll_section_selector",
+      "label": "Section selector",
+      "info": "Specify a valid CSS selector for the element of the page. This selector takes precedence over the button link if both are present"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "banner_background_color",
+      "label": "Banner color"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Icon with text",
+      "type": "icon_with_text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "icon text",
+          "placeholder": "Icon text goes here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Banner with points"
+    }
+  ]
+}
+{% endschema %}

@@ -9,6 +9,7 @@
 
 <style>
   #shopify-section-{{ section.id }} {
+    --heading-padding: 112px;
     --section-padding-top: {{ section.settings.padding_top }}px;
     --section-padding-bottom: {{ section.settings.padding_bottom }}px;
     {%- if desktop_image != blank %}
@@ -17,6 +18,12 @@
         --ratio-percent: {{ 1 | divided_by: desktop_image.aspect_ratio | times: 100 }}%;
       {% endif -%}
     {% endif -%}
+  }
+
+  @media screen and (max-width: 767px) {
+    #shopify-section-{{ section.id }} {
+      --heading-padding: 72px;
+    }
   }
 
   {%- if mobile_image != blank and section.settings.image_height_mobile == 'adapt' %}
@@ -28,7 +35,12 @@
   {% endif -%}
 </style>
 
-<div class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"{% if section.settings.transparent_header and desktop_image != blank %} allow-transparent-header{% endif %}>
+<div
+  class="section section--padding{% if section.settings.divider %} section--divider{% endif %}{% if section.settings.rounded %} section--rounded relative{% endif %}"
+  {% if section.settings.transparent_header and desktop_image != blank %}
+    allow-transparent-header
+  {% endif %}
+>
   <div class="{% unless section.settings.full_width %}page-width {% endunless %}relative">
     <div class="banner relative{% if desktop_image != blank %} media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }}{% endif %}">
       {%- if desktop_image != blank -%}
@@ -41,30 +53,48 @@
             assign fetchpriority = 'low'
           endif
         -%}
-        <media-element class="banner__media block w-full h-full overflow-hidden"{% if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif %}>
-          <animate-element data-animate="zoom-out" class="media media--height block w-full h-full relative overflow-hidden">
+        <media-element
+          class="block w-full h-full overflow-hidden banner__media"
+          {% if section.settings.enable_parallax %}
+            data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"
+          {% endif %}
+        >
+          <animate-element
+            data-animate="zoom-out"
+            class="relative block w-full h-full overflow-hidden media media--height"
+          >
             {%- capture sizes -%}{% if section.settings.full_width %}100vw{% else %}min({{ settings.page_width }}px, 100vw){% endif %}{%- endcapture -%}
-            <picture class="media media--height block w-full h-full relative overflow-hidden">
+            <picture class="relative block w-full h-full overflow-hidden media media--height">
               {%- if mobile_image -%}
                 <source
-                  media="(max-width: 767px)"
+                  media="(max-width: 1280px)"
                   srcset="{{ mobile_image | image_url: width: '400x' }} 400w, {{ mobile_image | image_url: width: '600x' }} 600w, {{ mobile_image | image_url: width: '800x' }} 800w, {{ mobile_image | image_url: width: '1000x' }} 1000w"
                   width="{{ mobile_image.width }}"
                   height="{{ mobile_image.height }}"
                 >
               {%- endif -%}
 
-              {{- desktop_image | image_url: width: desktop_image.width | image_tag: loading: loading, fetchpriority: fetchpriority, sizes: sizes, widths: '300,400,500,600,700,800,900,1000,1200,1400,1600,1800,2000,2200,2400,2600,2800,3000,3200', is: 'lazy-image', alt: collection_alt -}}
+              {{-
+                desktop_image
+                | image_url: width: desktop_image.width
+                | image_tag:
+                  loading: loading,
+                  fetchpriority: fetchpriority,
+                  sizes: sizes,
+                  widths: '800,900,1000,1200,1400,1600,1800,2000,2200',
+                  is: 'lazy-image',
+                  alt: collection_alt
+              -}}
             </picture>
           </animate-element>
         </media-element>
-        <span class="banner__overlay absolute top-0 left-0 w-full h-full pointer-events-none"></span>
+        <span class="absolute top-0 left-0 w-full h-full pointer-events-none banner__overlay"></span>
       {%- endif -%}
-    
+
       {%- if section.blocks.size > 0 -%}
         <div class="banner__content overflow-hidden{% if desktop_image != blank %} absolute z-1 top-0 left-0 w-full h-full{% endif %}">
-          <div class="page-width w-full h-full flex {{ section.settings.content_position }} {{ section.settings.content_position_mobile }}">
-            <div class="banner__box md:text-{{ section.settings.text_alignment }} text-{{ section.settings.text_alignment_mobile }}">
+          <div class="page-width w-full h-full flex !jc-px-5 md:!jc-px-10 {{ section.settings.content_position }} {{ section.settings.content_position_mobile }}">
+            <div class="banner__box !jc-pt-[var(--heading-padding)] md:text-{{ section.settings.text_alignment }} text-{{ section.settings.text_alignment_mobile }}">
               {%- assign delay = 0 -%}
               {%- for block in section.blocks -%}
                 {%- liquid
@@ -74,51 +104,108 @@
                 -%}
                 {%- case block.type -%}
                   {%- when 'spacing' -%}
-                    <empty-element class="block spacing-section{% if block.settings.height_mobile == 0 %} hidden md:block{% endif %}{% if block.settings.height == 0 %} md:hidden{% endif %}" style="--spacing-height-desktop: {{ block.settings.height }}px; --spacing-height-mobile: {{ block.settings.height_mobile }}px;" {{ block.shopify_attributes }}></empty-element>
+                    <empty-element
+                      class="block spacing-section{% if block.settings.height_mobile == 0 %} hidden md:block{% endif %}{% if block.settings.height == 0 %} md:hidden{% endif %}"
+                      style="--spacing-height-desktop: {{ block.settings.height }}px; --spacing-height-mobile: {{ block.settings.height_mobile }}px;"
+                      {{ block.shopify_attributes }}
+                    ></empty-element>
 
                   {%- when 'breadcrumb' -%}
-                    <animate-element class="block" data-animate="fade-up" data-animate-delay="{{ delay | times: 250 }}" {{ block.shopify_attributes }}>
+                    <animate-element
+                      class="block"
+                      data-animate="fade-up"
+                      data-animate-delay="{{ delay | times: 250 }}"
+                      {{ block.shopify_attributes }}
+                    >
                       <nav class="breadcrumb" role="navigation" aria-label="breadcrumbs">
-                        <ul class="inline-flex gap-4 md:gap-6">
-                          <li class="flex items-center gap-4 md:gap-6">
-                            <a class="block" href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home_link_title' | t | escape }}" is="magnet-link">
-                              {%- render 'icon', icon: 'home', size: 'sm' -%}
+                        <ul class="inline-flex jc-gap-1">
+                          <li class="flex items-center jc-gap-1">
+                            <a
+                              class="block jc-text-xs jc-leading-4"
+                              href="{{ routes.root_url }}"
+                              title="{{ 'general.breadcrumbs.home_link_title' | t | escape }}"
+                              is="magnet-link"
+                            >
+                              {{ 'general.breadcrumbs.home' | t }}
                             </a>
                           </li>
                           {%- if block.settings.show_collections_link -%}
-                            <li class="flex items-center gap-4 md:gap-6">
-                              <a class="block" href="{{ routes.collections_url }}" is="magnet-link">{{ 'general.breadcrumbs.collections' | t }}</a>
+                            <li class="flex items-center jc-gap-1">
+                              <a
+                                class="block jc-text-xs jc-leading-4"
+                                href="{{ routes.collections_url }}"
+                                is="magnet-link"
+                              >
+                                {{- 'general.breadcrumbs.collections' | t -}}
+                              </a>
                             </li>
                           {%- endif -%}
-                          <li class="flex items-center gap-4 md:gap-6">{{ collection.title }}</li>
+                          <li class="flex items-center jc-gap-1 jc-text-xs jc-leading-4">{{ collection.title }}</li>
                         </ul>
                       </nav>
                     </animate-element>
 
                   {%- when 'title' -%}
-                    <h1 class="banner__title heading font-bold leading-none {{ block.settings.title_size }}{% if block.settings.title_size == 'title-xl' %} tracking-heading{% endif %}{% unless desktop_image %} relative{% endunless %}" {{ block.shopify_attributes }}>
-                      <split-words class="split-words flex flex-wrap" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ collection.title }}</split-words>
+                    <h1
+                      class="banner__title heading font-bold leading-none !jc-my-4 {{ block.settings.title_size }}{% if block.settings.title_size == 'title-xl' %} tracking-heading{% endif %}{% unless desktop_image %} relative{% endunless %}"
+                      {{ block.shopify_attributes }}
+                    >
+                      <split-words
+                        class="flex flex-wrap split-words [&_.single-word]:!jc-p-0 [&_.single-word_.block.animate]:!jc-text-5xl [&_.single-word_.block.animate]:!jc-leading-10 md:[&_.single-word_.block.animate]:!jc-text-7.5xl md:[&_.single-word_.block.animate]:!jc-leading-14 jc-font-normal jc-font-['Sequel75'] jc-gap-x-5"
+                        data-animate="fade-up-large"
+                        data-animate-delay="{{ delay | times: 250 }}"
+                      >
+                        {{- collection.title -}}
+                      </split-words>
                       {%- unless desktop_image -%}
                         {%- if collection.metafields.theme.marquee.value != blank -%}
-                          <div class="block absolute bottom-0 w-full pointer-events-none">
-                            <marquee-element class="flex font-bold {{ block.settings.title_size }}2x tracking-heading" {% if section.settings.enable_parallax %} data-parallax="1.5"{% endif %}>
-                              <div class="marquee whitespace-nowrap">{{ collection.metafields.theme.marquee.value }}</div>
+                          <div class="absolute bottom-0 block w-full pointer-events-none">
+                            <marquee-element
+                              class="flex font-bold {{ block.settings.title_size }}2x tracking-heading"
+                              {% if section.settings.enable_parallax %}
+                                data-parallax="0.7"
+                              {% endif %}
+                            >
+                              <div class="marquee whitespace-nowrap">
+                                {{ collection.metafields.theme.marquee.value }}
+                              </div>
                             </marquee-element>
                           </div>
                         {%- endif -%}
                       {%- endunless -%}
                     </h1>
-                    
+
                   {%- when 'description' -%}
                     {%- if collection.description != blank -%}
-                      <animate-element class="block" data-animate="fade-up" data-animate-delay="{{ delay | times: 250 }}">
-                        <div class="rte leading-normal {{ block.settings.text_font }} {{ block.settings.text_size }}{% if block.settings.secondary_color %} text-opacity{% endif %}"{% if block.settings.text_size == 'subtext-custom' %} style="--subtext-size:{{ block.settings.text_max_size }}px;"{% endif %} {{ block.shopify_attributes }}>
+                      <animate-element
+                        class="block"
+                        data-animate="fade-up"
+                        data-animate-delay="{{ delay | times: 250 }}"
+                      >
+                        <div
+                          class="rte leading-normal {{ block.settings.text_font }} {{ block.settings.text_size }}{% if block.settings.secondary_color %} text-opacity{% endif %}"
+                          {% if block.settings.text_size == 'subtext-custom' %}
+                            style="--subtext-size:{{ block.settings.text_max_size }}px;"
+                          {% endif %}
+                          {{ block.shopify_attributes }}
+                        >
                           {{- collection.description -}}
                         </div>
                       </animate-element>
                     {%- endif -%}
                 {%- endcase -%}
               {%- endfor -%}
+              
+              {% liquid
+                assign icon_with_text_blocks = section.blocks | where: 'type', 'icon_with_text'
+              %}
+              {%- if icon_with_text_blocks.size > 1 -%}
+                <div class="jc-flex jc-flex-col jc-gap-y-4">
+                  {%- for icon_with_text in icon_with_text_blocks -%}
+                    {%- render 'main-collection-icon-with-text', block: icon_with_text -%}
+                  {%- endfor -%}
+                </div>
+              {%- endif -%}
             </div>
           </div>
         </div>
@@ -163,6 +250,10 @@
         {
           "label": "t:sections.global.settings.image_height.options__1.label",
           "value": "adapt"
+        },
+        {
+          "label": "340px",
+          "value": "340px"
         },
         {
           "label": "t:sections.global.settings.image_height.options__2.label",
@@ -589,6 +680,24 @@
           "max": 120,
           "step": 4,
           "unit": "px"
+        }
+      ]
+    },
+    {
+      "name": "Icon with text",
+      "type": "icon_with_text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "icon text",
+          "placeholder": "Icon text goes here"
         }
       ]
     }

@@ -1,0 +1,228 @@
+{% comment %}
+  Section: quiz-recommendations
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - quiz-recommendations-card
+{% endcomment %}
+
+{%- style -%}
+  .background-{{ section.id }} {
+    background: {{ section.settings.background }} !important;
+  }
+
+  .paddings-{{ section.id }} {
+    padding-top: {{ section.settings.padding_mob_t }}px !important;
+    padding-bottom: {{ section.settings.padding_mob_b }}px !important;
+  }
+
+  @media screen and (min-width: 768px) {
+    .paddings-{{ section.id }} {
+      padding-top: {{ section.settings.padding_dsk_t }}px !important;
+      padding-bottom: {{ section.settings.padding_dsk_b }}px !important;
+    }
+  }
+{%- endstyle -%}
+
+{%- capture content_for_query_string -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign page_url = content_for_query_string
+  | split: '"pageurl":"'
+  | last
+  | split: '"'
+  | first
+  | split: '.myshopify.com'
+  | last
+  | replace: '\/', '/'
+  | replace: '%20', ' '
+  | replace: '\u0026', '&'
+-%}
+{% capture final_url %}https://{{ page_url }}{% endcapture %}
+
+{% liquid
+  assign decoded_url = final_url | url_decode
+  assign quiz_results = decoded_url | split: '@' | last | split: 'quiz_results=' | last | split: ';'
+
+  assign product_handles = ''
+
+  for item in quiz_results
+    if item contains 'product_handle'
+      assign handle = item | split: ':' | last | handleize
+      assign product_handles = product_handles | append: ',' | append: handle | replace: "50ml-", "" | replace: "4ml-", ""
+    endif
+  endfor
+
+  assign product_handles = product_handles | split: ','
+  assign recommended_products = '' | split: ''
+
+  for handle in product_handles
+    assign current_product = collections.all.products | where: 'handle', handle
+    if current_product != blank
+      assign recommended_products = recommended_products | concat: current_product
+    endif
+  endfor
+
+  assign bundle_preselect_products_id = ""
+  for product in recommended_products
+    assign bundle_preselect_products_id = bundle_preselect_products_id | append: product.id | append: ','
+  endfor
+  assign bundle_preselect_products_id = bundle_preselect_products_id | split: ','
+    
+
+  assign total_products_count = recommended_products | size
+%}
+
+<script>
+  console.log({{ bundle_preselect_products_id | json }});
+  window.preselectProductIds = {{ bundle_preselect_products_id | json }}
+</script>
+
+
+
+<div class="jc-container background-{{ section.id }} paddings-{{ section.id }} !jc-px-6 md:!jc-px-28 jc-overflow-hidden">
+  {%- unless section.settings.title == blank and section.settings.subtitle == blank -%}
+    <div class="[&_p]:jc-text-start md:[&_p]:jc-text-center [&_p]:jc-text-base [&_p]:jc-leading-6 [&_p]:jc-m-0 [&_p]:jc-max-w-[410px] [&_p]:jc-mx-auto">
+      {%- if section.settings.title != blank -%}
+        <h2 class="md:jc-mx-auto jc-whitespace-nowrap jc-w-min md:jc-text-center jc-text-xl md:jc-text-5xl jc-leading-6 md:jc-leading-10 jc-mb-2">
+          {{ section.settings.title }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subtitle != blank -%}
+        {{ section.settings.subtitle }}
+      {%- endif -%}
+    </div>
+  {%- endunless -%}
+
+  {% comment %}
+    <div class="coucou1" data-products="{{ quiz_results }}">.</div>
+    <div class="coucou1-2" data-products="{{ product_handles }}">.</div>
+    <div class="coucou2" data-products="{{ recommended_products }}">.</div>
+    <div class="coucou2" data-products="{{ total_products_count }}">.</div>
+  {% endcomment %}
+  
+  {%- if recommended_products != blank -%}
+    <quiz-recommendations-swiper data-section-id="{{ section.id }}" class="jc-block jc-relative jc-mt-4 md:jc-mt-16 jc-opacity-0 [&.reveal]:jc-opacity-100 jc-transition-opacity jc-duration-300 jc-ease-in">
+      <div
+        quiz-recommendations-swiper
+        id="{{ section.id }}"
+        class="swiper jc-w-full jc-grid jc-gap-3 jc-grid-cols-1 !jc-overflow-visible"
+      >
+        <div class="swiper-wrapper">
+          {%- for product in recommended_products -%}
+            <div class="swiper-slide">
+              {% render 'quiz-recommendations-card',
+                root: section,
+                product: product,
+                index: forloop.index,
+                total_count: total_products_count,
+                lazy_load: false,
+                image_ratio: settings.product_image_ratio,
+                image_fill: settings.product_image_fill,
+                show_secondary_image: settings.product_secondary_image,
+                show_vendor: settings.product_vendor,
+                show_rating: settings.product_rating,
+                show_color_swatches: settings.product_color_swatches,
+                show_countdown: settings.product_countdown,
+                show_quick_add: settings.product_quick_add,
+                show_quick_view: settings.product_quick_view,
+                show_save_amount: settings.product_save_amount,
+                save_type: settings.product_save_type,
+                section_id: section.id;
+              %}
+            </div>
+          {%- endfor -%}
+        </div>
+        <div class="swiper-pagination !jc-static"></div>
+      </div>
+      <div
+        class="swiper-button-prev !jc-flex reviews-prev-{{ section.id }} after:jc-shrink-0 after:jc-text-sm after:jc-bg-white after:jc-font-bold after:jc-content-['prev'] after:jc-w-9 after:jc-h-9 after:jc-rounded-full after:jc-grid after:jc-place-content-center after:jc-text-black !jc-left-0 -jc-translate-x-1/2 !jc-z-[1] md:!jc-hidden"
+      ></div>
+      <div
+        class="swiper-button-next !jc-flex reviews-next-{{ section.id }} after:jc-shrink-0 after:jc-text-sm after:jc-bg-white after:jc-font-bold after:jc-content-['next'] after:jc-w-9 after:jc-h-9 after:jc-rounded-full after:jc-grid after:jc-place-content-center after:jc-text-black !jc-right-0 jc-translate-x-1/2 !jc-z-[1] md:!jc-hidden"
+      ></div>
+    </quiz-recommendations-swiper>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Quiz recommendations",
+  "settings": [
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (mobile)"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Section Title"
+    },
+    {
+      "type": "richtext",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "<p>Section Subtitle</p>"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#fff8eb"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Quiz recommendations"
+    }
+  ]
+}
+{% endschema %}

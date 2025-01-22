@@ -21,14 +21,14 @@
   <div class="page-width{% if section.settings.full_width %} page-width--full{% endif %} relative">
     <div class="image-with-text with-background flex lg:gap-8 flex-col{% if section.settings.layout == 'image_first' %} lg:flex-row{% else %} lg:flex-row-reverse{% endif %} overflow-hidden">
       <div class="image-with-text__item grow shrink-0{% if section.settings.image_width == 'small' %} lg:grow-0{% endif %} relative">
-        <div class="image-with-text__media h-full">
+        <div class="h-full image-with-text__media">
           <media-element class="image-with-text__image block media--{{ section.settings.image_height }} mobile:media--{{ section.settings.image_height_mobile }} relative overflow-hidden"
             {%- if section.settings.enable_parallax %} data-parallax="0.3" data-parallax-dir="{{ section.settings.parallax_direction }}"{% endif -%}
           >
-            <div class="media media--height block w-full h-full relative overflow-hidden">
+            <div class="relative block w-full h-full overflow-hidden media media--height">
               {%- if section.settings.image != blank -%}
                 {%- assign sizes = '(max-width: 767px) 100vw, 50vw' -%}
-                <picture class="media media--height block w-full h-full relative overflow-hidden">
+                <picture class="relative block w-full h-full overflow-hidden media media--height">
                   {%- if section.settings.image_mobile -%}
                     <source
                       media="(max-width: 767px)"
@@ -71,7 +71,7 @@
                   {%- assign delay = delay | plus: 1 -%}
                   <{{ block.settings.heading_tag }} class="heading font-bold leading-none {{ block.settings.heading_size }}" {{ block.shopify_attributes }}>
                     {%- if block.settings.highlighted_text == 'none' -%}
-                      <split-words class="split-words flex flex-wrap" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
+                      <split-words class="flex flex-wrap split-words" data-animate="fade-up-large" data-animate-delay="{{ delay | times: 250 }}">{{ block.settings.heading }}</split-words>
                     {%- else -%}
                       {%- render 'highlighted-text', content: block.settings.heading, style: block.settings.highlighted_text, scribble: block.settings.highlighted_scribble, gradient: withGradient -%}
                     {%- endif -%}
@@ -88,7 +88,7 @@
               {%- when 'image' -%}
                 {%- if block.settings.image != blank -%}
                   <div {{ block.shopify_attributes }}>
-                    <p class="media media--transparent relative inline-block">
+                    <p class="relative inline-block media media--transparent">
                       {%- if block.settings.image_width == 'custom' -%}
                         {%- capture style -%}--image-max-width: {{ block.settings.image_max_width }}px; --image-max-width-mobile: {{ block.settings.image_max_width_mobile }}px{%- endcapture -%}
                         {%- capture sizes -%}(max-width: 767px) min({{ block.settings.image_max_width_mobile }}px, 100vw), min({{ block.settings.image_max_width }}px, 100vw){%- endcapture -%}
@@ -109,7 +109,9 @@
                     <span class="btn-text">
                       {%- liquid
                         echo block.settings.button_label | escape
-                        render 'icon', icon: 'arrow-right', size: 'sm', class: 'transform'
+                        if block.settings.show_icon
+                          render 'icon', icon: 'arrow-right', size: 'sm', class: 'transform'
+                        endif
                       -%}
                     </span>
                   </a>
@@ -758,6 +760,12 @@
           "id": "button_secondary_style",
           "default": false,
           "label": "t:sections.global.settings.button_secondary_style.label"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_icon",
+          "label": "Show icon",
+          "default": true
         }
       ]
     },

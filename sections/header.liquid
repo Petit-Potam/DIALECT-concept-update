@@ -34,7 +34,7 @@
   render 'header-drawer', section: section
 -%}
 
-<header data-section-id="{{ section.id }}" class="header header--{{ header_layout }} mobile:header--{{ section.settings.logo_position_mobile }} page-width{% if section.settings.full_width %} page-width--full{% endif %} section--padding grid items-center z-20 relative w-full"{% if section.settings.sticky_header_type != 'none' %} is="sticky-header" data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %} is="custom-header"{% endif %}>
+<header data-section-id="{{ section.id }}" class="header header--{{ header_layout }} mobile:header--{{ section.settings.logo_position_mobile }} page-width{% if section.settings.full_width %} page-width--full{% endif %} !jc-gap-0 section--padding grid items-center z-20 relative w-full"{% if section.settings.sticky_header_type != 'none' %} is="sticky-header" data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %} is="custom-header"{% endif %}>
   {%- liquid
     render 'header-icons', show_search: true, show_hamburger: true, show_toggle: show_toggle, dir: 'start'
 
@@ -48,7 +48,7 @@
   -%}
   
   <div class="header__navigation hidden lg:flex lg:gap-5 {{ main_menu_class }}"{% if header_layout == 'center' %} id="MenuToggle"{% endif %}>
-    <nav class="header__menu hidden lg:flex" role="navigation" aria-label="Primary">
+    <nav class="hidden header__menu lg:flex" role="navigation" aria-label="Primary">
       {%- render 'header-nav-desktop', section: section, main_menu: main_menu, limit: link_count -%}
     </nav>
   </div>
@@ -60,13 +60,13 @@
   -%}
   
   {%- if header_layout == 'center-split' -%}
-    <div class="header__navigation header__navigation--split hidden lg:flex lg:gap-5 lg:justify-start">
-      <nav class="header__menu hidden lg:flex" role="navigation" aria-label="Secondary">
+    <div class="hidden header__navigation header__navigation--split lg:flex lg:gap-5 lg:justify-start">
+      <nav class="hidden header__menu lg:flex" role="navigation" aria-label="Secondary">
         {%- render 'header-nav-desktop', section: section, main_menu: main_menu, offset: link_count -%}
       </nav>
     </div>
   {%- endif -%}
-
+  
   {%- liquid
     if header_layout != 'center'
       render 'header-icons', show_search: true, show_account: true, show_cart: true, show_hamburger: true, dir: 'end'
@@ -76,14 +76,14 @@
   {%- if section.settings.rounded -%}
     {%- render 'corner', dir: 'bottom', border: true, prefix: 'header' -%}
   {%- else -%}
-    <span class="header__cutout cutout opacity-0 absolute left-0 top-100 w-full pointer-events-none"></span>
+    <span class="absolute left-0 w-full opacity-0 pointer-events-none header__cutout cutout top-100"></span>
   {%- endif -%}
 </header>
 
 {%- if section.settings.hover_menu -%}
-  <span class="overlay opacity-0 fixed left-0 w-full pointer-events-none"></span>
+  <span class="fixed left-0 w-full opacity-0 pointer-events-none overlay"></span>
 {%- else -%}
-  <overlay-element class="overlay opacity-0 fixed left-0 w-full pointer-events-none"></overlay-element>
+  <overlay-element class="fixed left-0 w-full opacity-0 pointer-events-none overlay"></overlay-element>
 {%- endif -%}
 
 <script>
@@ -235,6 +235,26 @@
       "default": true,
       "label": "t:sections.header.settings.enable_country_selector.label",
       "info": "t:sections.header.settings.enable_country_selector.info"
+    },
+    {
+      "type": "header",
+      "content": "Custom link settings"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_link_icon",
+      "label": "Custom link icon"
+    },
+    {
+      "type": "text",
+      "id": "custom_link_text",
+      "label": "Custom link text",
+      "default": "Find your perfect scent"
+    },
+    {
+      "type": "url",
+      "id": "custom_link",
+      "label": "Custom link url"
     },
     {
       "type": "header",

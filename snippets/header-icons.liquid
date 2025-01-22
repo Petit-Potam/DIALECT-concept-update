@@ -14,23 +14,46 @@
 {%- endcomment -%}
 
 <div class="header__icons header__icons--{{ dir }} flex justify-{{ dir }} z-1">
-  <div class="header__buttons flex items-center gap-1d5">
+  <div class="flex items-center header__buttons gap-1d5">
+    {%- if section.settings.custom_link_text != blank -%}
+      <a
+        is="magnet-link"
+        class="jc-hidden xl:jc-flex jc-gap-1 jc-items-center !jc-w-auto jc-mx-3 jc-text-xs jc-leading-4 jc-font-bold jc-text-black"
+        href="{{ section.settings.custom_link }}">
+        {% if section.settings.custom_link_icon != blank %}
+          {% render 'g-render-image',
+            class: 'jc-w-5 jc-h-5 jc-object-contain',
+            img_src: section.settings.custom_link_icon.url,
+            img: section.settings.custom_link_icon,
+            size: '48 96 200',
+            alt: section.settings.custom_link_icon.alt,
+            width: 20,
+            height: 20,
+            loading: 'eager',
+          %}
+        {% endif %}
+        <span class="jc-inline-block jc-text-sm jc-leading-5">
+          {{ section.settings.custom_link_text }}
+        </span>
+      </a>
+    {%- endif -%}
+    
     {%- if show_toggle -%}
-      <button class="menu-toggle-button hidden lg:flex items-center justify-center" type="button" is="menu-toogle" aria-controls="MenuToggle" aria-expanded="false">
+      <button class="items-center justify-center hidden menu-toggle-button lg:flex" type="button" is="menu-toogle" aria-controls="MenuToggle" aria-expanded="false">
         <span class="sr-only">{{ 'general.drawers.navigation' | t }}</span>
         {%- render 'icon', icon: 'hamburger', size: 'lg' -%}
       </button>
     {%- endif -%}
 
     {%- if show_search and settings.enable_search -%}
-      <a href="{{ routes.search_url }}" class="search-drawer-button flex items-center justify-center" is="magnet-link" aria-controls="SearchDrawer" aria-expanded="false" >
+      <a href="{{ routes.search_url }}" class="flex items-center justify-center search-drawer-button" is="magnet-link" aria-controls="SearchDrawer" aria-expanded="false" >
         <span class="sr-only">{{ 'general.search.title' | t }}</span>
         {%- render 'icon', icon: 'search', size: 'lg' -%}
       </a>
     {%- endif -%}
 
     {%- if show_account and shop.customer_accounts_enabled -%}
-      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="hidden lg:flex items-center justify-center" is="magnet-link">
+      <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="items-center justify-center hidden lg:flex" is="magnet-link">
         <span class="sr-only">
           {%- liquid
             if customer
@@ -45,15 +68,15 @@
     {%- endif -%}
 
     {%- if show_cart -%}
-      <a href="{{ routes.cart_url }}" class="cart-drawer-button flex items-center justify-center relative" is="magnet-link" aria-controls="CartDrawer" aria-expanded="false" data-no-instant>
+      <a href="{{ routes.cart_url }}" class="relative flex items-center justify-center cart-drawer-button" is="magnet-link" aria-controls="CartDrawer" aria-expanded="false" data-no-instant>
         <span class="sr-only">{{ 'general.cart.title' | t }}</span>
         {%- render 'icon', icon: 'cart', size: 'lg' -%}
-        <cart-count class="count absolute top-0 right-0 text-xs" aria-label="{{ 'general.cart.cart_count' | t: count: cart.item_count | escape }}"{% if cart == empty %} hidden{% endif %}>{{ cart.item_count }}</cart-count>
+        <cart-count class="absolute top-0 right-0 text-xs count" aria-label="{{ 'general.cart.cart_count' | t: count: cart.item_count | escape }}"{% if cart == empty %} hidden{% endif %}>{{ cart.item_count }}</cart-count>
       </a>
     {%- endif -%}
 
     {%- if show_hamburger -%}
-      <button class="menu-drawer-button flex items-center justify-center" type="button" is="magnet-button" aria-controls="MenuDrawer" aria-expanded="false">
+      <button class="flex items-center justify-center menu-drawer-button" type="button" is="magnet-button" aria-controls="MenuDrawer" aria-expanded="false">
         <span class="sr-only">{{ 'general.drawers.navigation' | t }}</span>
         {%- render 'icon', icon: 'hamburger', size: 'lg' -%}
       </button>

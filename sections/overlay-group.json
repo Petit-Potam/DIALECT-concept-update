@@ -13,25 +13,45 @@
   "sections": {
     "cart-drawer": {
       "type": "cart-drawer",
+      "blocks": {
+        "trust_badges_BLCQfJ": {
+          "type": "trust_badges",
+          "settings": {
+            "badge_image_1": "shopify://shop_images/made_in_france.svg",
+            "badge_image_2": "shopify://shop_images/return_policy.svg",
+            "badge_image_3": "shopify://shop_images/shipping_terms.svg"
+          }
+        }
+      },
+      "block_order": [
+        "trust_badges_BLCQfJ"
+      ],
       "settings": {
         "show_vendor": false,
-        "show_cart_note": true,
-        "show_shipping_calculator": true,
-        "show_view_cart_button": true,
+        "show_cart_note": false,
+        "show_shipping_calculator": false,
+        "show_view_cart_button": false,
         "show_checkout_button": true,
+        "step_1_icon": "shopify://shop_images/bottle_icon_e899ad76-d002-4e64-97a9-1e1f3fcc6d7c.png",
+        "step_2_icon": "shopify://shop_images/bottles_icon_fcf186c8-4266-4a13-99c3-5e541e5cefd7.png",
+        "step_3_icon": "shopify://shop_images/sparks_icon_43d67e4d-53bf-4c2a-88af-2e4c5eb2e0aa.svg",
+        "step_1_text": "<p>Add another perfume and your <em>next one’s free + free shipping! </em></p>",
+        "step_2_text": "<p>Select your <em>free perfume </em>and get <em>free shipping</em></p>",
+        "step_3_text": "<p>Great! Your free perfume and shipping are ready</p>",
         "show_free_shipping_bar": true,
-        "free_shipping_minimum_amount": "1000",
-        "cart_recommendations_enabled": true,
+        "free_shipping_minimum_amount": "",
+        "cart_recommendations_enabled": false,
         "cart_recommendations_heading": "You may also like",
         "cart_recommendations_limit": 5,
         "show_cart_recommendations_vendor": false,
         "show_cart_recommendations_price": true,
-        "cart_recommendations_products": [
-
-        ],
-        "empty_cart_message": "<p>Not sure where to start?<br\/>Try these collections:<\/p>",
+        "cart_recommendations_products": [],
+        "empty_cart_message": "<p>Not sure where to start?<br/>Try these collections:</p>",
         "empty_cart_collections": [
-
+          "all-perfume",
+          "perfume-for-men",
+          "perfume-for-women",
+          "unisexe-perfume"
         ],
         "recent_products_enabled": true,
         "recent_products_heading": "Recently viewed",
@@ -42,8 +62,7 @@
     },
     "search-drawer": {
       "type": "search-drawer",
-      "settings": {
-      }
+      "settings": {}
     },
     "newsletter-popup": {
       "type": "newsletter-popup",
@@ -51,7 +70,7 @@
         "text-1": {
           "type": "text",
           "settings": {
-            "text": "<p>FIRST TIMER?<\/p>",
+            "text": "<p>FIRST TIMER?</p>",
             "text_size": "subtext-custom",
             "text_max_size": 12,
             "text_font": "body",
@@ -63,7 +82,7 @@
         "heading": {
           "type": "heading",
           "settings": {
-            "heading": "Sign up and get <em>20% off<\/em> your first order",
+            "heading": "Sign up and get <em>20% off</em> your first order",
             "heading_size": "text-2xl lg:text-3xl",
             "heading_tag": "h2",
             "highlighted_text": "scribble",
@@ -79,25 +98,32 @@
         },
         "form": {
           "type": "form",
+          "settings": {}
+        },
+        "image_TxiaAU": {
+          "type": "image",
           "settings": {
+            "image": "shopify://shop_images/Frame_4.png",
+            "image_width": "custom",
+            "image_max_width": 300,
+            "image_max_width_mobile": 300
           }
         },
         "text-2": {
           "type": "text",
           "settings": {
-            "text": "<p>Subscribe to our newsletter and be the first to hear about our new arrivals, special promotions and online exclusives.<\/p>",
+            "text": "<p>Subscribe to our newsletter and be the first to hear about our new arrivals, special promotions and online exclusives.</p>",
             "text_size": "text-sm",
             "text_max_size": 32,
             "text_font": "body",
-            "secondary_color": true,
+            "secondary_color": false,
             "highlighted_text": "none",
             "highlighted_scribble": "circle"
           }
         },
         "media": {
           "type": "media",
-          "settings": {
-          }
+          "settings": {}
         },
         "floating": {
           "type": "floating",
@@ -107,7 +133,7 @@
             "show_social": true,
             "social_heading": "Follow us",
             "mobile_disabled": true,
-            "mobile_hide_social": false,
+            "mobile_hide_social": true,
             "color_text": "#171717",
             "color_background": "#ffffff"
           }
@@ -118,22 +144,22 @@
         "heading",
         "spacing-1",
         "form",
+        "image_TxiaAU",
         "text-2",
         "media",
         "floating"
       ],
       "settings": {
         "mode": "enabled",
-        "only_homepage": true,
+        "only_homepage": false,
         "only_visitor": true,
         "delay": 7,
-        "expiry": 30,
+        "expiry": 2,
         "text_alignment": "left",
-        "content_position": "right-0",
-        "image": "",
+        "content_position": "left-0",
         "color_drawer_text": "#171717",
         "color_drawer_background": "#ffffff",
-        "color_drawer_highlight": "#ffddbf",
+        "color_drawer_highlight": "{{ shop.brand.colors.primary[0].background }}",
         "color_drawer_button_text": "#ffffff",
         "color_drawer_button_background": "#171717",
         "color_drawer_button_gradient": "",
@@ -156,7 +182,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>Are you 18 years old or older?<\/p>",
+            "text": "<p>Are you 18 years old or older?</p>",
             "text_size": "text-base",
             "text_max_size": 32,
             "text_font": "body",
@@ -193,8 +219,6 @@
         "expiry": 30,
         "text_alignment": "center",
         "content_position": "center-0",
-        "image": "",
-        "background_image": "",
         "blur_background_image": false,
         "color_drawer_text": "#171717",
         "color_drawer_background": "#ffffff",
@@ -221,7 +245,7 @@
         "text": {
           "type": "text",
           "settings": {
-            "text": "<p>This site uses cookies for better user experience and analytics.<\/p>",
+            "text": "<p>This site uses cookies for better user experience and analytics.</p>",
             "text_size": "text-base",
             "text_max_size": 32,
             "text_font": "body",
@@ -251,6 +275,7 @@
         "spacing",
         "buttons"
       ],
+      "disabled": true,
       "settings": {
         "mode": "enabled",
         "delay": 5,
@@ -269,6 +294,7 @@
       "blocks": {
         "mobile-dock-0": {
           "type": "home",
+          "disabled": true,
           "settings": {
             "custom_icon": "",
             "title": "Home"
@@ -292,8 +318,8 @@
           "type": "link",
           "settings": {
             "custom_icon": "",
-            "title": "Shop",
-            "link": "shopify:\/\/collections\/all"
+            "title": "Shop All",
+            "link": "shopify://collections/all-perfume"
           }
         },
         "mobile-dock-4": {
@@ -305,6 +331,7 @@
         },
         "mobile-dock-5": {
           "type": "account",
+          "disabled": true,
           "settings": {
             "custom_icon": "",
             "title": "Account"
@@ -319,6 +346,7 @@
         "mobile-dock-4",
         "mobile-dock-5"
       ],
+      "custom_css": [],
       "settings": {
         "color_text": "#000000",
         "color_background": "#ffffff",

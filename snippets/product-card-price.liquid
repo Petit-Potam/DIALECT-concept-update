@@ -1,0 +1,117 @@
+{%- comment -%}
+  Renders a list of product's price (regular, sale)
+
+  Accepts:
+  - product: {Object} Product Liquid object (optional)
+  - use_variant: {Boolean} Renders selected or first variant price instead of overall product pricing (optional)
+  - show_badges: {Boolean} Renders 'Sale' and 'Sold Out' tags if the product matches the condition (optional)
+  - class: {String} Adds a price class to the price element (optional)
+
+  Usage:
+  {% render 'product-price', product: product %}
+{%- endcomment -%}
+{%- liquid
+  if use_variant
+    assign target = product.selected_or_first_available_variant
+  else
+    assign target = product
+  endif
+
+  assign compare_at_price = target.compare_at_price
+  assign price = target.price | default: 1999
+
+  assign on_sale = false
+  if compare_at_price > price
+    assign on_sale = true
+  endif
+
+  assign savings_percentage = 0
+  assign savings_percentage_label = blank
+
+  if compare_at_price > price
+    assign decimal_compare_at_price = compare_at_price | money_without_currency | times: 1.0
+
+    assign price_difference = compare_at_price | minus: price
+    assign savings_percentage = price_difference | divided_by: decimal_compare_at_price | times: 100.0 | ceil
+    assign savings_percentage_label = savings_percentage | truncate: 2, '' | append: '%'
+  endif
+-%}
+
+<div class="jc-w-fit jc-flex jc-flex-col jc-items-end min-[639px]:jc-items-start lg:jc-items-end jc-justify-between {% unless product.featured_media %}!jc-w-full !jc-items-center{% endunless %}">
+  <div
+    class="
+      price max-[639px]:jc-flex-col max-[639px]:jc-items-end max-lg:jc-items-baseline
+      {% if on_sale %} price--on-sale{% endif %}
+      {% if class != blank %} {{ class }}{% endif %}
+      !jc-static
+    "
+  >
+    {%- if on_sale -%}
+      <span class="sr-only">{{ 'products.general.sale_price' | t }}</span>
+    {%- endif -%}
+
+    <span class="!jc-text-vividTangelo jc-whitespace-nowrap !jc-text-sm md:!jc-text-xl !jc-leading-4 md:!jc-leading-5 jc-font-bold">
+      {%- liquid
+        if target == product and product.price_varies
+          if settings.currency_code_enabled
+            assign price_min = product.price_min | money_with_currency
+          else
+            assign price_min = product.price_min | money
+          endif
+          echo 'products.general.from_text_html' | t: price: price_min
+        else
+          if settings.currency_code_enabled
+            echo price | money_with_currency
+          else
+            echo price | money
+          endif
+        endif
+      -%}
+    </span>
+
+    {%- if on_sale -%}
+      <span class="sr-only">{{ 'products.general.regular_price' | t }}</span>
+      <span class="relative inline-flex items-center h-auto jc-text-sm md:jc-text-base jc-leading-5 md:jc-leading-6 jc-text-chineseBlack jc-line-through">
+        {%- liquid
+          if settings.currency_code_enabled
+            echo compare_at_price | money_with_currency
+          else
+            echo compare_at_price | money
+          endif
+        -%}
+      </span>
+    {%- endif -%}
+
+    {%- assign product_variant = product.selected_or_first_available_variant -%}
+    {%- if product_variant.unit_price_measurement -%}
+      <span class="sr-only">{{ 'products.general.unit_price' | t }}</span>
+      <span class="flex items-center unit-price">
+        {%- liquid
+          capture unit_price_base_unit
+            if product_variant.unit_price_measurement
+              if product_variant.unit_price_measurement.reference_value != 1
+                echo product_variant.unit_price_measurement.reference_value
+              endif
+              echo product_variant.unit_price_measurement.reference_unit
+            endif
+          endcapture
+        -%}
+        ({{ product_variant.unit_price | money }}
+        <span aria-hidden="true">/</span>
+        <span class="sr-only">&nbsp;{{ 'general.accessibility.unit_price_separator' | t }}&nbsp;</span>
+        {{ unit_price_base_unit }})
+      </span>
+    {%- endif -%}
+  </div>
+  {% if savings_percentage_label != blank %}
+    <span class="jc-block jc-text-vividTangelo jc-text-xs md:jc-text-sm jc-leading-4 md:jc-leading-5 jc-font-bold">
+      {{-
+        'products.general.save_html'
+        | t: saved_amount: saved_amount
+        | split: '{'
+        | first
+        | append: savings_percentage_label
+      -}}
+    </span>
+  {% endif %}
+</div>

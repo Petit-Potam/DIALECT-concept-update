@@ -1,0 +1,216 @@
+{%- comment -%}
+  Section: quiz-answers
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - icon-with-text
+  - scent-quality
+{%- endcomment -%}
+
+{%- style -%}
+  .background-{{ section.id }} {
+    background: {{ section.settings.background }} !important;
+  }
+
+  .paddings-{{ section.id }} {
+    padding-top: {{ section.settings.padding_mob_t }}px;
+    padding-bottom: {{ section.settings.padding_mob_b }}px;
+  }
+
+  @media screen and (min-width: 768px) {
+    .paddings-{{ section.id }} {
+      padding-top: {{ section.settings.padding_dsk_t }}px;
+      padding-bottom: {{ section.settings.padding_dsk_b }}px;
+    }
+  }
+
+  .underlined-dsk em::before {
+    content : "";
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='324' height='24' viewBox='0 0 324 24' fill='none'%3E%3Cpath d='M3 21C52.4312 10.2871 185.235 -6.86075 321 10.2506' stroke='%23E97A21' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E");
+    height: 25px;
+    width: 325px;
+    background-repeat: no-repeat;
+  }
+
+  @media screen and (max-width:767px) {
+    .underlined-dsk em::before {
+      content : "";
+      position: absolute;
+      bottom: -16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='16' viewBox='0 0 180 16' fill='none'%3E%3Cpath d='M2 14C29.3581 6.85809 102.86 -4.57383 178 6.83372' stroke='%23E97A21' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E");
+      height: 16px;
+      width: 180px;
+      background-repeat: no-repeat;
+    }
+  }
+{%- endstyle -%}
+
+{%- capture content_for_query_string -%}{{ content_for_header }}{%- endcapture -%}
+{%- assign page_url = content_for_query_string
+  | split: '"pageurl":"'
+  | last
+  | split: '"'
+  | first
+  | split: '.myshopify.com'
+  | last
+  | replace: '\/', '/'
+  | replace: '%20', ' '
+  | replace: '\u0026', '&'
+-%}
+{% capture final_url %}https://{{ page_url }}{% endcapture %}
+
+{%- liquid
+  assign scent_qualities = shop.metaobjects.scent_qualities.values
+  assign icon_with_text_blocks = section.blocks | where: 'type', 'icon_with_text'
+
+  assign decoded_url = final_url | url_decode
+  assign quiz_results = decoded_url | split: '@' | last | split: 'quiz_results=' | last | split: ';'
+
+  assign gender = ''
+  assign scent = ''
+  assign intensity = ''
+
+  for item in quiz_results
+    if item contains 'intensity'
+      assign intensity = item | split: ':' | last | capitalize
+    elsif item contains 'scent'
+      assign scent = item | split: ':' | last | capitalize
+    elsif item contains 'gender'
+      assign gender = item | split: ':' | last | capitalize
+    endif
+  endfor
+
+  assign intensity_metaobject = scent_qualities | where: 'label', intensity
+  assign scent_metaobject = scent_qualities | where: 'label', scent
+  assign gender_metaobject = scent_qualities | where: 'label', gender
+
+  assign metaobjects_array = gender_metaobject | concat: scent_metaobject | concat: intensity_metaobject
+-%}
+
+<div class="background-{{ section.id }} jc-mb-21 md:jc-mb-13.5">
+  <div class="jc-container paddings-{{ section.id }} !jc-px-5 md:!jc-px-10 jc-py-12 md:jc-py21.5 jc-relative jc-flex jc-flex-col jc-items-center jc-justify-center">
+    <div class="underlined-dsk jc-text-center [&_p]:!jc-font-['Sequel75'] [&_p]:jc-text-3.5xl md:[&_p]:!jc-text-7.5xl [&_p]:jc-leading-8 md:[&_p]:!jc-leading-14 [&_p_em]:!jc-not-italic jc-mb-6 md:jc-mb-8 [&_p_em]:jc-w-fit [&_p_em]:jc-inline-block [&_p_em]:jc-relative">
+      {%- unless section.settings.heading == blank -%}
+        {{- section.settings.heading -}}
+      {%- endunless -%}
+    </div>
+    {%- unless icon_with_text_blocks == blank -%}
+      <div class="jc-flex jc-flex-col jc-items-center md:jc-flex-row jc-gap-x-8 jc-gap-y-4 jc-mt-4.5 md:jc-mt-4 jc-mb-[112px] md:jc-mb-21.5">
+        {%- for block in icon_with_text_blocks -%}
+          {%- render 'icon-with-text', block: block -%}
+        {%- endfor -%}
+      </div>
+    {%- endunless -%}
+
+    <div class="jc-mx-auto jc-left-0 jc-px-6 md:jc-px-28 jc-flex jc-w-full jc-items-center jc-justify-center jc-gap-2 md:jc-gap-4 jc-absolute jc-bottom-0 jc-translate-y-[50%]">
+      {%- for entry in metaobjects_array -%}
+        {%- render 'scent-quality', root: entry -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{%- schema -%}
+{
+  "name": "Quiz answers",
+  "tag": "section",
+  "limit": 1,
+  "settings": [
+    {
+      "type": "header",
+      "content": "📐 Layout (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (desktop)"
+    },
+    {
+      "type": "range",
+      "id": "padding_dsk_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (desktop)"
+    },
+    {
+      "type": "header",
+      "content": "📐 Layout (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_t",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner top Padding (mobile)"
+    },
+    {
+      "type": "range",
+      "id": "padding_mob_b",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "default": 24,
+      "unit": "px",
+      "label": "Inner bottom Padding (mobile)"
+    },
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "<p>Section<em>Heading</em></p>"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "background",
+      "label": "Background",
+      "default": "#fff8eb"
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Icon with text",
+      "type": "icon_with_text",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "icon text",
+          "placeholder": "Icon text goes here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quiz answers"
+    }
+  ]
+}
+{%- endschema -%}

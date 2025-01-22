@@ -1,0 +1,28 @@
+<nav
+  class="breadcrumb lg:flex max-md:jc-mt-4"
+  role="navigation"
+  aria-label="breadcrumbs"
+  {{ block.shopify_attributes }}
+>
+  <ul class="inline-flex !jc-gap-1 md:!jc-gap-3.5">
+    <li class="flex items-center !jc-gap-1 md:!jc-gap-3.5">
+      <a class="block reversed-link !jc-text-chineseBlack/60" href="{{ routes.root_url }}" title="{{ 'general.breadcrumbs.home' | t | escape }}">
+        {{ "general.breadcrumbs.home" | t }}
+      </a>
+    </li>
+    {%- if block.settings.show_collections_link -%}
+      <li class="flex items-center !jc-gap-1 md:!jc-gap-3.5">
+        <a class="reversed-link !jc-text-chineseBlack/60" href="{{ routes.collections_url }}">{{ 'general.breadcrumbs.collections' | t }}</a>
+      </li>
+    {%- endif -%}
+    <li class="flex items-center !jc-gap-1 md:!jc-gap-3.5">
+      {%- liquid
+        if collection == blank
+          assign collection = product.collections | first
+        endif
+      -%}
+      <a class="reversed-link !jc-text-chineseBlack/60" href="{{ collection.url }}">{{ collection.title }}</a>
+    </li>
+    <li class="flex items-center !jc-gap-1 md:!jc-gap-3.5">{{ product.title }}</li>
+  </ul>
+</nav>

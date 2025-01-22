@@ -14,6 +14,7 @@
       "blocks": {
         "vendor": {
           "type": "text",
+          "disabled": true,
           "settings": {
             "text": "{{ product.vendor }}",
             "text_size": "text-base"
@@ -23,8 +24,25 @@
           "type": "title",
           "settings": {
             "title_size": "product-title-md",
+            "title_size_mobile": "product-title-md",
             "show_price": true,
-            "show_rating": true
+            "show_rating": false
+          }
+        },
+        "rating_7RAzR8": {
+          "type": "rating",
+          "settings": {}
+        },
+        "price_h8L9rz": {
+          "type": "price",
+          "settings": {
+            "show_taxes_notice": true
+          }
+        },
+        "liquid_qnfcyj": {
+          "type": "liquid",
+          "settings": {
+            "liquid": "<div style=\"font-size: 14px; line-height: 20px;\">{{ product.metafields.custom.volume.value }}\n</div>\n\n<span style=\"font-size: 16px; line-height: 24px; font-weight: 700;\">\n{% if product.metafields.custom.inspired_by_et_retail_price %}\n        Inspired by: \n        {% case product.metafields.custom.inspiration_brand %}\n            {% when 'Chanel' %}\n                \n            {% else %}\n            <b>\n                {% case product.metafields.custom.inspiration_brand | split:'' | last %}\n                    {% when 's' %}\n                        {{ product.metafields.custom.inspiration_brand }}'\n                    {% else %}\n                        {{ product.metafields.custom.inspiration_brand }}'s\n                {% endcase %}\n            </b>\n            {% endcase %}\n     {{ product.metafields.custom.inspired_by_et_retail_price | split:'('| join:'<br><span class=\"collection-item__retail-price\" style=\"font-size: 14px; line-height:20px; font-weight:400; color: #e97a21\">('}}</span>\n    {% endif %}\n</span>"
           }
         },
         "countdown": {
@@ -49,6 +67,7 @@
         },
         "inventory": {
           "type": "inventory",
+          "disabled": true,
           "settings": {
             "inventory_threshold": 15,
             "show_inventory_transfer": true,
@@ -65,11 +84,12 @@
         },
         "pickup_availability": {
           "type": "pickup_availability",
-          "settings": {
-          }
+          "disabled": true,
+          "settings": {}
         },
         "share": {
           "type": "share",
+          "disabled": true,
           "settings": {
             "share_label": "Share",
             "show_help_desk": true,
@@ -79,6 +99,7 @@
         },
         "complementary": {
           "type": "complementary",
+          "disabled": true,
           "settings": {
             "heading": "Pairs well with",
             "product_limit": 4,
@@ -88,13 +109,15 @@
         },
         "read_more": {
           "type": "read_more",
-          "settings": {
-          }
+          "settings": {}
         }
       },
       "block_order": [
         "vendor",
         "title",
+        "rating_7RAzR8",
+        "price_h8L9rz",
+        "liquid_qnfcyj",
         "countdown",
         "variant_picker",
         "inventory",
@@ -109,7 +132,7 @@
         "hide_variants": false,
         "enable_video_autoplay": true,
         "enable_video_looping": true,
-        "mobile_layout": "full_width"
+        "mobile_layout": "partial"
       }
     }
   },

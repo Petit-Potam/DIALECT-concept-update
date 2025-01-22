@@ -1,0 +1,188 @@
+{% comment %}
+  Section: g-featured-reviews
+  Created by: Volodymyr Korolchuk
+
+  Used snippets:
+  - g-render-image
+  - g-all-reviews-text
+  - g-featured-review
+  - judgeme_widgets
+{% endcomment %}
+
+<style>
+  .section-background-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+
+  /* jdgm medals custom styles */
+  .jdgm-medals-wrapper--small .jdgm-medals {
+    overflow: auto;
+    max-width: 100% !important;
+  }
+
+  .jdgm-medals-wrapper.jdgm-widget {
+    padding: 0 !important;
+  }
+
+  .jdgm-medals__container {
+    padding: 0 !important;
+    width: 100% !important;
+  }
+
+  .jdgm-medal {
+    display: flex !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: white;
+    border-radius: 999px;
+    padding: 8px;
+  }
+
+  .jdgm-medal .jdgm-medal__value {
+    top: 50% !important;
+  }
+
+  .jdgm-medal__image {
+    width: 64px !important;
+    height: 64px !important;
+  }
+
+  .jdgm-verified-wrapper, .jdgm-verified-by, .jdgm-rating {
+    display: none !important;
+  }
+
+  .jdgm-medal-wrapper {
+    margin: 0 2px 4px 2px !important;
+  }
+
+  @media screen and (min-width: 768px) {
+    .jdgm-medal-wrapper {
+      margin: 0 8px !important;
+    }
+    .jdgm-medal__image {
+      width: 88px !important;
+      height: 88px !important;
+    }
+
+    .jdgm-medal {
+      display: flex !important;
+      justify-content: center !important;
+      width: 100% !important;
+      height: 100% !important;
+      background-color: white;
+      border-radius: 999px;
+      padding: 12px;
+    }
+  }
+</style>
+
+<div class="section-background-{{ section.id }} jc-overflow-hidden">
+  <div class="jc-flex jc-flex-col jc-items-start jc-gap-6 md:jc-gap-8 !jc-px-6 !jc-py-10 md:!jc-px-10 md:!jc-py-15 jc-container">
+    <div class="jc-w-full jc-flex jc-flex-col jc-justify-center jc-gap-6">
+      {% if section.settings.heading != blank %}
+        <div class="jc-text-5xl jc-leading-10 md:jc-text-7.5xl md:jc-leading-14 jc-m-0 jc-text-start [&_p]:!jc-font-['Sequel45'] [&_p_strong]:!jc-font-['Sequel75'] [&_p_strong]:!jc-font-normal">
+          {{ section.settings.heading }}
+        </div>
+      {% endif %}
+      {% render 'g-all-reviews-text' %}
+    </div>
+
+    {%- assign featured_reviews = shop.metaobjects.featured_reviews.values -%}
+    {%- if featured_reviews != blank -%}
+      <featured-reviews-swiper class="jc-block jc-relative jc-mt-3">
+        <div
+          featured-reviews-swiper
+          id="{{ section.id }}"
+          class="swiper jc-w-full jc-grid jc-gap-3 jc-grid-cols-1 max-md:!jc-overflow-visible"
+        >
+          <div class="swiper-wrapper">
+            {% for review in featured_reviews limit: 6 %}
+              <div class="swiper-slide">
+                {% render 'g-featured-review',
+                  review: review,
+                  background_color: section.settings.carousel_item_background_color,
+                  featured_product_prelabel: section.settings.featured_product_prelabel
+                %}
+              </div>
+            {% endfor %}
+          </div>
+
+          <div class="jc-flex jc-justify-center">
+            <div class="indicators">
+              <button
+                class="md:jc-hidden button button--secondary reviews-mobile-prev-{{ section.id }}"
+                type="button"
+                is="previous-button"
+                aria-label="{{ 'general.pagination.previous' | t | escape }}"
+                disabled
+              >
+                <span class="btn-fill" data-fill></span>
+                <span class="btn-text">
+                  {%- render 'icon', icon: 'chevron-left', class: 'transform' -%}
+                </span>
+              </button>
+            </div>
+            
+            <div class="swiper-pagination !jc-static max-md:!jc-w-[128px] max-md:!jc-mx-3 jc-my-auto !jc-pb-1"></div>
+  
+            <div class="indicators">
+              <button
+                class="md:jc-hidden button button--secondary reviews-mobile-next-{{ section.id }}"
+                type="button"
+                is="next-button"
+                aria-label="{{ 'general.pagination.next' | t | escape }}"
+              >
+                <span class="btn-fill" data-fill></span>
+                <span class="btn-text">
+                  {%- render 'icon', icon: 'chevron-right', class: 'transform' -%}
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </featured-reviews-swiper>
+    {% endif %}
+    {% render 'judgeme_widgets', widget_type: 'judgeme_medals' %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured reviews",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "featured_product_prelabel",
+      "label": "Text before featured product title"
+    },
+    {
+      "type": "header",
+      "content": "🎨 Design"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "color",
+      "id": "carousel_item_background_color",
+      "label": "Carousel item color",
+      "default": "#FFF"
+    }
+  ],
+  "blocks": [],
+  "presets": [
+    {
+      "name": "Featured reviews"
+    }
+  ]
+}
+{% endschema %}
